@@ -1,0 +1,75 @@
+﻿<title>KENNEDY LOGIN</title>
+<div data-ng-init="vm.init()" class="col-md-12">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3" id="login">
+            <div class="row">
+                <div class="col-md-12" ng-show="vm.failedLoginCode == 2">
+                    <span class="validation-error">Invalid credentials<br /></span>
+                </div>
+                <div class="col-md-12" ng-show="vm.failedLoginCode == 3">
+                    <span class="validation-error">Too many logins attemps<br /></span>
+                </div>
+                <div class="col-md-12" ng-show="vm.failedLoginCode == 5">
+                    <span class="validation-error">Blocked user<br /></span>
+                </div>
+                <div class="col-md-12" ng-show="vm.failedLoginCode == 6">
+                    <span class="validation-error">User activation pending<br /></span>
+                </div>
+                <div class="col-md-12" ng-show="vm.failedLoginCode == 8">
+                    <span class="validation-error">Another device in use<br /></span>
+                </div>
+                <div class="col-md-12" ng-show="vm.failedLoginCode == 9">
+                    <span class="validation-error">Only one attempt left!<br /></span>
+                </div>
+                <div class="col-md-12" ng-show="vm.failedLoginCode == 10">
+                    <span class="validation-error">Credentials confirmation expired<br /></span>
+                </div>
+                <div class="col-md-12" ng-show="vm.failedLoginCode == 11">
+                    <span class="validation-error">User confirmation expired<br /></span>
+                </div>
+                <div class="col-md-12" ng-show="vm.failedLoginCode == 12">
+                    <span class="validation-error">User send pending<br /></span>
+                </div>
+                <div class="col-md-12" ng-show="vm.failedLoginCode == 13">
+                    <span class="validation-error">Unknown error<br /></span>
+                </div>
+            </div>
+        </div>
+
+
+        <form name="form" onsubmit="return false;">
+            <div class="row form-group">
+                <div class="col-md-4">
+                    <label for="inputUserName" class="sr-only">Username</label>
+                    <input name="inputUserName"
+                           ng-model="loginUser.UserName"
+                           type="text"
+                           class="form-control"
+                           placeholder="Username"
+                           make-validations="form.inputUserName"
+                           required />
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-md-4">
+                    <label for="inputPassword" class="sr-only">Password</label>
+                    <input name="inputPassword"
+                           ng-model="loginUser.Password"
+                           type="password"
+                           class="form-control"
+                           placeholder="Password"
+                           make-validations="form.inputPassword"
+                           required />
+
+                    <div class="checkbox pull-left">
+                        <label>
+                            <input type="checkbox" ng-model="vm.KeepLoggedIn"> Keep me logged in
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <button class="col-md-3 btn btn-lg btn-primary" type="submit" ng-click="!form.$valid || authorizeAction()" ng-disabled="!form.$valid">Login</button>
+        </form>
+    </div>
+</div>
