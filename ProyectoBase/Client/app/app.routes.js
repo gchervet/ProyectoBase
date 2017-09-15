@@ -2,15 +2,13 @@
 .config([
     '$stateProvider',
     '$urlRouterProvider',
-    'AuthServices',
     function (
         $stateProvider,
-        $urlRouterProvider,
-        AuthServices
+        $urlRouterProvider
         ) {
 
         /* PARA UTILIZAR ROUTEPROVIDER */
-        $routeProvider
+        $urlRouterProvider
         .when('/login', {
             templateUrl: '/app/components/login/login.html',
             controller: 'loginController as vm'
