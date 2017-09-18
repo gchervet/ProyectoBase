@@ -1,14 +1,12 @@
-﻿angular.module("app")
-.config([
-    '$stateProvider',
-    '$urlRouterProvider',
-    function (
-        $stateProvider,
-        $urlRouterProvider
-        ) {
+﻿angular
+  .module('app', [
+    'ngResource',
+    'ngRoute',
+    'AuthServices'
+  ])
+  .config(function ($routeProvider) {
 
-        /* PARA UTILIZAR ROUTEPROVIDER */
-        $urlRouterProvider
+      $routeProvider
         .when('/login', {
             templateUrl: '/app/components/login/login.html',
             controller: 'loginController as vm'
@@ -31,15 +29,5 @@
             permissions: ["administration", "list_orders"]
         })
 
-        /* PARA UTILIZAR STATEPROVIDER */
-        //$stateProvider.state('login', {
-        //    url: '/login',
-        //    views: {
-        //        'main': {
-        //            templateUrl: '/app/components/login/login.html',
-        //            controller: 'loginController as vm'
-        //        }
-        //    }
-        //});
-        //$urlRouterProvider.otherwise("/login");
-    }]);
+      $routeProvider.otherwise("/login");
+  });

@@ -1,10 +1,14 @@
-﻿angular.module("app", [
+﻿var app = angular.module('app', [
     "ui.router", 
-    "ui.bootstrap"
-])
-.run(['myUrl', '$rootScope', '$location', 'Auth',
+    "ui.bootstrap",
+    "AuthService"
+]);
+
+
+app.config(['myUrl', '$rootScope', '$location', 'Auth',
     function (myUrl, $rootScope, $location, Auth) {
 
+        debugger;
         // Setting the authorization Instance
         Auth.init();
 

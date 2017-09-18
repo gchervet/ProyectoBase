@@ -1,5 +1,4 @@
-﻿angular.module("app")
-    .controller("loginController", [
+﻿app.controller("loginController", [
         "$scope",
         "$rootScope",
         "$location",
