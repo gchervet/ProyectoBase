@@ -21,6 +21,8 @@ namespace Service
                 loginAttemptCode = ldapAuth.IsAuthenticated(WebConfigurationManager.AppSettings["DomainName"], user.UserName, user.Password);
                 if (loginAttemptCode == 1)
                 {
+                    // El usuario existe, se genera un token y se devuelven sus permisos
+                    SessionTokenDTO sessionTokenDTO = SessionTokenService.Create(user, WebConfigurationManager.AppSettings["DomainName"] + WebConfigurationManager.AppSettings["TokenKey"], null);
                     return new LoginResponseDTO(true, string.Empty, string.Empty, HttpStatusCode.OK, FailedLoginEnum.LoggedWithoutError.GetHashCode());
                 }
                 return new LoginResponseDTO(false, "Could not log into the server", string.Empty, HttpStatusCode.Forbidden, loginAttemptCode);

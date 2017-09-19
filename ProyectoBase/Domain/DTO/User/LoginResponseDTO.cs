@@ -23,5 +23,8 @@ namespace Domain
         public string Error { get; set; }
         public FailedLoginEnum FailedLoginCode { get; set; }
         public HttpStatusCode ResponseStatus { get; set; }
+
+        public string Token { get; set; }
+        public string 
     }
 }

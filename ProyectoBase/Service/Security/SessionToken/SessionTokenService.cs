@@ -17,17 +17,18 @@ namespace Service
         /// <param name="deviceIdentifier">Identificador del dispositivo que esta utilizando el usuario</param>
         /// <param name="expireHours">La cantidad de horas hasta que expira el token. Si es null no expirará.</param>
         /// <returns>El token creado</returns>
-        public SessionTokenDTO Create(LoginUserDTO user, string deviceIdentifier, int? expireHours)
+        public static SessionTokenDTO Create(LoginUserDTO user, string tokenKey, int? expireHours)
         {
             //DateTime expireDate = expireHours.HasValue ? SystemTime.Now.AddHours(expireHours.Value) : DateTime.MaxValue;
 
             SessionTokenDTO sessionTokenDto = new SessionTokenDTO
             {
-                Token = AesEncryption.GetInstance().Encrypt(user.UserName + user.Password + deviceIdentifier),
+                Token = AesEncryption.GetInstance().Encrypt(user.UserName + user.Password + tokenKey),
                 IdUser = user.UserName
             };
 
-            //sessionTokenDto = Create(sessionToken);
+            /* Genera el token en la BDD */
+            //sessionTokenDto = Create(sessionTokenDto);
 
             return sessionTokenDto;
         }
