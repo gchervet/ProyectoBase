@@ -25,7 +25,6 @@
             //};
 
 
-            debugger; 
             var loginController = this;
             $scope.loginUser = {};
 
@@ -37,7 +36,7 @@
             }
 
             loginController.init = function () {
-                debugger;
+
                 generalConfigurationCallback = function (response) {
                     loginController.enableRegister = response;
                 }
@@ -87,9 +86,9 @@
             $scope.authorizeAction = function () {
                 
                 var loginCallback = function (response) {
-                    debugger;
+
                     if (response) {
-                        loginController.failedLoginCode = response.FailedLoginCode;
+                        loginController.failedLoginCode = response.data.FailedLoginCode;
                     }
                     loginController.handleLoginResponse(response);
                 };
@@ -105,30 +104,30 @@
             };
 
 
-            loginController.register = function () {
-
-                var modalCreate = $uibModal.open({
-                    animation: true,
-                    backdrop: 'static',
-                    keyboard: false,
-                    size: 'medium',
-                    templateUrl: 'app/components/login/loginRegister.html',
-                    controller: 'loginRegisterController as vm',
-                    resolve: null
-                });
-            };
-
-            loginController.forgotPassword = function () {
-
-                var modal = $uibModal.open({
-                    animation: true,
-                    backdrop: 'static',
-                    keyboard: false,
-                    size: 'medium',
-                    templateUrl: 'app/components/login/loginForgotPasswordTemplete.html',
-                    controller: 'loginForgotPasswordController as vm',
-                    resolve: null
-                });
-            };
+            //loginController.register = function () {
+            //
+            //    var modalCreate = $uibModal.open({
+            //        animation: true,
+            //        backdrop: 'static',
+            //        keyboard: false,
+            //        size: 'medium',
+            //        templateUrl: 'app/components/login/loginRegister.html',
+            //        controller: 'loginRegisterController as vm',
+            //        resolve: null
+            //    });
+            //};
+            //
+            //loginController.forgotPassword = function () {
+            //
+            //    var modal = $uibModal.open({
+            //        animation: true,
+            //        backdrop: 'static',
+            //        keyboard: false,
+            //        size: 'medium',
+            //        templateUrl: 'app/components/login/loginForgotPasswordTemplete.html',
+            //        controller: 'loginForgotPasswordController as vm',
+            //        resolve: null
+            //    });
+            //};
 
         }]);

@@ -294,17 +294,17 @@
                 $.extend(callConfig, httpCallConfig);
 
                 $http({ noBlock: callConfig.noblock, method: callConfig.method, headers: { 'Content-Type': "application/json" }, url: callConfig.host + callConfig.url, data: callConfig.data })
-                    .success(function (response) {
+                    .then(function (response) {
                         callConfig.callbackSuccess(response);
-                    })
-                    .error(function (response, status, headers, config) {
+                    }), function errorCallback(response, status, headers, config) {
 
                         callConfig.callbackError(response, status, headers, config);
 
                         if (callConfig.runDefaultErrorHandler) {
                             defaultErrorHandler(response, status, headers, config);
                         }
-                    });
+                    };
+
             };
 
             function defaultErrorHandler(response, status, headers, config) {

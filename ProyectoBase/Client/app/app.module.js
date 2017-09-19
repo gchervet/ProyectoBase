@@ -8,7 +8,6 @@
 app.config(['myUrl', '$rootScope', '$location', 'Auth',
     function (myUrl, $rootScope, $location, Auth) {
 
-        debugger;
         // Setting the authorization Instance
         Auth.init();
 
