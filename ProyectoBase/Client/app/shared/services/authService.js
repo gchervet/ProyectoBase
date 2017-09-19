@@ -67,17 +67,26 @@
 
 
     auth.userHasPermission = function (permissions) {
+        debugger;
+
+        /* Antes de verificar los permisos, verificamos si el usuario se encuentra logueado */
         if (!auth.isLoggedIn()) {
             return false;
         }
 
         var found = false;
-        angular.forEach(permissions, function (permission, index) {
-            if ($sessionStorage.user.user_permissions.indexOf(permission) >= 0) {
-                found = true;
-                return;
-            }
-        });
+
+        if ($sessionStorage.user.permissions) {
+            angular.forEach(permissions, function (permission, index) {
+                if ($sessionStorage.user.permissions.indexOf(permission) >= 0) {
+                    found = true;
+                    return;
+                }
+            });
+        }
+        else {
+            found = true;
+        }
 
         return found;
     };

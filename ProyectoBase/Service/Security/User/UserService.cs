@@ -24,7 +24,7 @@ namespace Service
                     // El usuario existe, se genera un token y se devuelven sus permisos
                     SessionTokenDTO sessionTokenDTO = SessionTokenService.Create(user, WebConfigurationManager.AppSettings["DomainName"] + WebConfigurationManager.AppSettings["TokenKey"], null);
                     List<string> userPermissions = new List<string>();
-                    userPermissions.Add("administrator");
+                    userPermissions.Add("administration");
 
                     return new LoginResponseDTO(true, string.Empty, string.Empty, HttpStatusCode.OK, FailedLoginEnum.LoggedWithoutError.GetHashCode(), sessionTokenDTO.Token, user.UserName, userPermissions);
                 }

@@ -99,15 +99,23 @@
                     debugger;
 
                     if (response) {
+
                         loginController.failedLoginCode = response.data.FailedLoginCode;
 
-                        $sessionStorage.user = response.data;
-                        $rootScope.user = $sessionStorage.user;
-                        $rootScope.token = "Basic " + response.data;
+                        if (response.data.FailedLoginCode == 1) {
+                            
+                            $sessionStorage.user = response.data;
+                            $rootScope.user = $sessionStorage.user;
+                            $rootScope.token = "Basic " + response.data;
 
-                        $location.path("/home");
+                            $location.path("/home");
+                        }
+                        else {
+                            $sessionStorage.user = null;
+                        }
                     }
-                    loginController.handleLoginResponse(response);
+
+                    //loginController.handleLoginResponse(response);
                 };
 
                 var errorCallback = function (response) {
