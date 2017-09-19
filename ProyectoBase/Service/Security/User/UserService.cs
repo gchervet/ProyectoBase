@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net;
+using System.Web.Configuration;
 
 namespace Service
 {
@@ -12,16 +13,14 @@ namespace Service
     {
         public LoginResponseDTO LogIn(LoginUserDTO user)
         {
-            LdapAuthentication ldapAuth = new LdapAuthentication("LDAP://AR-WINDC-01.central.kennedy.edu.ar");
+            LdapAuthentication ldapAuth = new LdapAuthentication(WebConfigurationManager.AppSettings["PFUserName"]);
             int loginAttemptCode = default(int);
 
             try
             {
-                loginAttemptCode = ldapAuth.IsAuthenticated("KENNEDY", user.UserName, user.Password);
+                loginAttemptCode = ldapAuth.IsAuthenticated(WebConfigurationManager.AppSettings["DomainName"], user.UserName, user.Password);
                 if (loginAttemptCode == 1)
                 {
-
-
                     return new LoginResponseDTO(true, string.Empty, string.Empty, HttpStatusCode.OK, FailedLoginEnum.LoggedWithoutError.GetHashCode());
                 }
                 return new LoginResponseDTO(false, "Could not log into the server", string.Empty, HttpStatusCode.Forbidden, loginAttemptCode);
