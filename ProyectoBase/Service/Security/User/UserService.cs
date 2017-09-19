@@ -23,20 +23,23 @@ namespace Service
                 {
                     // El usuario existe, se genera un token y se devuelven sus permisos
                     SessionTokenDTO sessionTokenDTO = SessionTokenService.Create(user, WebConfigurationManager.AppSettings["DomainName"] + WebConfigurationManager.AppSettings["TokenKey"], null);
-                    return new LoginResponseDTO(true, string.Empty, string.Empty, HttpStatusCode.OK, FailedLoginEnum.LoggedWithoutError.GetHashCode());
+                    List<string> userPermissions = new List<string>();
+                    userPermissions.Add("administrator");
+
+                    return new LoginResponseDTO(true, string.Empty, string.Empty, HttpStatusCode.OK, FailedLoginEnum.LoggedWithoutError.GetHashCode(), sessionTokenDTO.Token, user.UserName, userPermissions);
                 }
-                return new LoginResponseDTO(false, "Could not log into the server", string.Empty, HttpStatusCode.Forbidden, loginAttemptCode);
+                return new LoginResponseDTO(false, "Could not log into the server", string.Empty, HttpStatusCode.Forbidden, loginAttemptCode, null, null, null);
             }
             catch(Exception e)
             {
                 switch (e.HResult)
                 {
                     case -2147023570:
-                        return new LoginResponseDTO(false, "Could not log into the server", e.Message, HttpStatusCode.Forbidden, FailedLoginEnum.InvalidCredentials.GetHashCode());
+                        return new LoginResponseDTO(false, "Could not log into the server", e.Message, HttpStatusCode.Forbidden, FailedLoginEnum.InvalidCredentials.GetHashCode(), null, null, null);
                     default:
                         break;
                 }
-                return new LoginResponseDTO(false, "Could not log into the server", e.Message, HttpStatusCode.Forbidden, loginAttemptCode);
+                return new LoginResponseDTO(false, "Could not log into the server", e.Message, HttpStatusCode.Forbidden, loginAttemptCode, null, null, null);
             }
         }
     }

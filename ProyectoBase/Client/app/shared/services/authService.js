@@ -4,7 +4,7 @@
     /**
      *  User profile resource
      */
-    var Profile = $resource('/api/profile', {}, {
+    var Profile = $resource('/api/User/Authenticate', {}, {
         login: {
             method: "POST",
             isArray: false
@@ -23,9 +23,10 @@
         }
     };
 
-    auth.login = function (username, password) {
+    auth.login = function (loginUser) {
         return $q(function (resolve, reject) {
-            Profile.login({ username: username, password: password }).$promise
+
+            Profile.login({ username: loginUser.UserName, password: loginUser.Password }).$promise
             .then(function (data) {
                 $sessionStorage.user = data;
                 $rootScope.user = $sessionStorage.user;

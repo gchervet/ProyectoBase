@@ -9,13 +9,17 @@ namespace Domain
 {
     public class LoginResponseDTO
     {
-        public LoginResponseDTO(bool validLogin, string responseMessage, string error, HttpStatusCode responseStatus, int failedLoginCode)
+        public LoginResponseDTO(bool validLogin, string responseMessage, string error, HttpStatusCode responseStatus, int failedLoginCode, string token, string name, List<String> permissions)
         {
             ValidLogin = validLogin;
             ResponseMessage = responseMessage;
             Error = error;
             ResponseStatus = responseStatus;
             FailedLoginCode = (FailedLoginEnum)failedLoginCode;
+
+            Token = token;
+            this.name = name;
+            this.permissions = permissions;
         }
 
         public bool ValidLogin { get; set; }
@@ -24,7 +28,9 @@ namespace Domain
         public FailedLoginEnum FailedLoginCode { get; set; }
         public HttpStatusCode ResponseStatus { get; set; }
 
+        /* Seguridad del front end */
         public string Token { get; set; }
-        public string 
+        public string name { get; set; }
+        public List<String> permissions { get; set; }
     }
 }

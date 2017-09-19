@@ -7,22 +7,18 @@
         "myUrl",
         "$window",
         "utilityService",
+        "$sessionStorage",
         "Auth",
-        function ($scope, $rootScope, $location, $state, $uibModal, myUrl, $window, utilityService, Auth) {
-            
-            /* PARA USAR VALIDACION DE AUTH SERVICE */
-            //$scope.email = "";
-            //$scope.password = "";
-            //$scope.failed = false;
+        function ($scope, $rootScope, $location, $state, $uibModal, myUrl, $window, utilityService, $sessionStorage, Auth) {
 
-            //$scope.login = function () {
-            //    Auth.login($scope.email, $scope.password)
-            //      .then(function () {
-            //          $location.path("/home");
-            //      }, function () {
-            //          $scope.failed = true;
-            //      });
-            //};
+            /* PARA USAR VALIDACION DE AUTH SERVICE */
+            $scope.email = "";
+            $scope.password = "";
+            $scope.failed = false;
+
+            $scope.login = function () {
+
+            };
 
 
             var loginController = this;
@@ -40,7 +36,7 @@
                 generalConfigurationCallback = function (response) {
                     loginController.enableRegister = response;
                 }
-                             
+
             };
 
             loginController.KeepLoggedIn = false;
@@ -51,7 +47,14 @@
             };
 
             loginController.handleLoginResponse = function (response) {
-                
+
+
+                if (Auth.userHasPermission(["administration"])) {
+                    // some evil logic here
+                    var userName = Auth.currentUser().name;
+                    // ...
+                }
+
                 loginController.redirectAfterLogin();
             };
 
@@ -84,11 +87,25 @@
             };
 
             $scope.authorizeAction = function () {
+
+                //Auth.login($scope.loginUser)
+                // .then(function () {
+                //     $location.path("/home");
+                // }, function () {
+                //     $scope.failed = true;
+                // });
                 
                 var loginCallback = function (response) {
+                    debugger;
 
                     if (response) {
                         loginController.failedLoginCode = response.data.FailedLoginCode;
+
+                        $sessionStorage.user = response.data;
+                        $rootScope.user = $sessionStorage.user;
+                        $rootScope.token = "Basic " + response.data;
+
+                        $location.path("/home");
                     }
                     loginController.handleLoginResponse(response);
                 };
@@ -96,38 +113,14 @@
                 var errorCallback = function (response) {
                     loginController.resetUserPassword();
                     loginController.failedLoginCode = response.code;
+                    
+                    Auth.reject();
                 }
 
                 utilityService.callHttp({ method: "POST", url: "/api/User/Authenticate", data: $scope.loginUser, callbackSuccess: loginCallback, callbackError: errorCallback });
 
+
                 return false;
             };
-
-
-            //loginController.register = function () {
-            //
-            //    var modalCreate = $uibModal.open({
-            //        animation: true,
-            //        backdrop: 'static',
-            //        keyboard: false,
-            //        size: 'medium',
-            //        templateUrl: 'app/components/login/loginRegister.html',
-            //        controller: 'loginRegisterController as vm',
-            //        resolve: null
-            //    });
-            //};
-            //
-            //loginController.forgotPassword = function () {
-            //
-            //    var modal = $uibModal.open({
-            //        animation: true,
-            //        backdrop: 'static',
-            //        keyboard: false,
-            //        size: 'medium',
-            //        templateUrl: 'app/components/login/loginForgotPasswordTemplete.html',
-            //        controller: 'loginForgotPasswordController as vm',
-            //        resolve: null
-            //    });
-            //};
 
         }]);
