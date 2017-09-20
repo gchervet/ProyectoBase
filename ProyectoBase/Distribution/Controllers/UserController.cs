@@ -21,7 +21,8 @@ namespace WA_AD_Login_01.Controllers
         [AllowAnonymous]
         public LoginResponseDTO Authenticate(LoginUserDTO user)
         {
-            user.DeviceId = HttpContext.Current.Request.UserHostAddress;
+            //string test = HttpContext.Current.Session["HOLA"].ToString();
+            //user.DeviceId = HttpContext.Current.Request.UserHostAddress;
             
             UserService userService = new UserService();
             return userService.LogIn(user);

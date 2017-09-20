@@ -1,5 +1,5 @@
 ﻿angular.module('AuthServices', ['ngResource', 'ngStorage'])
-.factory('Auth', function ($resource, $rootScope, $sessionStorage, $q) {
+.factory('Auth', function ($resource, $rootScope, $sessionStorage, $q, $cookies, $location) {
 
     /**
      *  User profile resource
@@ -67,7 +67,6 @@
 
 
     auth.userHasPermission = function (permissions) {
-        debugger;
 
         /* Antes de verificar los permisos, verificamos si el usuario se encuentra logueado */
         if (!auth.isLoggedIn()) {
@@ -101,6 +100,11 @@
         return $sessionStorage.user != null;
     };
 
+    auth.tokenCookieExists = function () {
+        if (!$cookies.get('token')) {
+            $location.url('/login?path=' + encodeURIComponent($location.absUrl()));
+        }
+    }
 
     return auth;
 });

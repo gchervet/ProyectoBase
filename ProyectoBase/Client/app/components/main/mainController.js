@@ -5,12 +5,14 @@
 
       mainController.init = function () {
 
-          debugger;
-          if (Auth.userHasPermission(["administration"])) {
-              // some evil logic here
-              var userName = Auth.currentUser().name;
-              // ...
-          }
+
+          Auth.tokenCookieExists();
+
+          //if (Auth.userHasPermission(["administration"])) {
+          //    // some evil logic here
+          //    var userName = Auth.currentUser().name;
+          //    // ...
+          //}
       };
 
       $rootScope.logout = function () {

@@ -4,26 +4,33 @@
       var homeController = this;
 
       homeController.init = function () {
-
-          debugger;
+          
+          Auth.tokenCookieExists();
 
           if ($sessionStorage.user == null) {
               $rootScope.logout();
           }
 
-          if (Auth.userHasPermission(["administration"])) {
-              // some evil logic here
-              var userName = Auth.currentUser().name;
-              // ...
-          }
-          else {
-              homeController.logout();
-          }
+          //if (Auth.userHasPermission(["administration"])) {
+          //    // some evil logic here
+          //    var userName = Auth.currentUser().name;
+          //    // ...
+          //}
+          //else {
+          //    homeController.logout();
+          //}
       };
 
       homeController.logout = function () {
 
           Auth.logout();
           $location.path("/login");
+
       };
+
+      homeController.requestTest = function () {
+          debugger;
+          Auth.tokenCookieExists();
+      };
+
   });
