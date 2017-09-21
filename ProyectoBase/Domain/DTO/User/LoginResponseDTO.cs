@@ -9,7 +9,7 @@ namespace Domain
 {
     public class LoginResponseDTO
     {
-        public LoginResponseDTO(bool validLogin, string responseMessage, string error, HttpStatusCode responseStatus, int failedLoginCode, string token, string name, List<String> permissions)
+        public LoginResponseDTO(bool validLogin, string responseMessage, string error, HttpStatusCode responseStatus, int failedLoginCode, string token, string name, List<String> permissions, int expirationMinutes)
         {
             ValidLogin = validLogin;
             ResponseMessage = responseMessage;
@@ -20,6 +20,8 @@ namespace Domain
             Token = token;
             this.name = name;
             this.permissions = permissions;
+
+            ExpirationMinutes = expirationMinutes;
         }
 
         public bool ValidLogin { get; set; }
@@ -32,5 +34,6 @@ namespace Domain
         public string Token { get; set; }
         public string name { get; set; }
         public List<String> permissions { get; set; }
+        public int ExpirationMinutes { get; set; }
     }
 }

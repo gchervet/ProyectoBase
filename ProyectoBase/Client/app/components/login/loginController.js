@@ -72,15 +72,20 @@
 
                         if (response.data.FailedLoginCode == 1) {
                             
-                            var now = new Date();
-                            now.setSeconds(now.getSeconds() + 10);
+                            /* Seteo de fecha de expiración del token */
+                            var now = new Date(),
+                                expirationMinutes = 10;
+
+                            if (response.data.expirationMinutes) expirationMinutes = response.data.ExpirationMinutes;
+
+                            now.setMinutes(now.getMinutes() + expirationMinutes);
 
                             $sessionStorage.user = response.data;
                             $rootScope.user = $sessionStorage.user;
                             $rootScope.token = "Basic " + response.data.Token;
 
+                            /* Seteo de valores en los cookies */
                             $cookies.put('token', $rootScope.token, { expires: now });
-                            debugger;
 
                             $location.path("/home");
                         }

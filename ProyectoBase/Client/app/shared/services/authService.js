@@ -39,8 +39,11 @@
 
 
     auth.logout = function () {
+
+        /* Se limpian los datos de usuario y cookies */
         delete $sessionStorage.user;
         delete $rootScope.user;
+        $cookies.remove('token');
     };
 
 

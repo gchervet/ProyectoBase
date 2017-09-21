@@ -9,9 +9,7 @@
           Auth.tokenCookieExists();
 
           //if (Auth.userHasPermission(["administration"])) {
-          //    // some evil logic here
           //    var userName = Auth.currentUser().name;
-          //    // ...
           //}
       };
 

@@ -23,23 +23,26 @@ namespace Service
                 {
                     // El usuario existe, se genera un token y se devuelven sus permisos
                     SessionTokenDTO sessionTokenDTO = SessionTokenService.Create(user, WebConfigurationManager.AppSettings["DomainName"] + WebConfigurationManager.AppSettings["TokenKey"], null);
+                    
                     List<string> userPermissions = new List<string>();
                     userPermissions.Add("administration");
 
-                    return new LoginResponseDTO(true, string.Empty, string.Empty, HttpStatusCode.OK, FailedLoginEnum.LoggedWithoutError.GetHashCode(), sessionTokenDTO.Token, user.UserName, userPermissions);
+                    int tokenExpirationMinutes = Int32.Parse(WebConfigurationManager.AppSettings["TokenExpiryMinutes"]);
+
+                    return new LoginResponseDTO(true, string.Empty, string.Empty, HttpStatusCode.OK, FailedLoginEnum.LoggedWithoutError.GetHashCode(), sessionTokenDTO.Token, user.UserName, userPermissions, tokenExpirationMinutes);
                 }
-                return new LoginResponseDTO(false, "Could not log into the server", string.Empty, HttpStatusCode.Forbidden, loginAttemptCode, null, null, null);
+                return new LoginResponseDTO(false, "Could not log into the server", string.Empty, HttpStatusCode.Forbidden, loginAttemptCode, null, null, null, 0);
             }
             catch(Exception e)
             {
                 switch (e.HResult)
                 {
                     case -2147023570:
-                        return new LoginResponseDTO(false, "Could not log into the server", e.Message, HttpStatusCode.Forbidden, FailedLoginEnum.InvalidCredentials.GetHashCode(), null, null, null);
+                        return new LoginResponseDTO(false, "Could not log into the server", e.Message, HttpStatusCode.Forbidden, FailedLoginEnum.InvalidCredentials.GetHashCode(), null, null, null, 0);
                     default:
                         break;
                 }
-                return new LoginResponseDTO(false, "Could not log into the server", e.Message, HttpStatusCode.Forbidden, loginAttemptCode, null, null, null);
+                return new LoginResponseDTO(false, "Could not log into the server", e.Message, HttpStatusCode.Forbidden, loginAttemptCode, null, null, null, 0);
             }
         }
     }
