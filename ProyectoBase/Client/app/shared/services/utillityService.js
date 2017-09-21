@@ -1,6 +1,6 @@
 ﻿angular.module('app')
-    .factory('utilityService', ['$http', '$rootScope', '$uibModal', '$q', '$filter', '$interval', 'myUrl',
-        function utilityService($http, $rootScope, $uibModal, $q, $filter, $interval, myUrl) {
+    .factory('utilityService', ['$http', '$rootScope', '$uibModal', '$q', '$filter', '$interval', 'myUrl', '$sessionStorage',
+        function utilityService($http, $rootScope, $uibModal, $q, $filter, $interval, myUrl, $sessionStorage) {
             var service = {
                 showMessages: showMessages,
                 callHttp: callHttp,
@@ -293,7 +293,7 @@
 
                 $.extend(callConfig, httpCallConfig);
 
-                $http({ noBlock: callConfig.noblock, method: callConfig.method, headers: { 'Content-Type': "application/json" }, url: callConfig.host + callConfig.url, data: callConfig.data })
+                $http({ noBlock: callConfig.noblock, method: callConfig.method, headers: { 'Content-Type': "application/json", 'Authorization': $sessionStorage.user.Username }, url: callConfig.host + callConfig.url, data: callConfig.data })
                     .then(function (response) {
                         callConfig.callbackSuccess(response);
                     }), function errorCallback(response, status, headers, config) {

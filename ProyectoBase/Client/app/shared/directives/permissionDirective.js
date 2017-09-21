@@ -9,9 +9,9 @@
         link: function (scope, elem, attrs) {
             scope.$watch(Auth.isLoggedIn, function () {
                 if (Auth.userHasPermission(scope.permission)) {
-                    elem.show();
+                    $(elem).show();
                 } else {
-                    elem.hide();
+                    $(elem).hide();
                 }
             });
         }

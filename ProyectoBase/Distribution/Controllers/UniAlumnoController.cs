@@ -1,4 +1,5 @@
 ﻿using Domain;
+using Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +28,7 @@ namespace Distribution.Controllers
             {
                 List<string> tokenString = this.ActionContext.Request.Headers.GetValues("Authorization").ToList();
 
-                return HttpResponseController.Return_200_OK(new UniAlumnoDTO("hola"));
+                return HttpResponseController.Return_200_OK(UniAlumnoService.GetByLegajo(legajo));
             }
             catch
             {

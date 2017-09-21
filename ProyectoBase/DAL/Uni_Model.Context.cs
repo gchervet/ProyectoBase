@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DAL
+namespace Data
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class Uni_Entities : DbContext
     {
@@ -25,5 +27,61 @@ namespace DAL
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<uniAlumnos> uniAlumnos { get; set; }
+        public virtual DbSet<uniAlumnosDatosPersonales> uniAlumnosDatosPersonales { get; set; }
+        public virtual DbSet<uniAlumnosDetalles> uniAlumnosDetalles { get; set; }
+        public virtual DbSet<UniAlumnosDetalleTitulo> UniAlumnosDetalleTitulo { get; set; }
+    
+        public virtual ObjectResult<sp_get_UniAlumnos_Result> sp_get_UniAlumnos(Nullable<int> legprovi, Nullable<int> legdef, string username, Nullable<long> docnac)
+        {
+            var legproviParameter = legprovi.HasValue ?
+                new ObjectParameter("legprovi", legprovi) :
+                new ObjectParameter("legprovi", typeof(int));
+    
+            var legdefParameter = legdef.HasValue ?
+                new ObjectParameter("legdef", legdef) :
+                new ObjectParameter("legdef", typeof(int));
+    
+            var usernameParameter = username != null ?
+                new ObjectParameter("username", username) :
+                new ObjectParameter("username", typeof(string));
+    
+            var docnacParameter = docnac.HasValue ?
+                new ObjectParameter("docnac", docnac) :
+                new ObjectParameter("docnac", typeof(long));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_get_UniAlumnos_Result>("sp_get_UniAlumnos", legproviParameter, legdefParameter, usernameParameter, docnacParameter);
+        }
+    
+        public virtual ObjectResult<sp_get_UniAlumnos_detalle_Result> sp_get_UniAlumnos_detalle(Nullable<long> cursoEdicionId, Nullable<int> convenioId)
+        {
+            var cursoEdicionIdParameter = cursoEdicionId.HasValue ?
+                new ObjectParameter("cursoEdicionId", cursoEdicionId) :
+                new ObjectParameter("cursoEdicionId", typeof(long));
+    
+            var convenioIdParameter = convenioId.HasValue ?
+                new ObjectParameter("convenioId", convenioId) :
+                new ObjectParameter("convenioId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_get_UniAlumnos_detalle_Result>("sp_get_UniAlumnos_detalle", cursoEdicionIdParameter, convenioIdParameter);
+        }
+    
+        public virtual ObjectResult<sp_uni_get_alumno_carrera_idEntidad_Result> sp_uni_get_alumno_carrera_idEntidad(Nullable<int> idEntidad)
+        {
+            var idEntidadParameter = idEntidad.HasValue ?
+                new ObjectParameter("idEntidad", idEntidad) :
+                new ObjectParameter("idEntidad", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_uni_get_alumno_carrera_idEntidad_Result>("sp_uni_get_alumno_carrera_idEntidad", idEntidadParameter);
+        }
+    
+        public virtual ObjectResult<sp_uni_get_datos_alumno_username_Result> sp_uni_get_datos_alumno_username(string username)
+        {
+            var usernameParameter = username != null ?
+                new ObjectParameter("username", username) :
+                new ObjectParameter("username", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_uni_get_datos_alumno_username_Result>("sp_uni_get_datos_alumno_username", usernameParameter);
+        }
     }
 }

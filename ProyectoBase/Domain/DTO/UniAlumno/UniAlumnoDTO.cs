@@ -8,9 +8,12 @@ namespace Domain
 {
     public class UniAlumnoDTO
     {
-        public UniAlumnoDTO(string name)
+        public UniAlumnoDTO(Data.uniAlumnos uniAlumno)
         {
-            Name = name;
+            if (uniAlumno != null)
+            {
+                Name = uniAlumno.nombre + " " + uniAlumno.apellido;
+            }
         }
         public string Name { get; set; }
     }

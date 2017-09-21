@@ -25,9 +25,7 @@ namespace Distribution.Controllers
         public HttpResponseMessage Authenticate(LoginUserDTO user)
         {
             UserService userService = new UserService();
-            LoginResponseDTO rtn = userService.LogIn(user);
-            
-            return HttpResponseController.Return_200_OK(rtn);
+            return HttpResponseController.Return_200_OK(userService.LogIn(user));
         }
     }
 }

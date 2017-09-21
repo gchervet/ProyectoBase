@@ -1,5 +1,5 @@
 ﻿angular.module('app')
-  .controller('homeController', function ($scope, $rootScope, $location, $sessionStorage, Auth) {
+  .controller('homeController', function ($scope, $rootScope, $location, $sessionStorage, utilityService, Auth) {
 
       var homeController = this;
 
@@ -29,6 +29,20 @@
       homeController.requestTest = function () {
           debugger;
           Auth.tokenCookieExists();
+
+
+          var testCallback = function (response) {
+              
+              debugger;
+          };
+
+          var testErrorCallback = function (response) {
+
+              debugger;
+
+          }
+
+          utilityService.callHttp({ method: "GET", url: "/api/uniAlumno/GetByLegajo?legajo=12345", callbackSuccess: testCallback, callbackError: testErrorCallback });
       };
 
   });
