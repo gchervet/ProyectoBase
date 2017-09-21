@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 
-namespace WA_AD_Login_01
+namespace Distribution
 {
     public static class WebApiConfig
     {

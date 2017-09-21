@@ -1,0 +1,38 @@
+﻿using Domain;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Text;
+using System.Web;
+using System.Web.Http;
+using System.Web.Script.Serialization;
+
+namespace Distribution.Controllers
+{
+    [RoutePrefix("api/UniAlumno")]
+    public class UniAlumnoController : ApiController
+    {
+        /// <summary>
+        /// Obtiene un objeto de alumno. El legajo puede ser provisorio o definitivo.
+        /// </summary>
+        /// <param name="legajo">Número de legajo.</param>
+        /// <returns>Objeto UniAlumnoDTO.</returns>
+        [Route("GetByLegajo")]
+        [HttpGet]
+        [AllowAnonymous]
+        public HttpResponseMessage GetByLegajo(int legajo)
+        {
+            try
+            {
+                List<string> tokenString = this.ActionContext.Request.Headers.GetValues("Authorization").ToList();
+
+                return HttpResponseController.Return_200_OK(new UniAlumnoDTO("hola"));
+            }
+            catch
+            {
+                return HttpResponseController.Return_401_Unauthorized(string.Empty);
+            }
+        }
+    }
+}

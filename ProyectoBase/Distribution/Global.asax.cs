@@ -8,7 +8,7 @@ using System.Web.Security;
 using System.Security.Principal;
 using Service;
 
-namespace WA_AD_Login_01
+namespace Distribution
 {
     public class WebApiApplication : System.Web.HttpApplication
     {
