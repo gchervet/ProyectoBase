@@ -21,8 +21,13 @@ namespace Service
                 loginAttemptCode = ldapAuth.IsAuthenticated(WebConfigurationManager.AppSettings["DomainName"], user.UserName, user.Password);
                 if (loginAttemptCode == 1)
                 {
-                    // El usuario existe, se genera un token y se devuelven sus permisos
-                    SessionTokenDTO sessionTokenDTO = SessionTokenService.Create(user, WebConfigurationManager.AppSettings["DomainName"] + WebConfigurationManager.AppSettings["TokenKey"], null);
+                    /* El usuario existe, se genera un token y se devuelven sus permisos .
+                       Para mayor seguridad, el TokenKey se une con el DomainName. 
+                       Recordar que estos valores provienen desde el web.config. */
+                    SessionTokenDTO sessionTokenDTO = SessionTokenService.Create(user, 
+                                                                                WebConfigurationManager.AppSettings["DomainName"] + 
+                                                                                WebConfigurationManager.AppSettings["TokenKey"], 
+                                                                                null);
                     
                     List<string> userPermissions = new List<string>();
                     userPermissions.Add("administration");

@@ -27,17 +27,14 @@
       };
 
       homeController.requestTest = function () {
-          debugger;
           Auth.tokenCookieExists();
 
 
           var testCallback = function (response) {
-              
               debugger;
           };
 
           var testErrorCallback = function (response) {
-
               debugger;
 
           }

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Configuration;
 
 namespace Service
 {
@@ -19,11 +20,10 @@ namespace Service
         /// <returns>El token creado</returns>
         public static SessionTokenDTO Create(LoginUserDTO user, string tokenKey, int? expireHours)
         {
-            //DateTime expireDate = expireHours.HasValue ? SystemTime.Now.AddHours(expireHours.Value) : DateTime.MaxValue;
-
             SessionTokenDTO sessionTokenDto = new SessionTokenDTO
             {
-                Token = AesEncryption.GetInstance().Encrypt(user.UserName + user.Password + tokenKey),
+                /* Para mayor seguridad, se repite el totenKey dos veces al armar el token */
+                Token = AesEncryption.GetInstance().Encrypt(user.UserName + tokenKey + tokenKey),
                 IdUser = user.UserName
             };
 
@@ -31,6 +31,19 @@ namespace Service
             //sessionTokenDto = Create(sessionTokenDto);
 
             return sessionTokenDto;
+        }
+
+        public static bool ValidRequestByUserAndToken(string tokenString, string userString)
+        {
+            SessionTokenDTO sessionTokenTry = Create(new LoginUserDTO() { UserName = userString },
+                                                        WebConfigurationManager.AppSettings["DomainName"] +
+                                                        WebConfigurationManager.AppSettings["TokenKey"],
+                                                        null);
+            if (sessionTokenTry != null)
+            {
+                return String.Equals(sessionTokenTry.Token, tokenString);
+            }
+            return false;
         }
     }
 }

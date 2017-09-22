@@ -293,7 +293,13 @@
 
                 $.extend(callConfig, httpCallConfig);
 
-                $http({ noBlock: callConfig.noblock, method: callConfig.method, headers: { 'Content-Type': "application/json", 'Authorization': $sessionStorage.user.Username }, url: callConfig.host + callConfig.url, data: callConfig.data })
+                var usernameHeader = '';
+
+                if ($sessionStorage && $sessionStorage.user && $sessionStorage.user.Username) {
+                    usernameHeader = $sessionStorage.user.Username;
+                }
+
+                $http({ noBlock: callConfig.noblock, method: callConfig.method, headers: { 'Content-Type': "application/json", 'User': usernameHeader }, url: callConfig.host + callConfig.url, data: callConfig.data })
                     .then(function (response) {
                         callConfig.callbackSuccess(response);
                     }), function errorCallback(response, status, headers, config) {

@@ -26,8 +26,13 @@ namespace Distribution.Controllers
         {
             try
             {
-                List<string> tokenString = this.ActionContext.Request.Headers.GetValues("Authorization").ToList();
+                string tokenString = this.ActionContext.Request.Headers.GetValues("Authorization").ToList().FirstOrDefault();
+                string userString = this.ActionContext.Request.Headers.GetValues("User").ToList().FirstOrDefault();
 
+                if (SessionTokenService.ValidRequestByUserAndToken(tokenString, userString))
+                {
+
+                }
                 return HttpResponseController.Return_200_OK(UniAlumnoService.GetByLegajo(legajo));
             }
             catch

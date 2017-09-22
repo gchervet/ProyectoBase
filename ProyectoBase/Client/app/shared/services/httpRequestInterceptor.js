@@ -4,10 +4,8 @@
 
             return {
                 request: function ($config) {
-                    debugger;
+
                     $config.headers['Authorization'] = "Basic " + $cookies.get("sessionToken");
-
-
                     return $config;
                 }
             };
