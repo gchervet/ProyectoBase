@@ -29,8 +29,8 @@ namespace Data
     
         public virtual DbSet<uniAlumnos> uniAlumnos { get; set; }
         public virtual DbSet<uniAlumnosDatosPersonales> uniAlumnosDatosPersonales { get; set; }
-        public virtual DbSet<UniAlumnosDetalleTitulo> UniAlumnosDetalleTitulo { get; set; }
         public virtual DbSet<uniAlumnosDetalles> uniAlumnosDetalles { get; set; }
+        public virtual DbSet<UniAlumnosDetalleTitulo> UniAlumnosDetalleTitulo { get; set; }
     
         public virtual ObjectResult<sp_get_UniAlumnos_Result> sp_get_UniAlumnos(Nullable<int> legprovi, Nullable<int> legdef, string username, Nullable<long> docnac)
         {
@@ -64,15 +64,6 @@ namespace Data
                 new ObjectParameter("convenioId", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_get_UniAlumnos_detalle_Result>("sp_get_UniAlumnos_detalle", cursoEdicionIdParameter, convenioIdParameter);
-        }
-    
-        public virtual ObjectResult<sp_uni_get_alumno_carrera_idEntidad_Result> sp_uni_get_alumno_carrera_idEntidad(Nullable<int> idEntidad)
-        {
-            var idEntidadParameter = idEntidad.HasValue ?
-                new ObjectParameter("idEntidad", idEntidad) :
-                new ObjectParameter("idEntidad", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_uni_get_alumno_carrera_idEntidad_Result>("sp_uni_get_alumno_carrera_idEntidad", idEntidadParameter);
         }
     
         public virtual ObjectResult<sp_uni_get_datos_alumno_username_Result> sp_uni_get_datos_alumno_username(string username)

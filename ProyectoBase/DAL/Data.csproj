@@ -58,9 +58,6 @@
     <Compile Include="sp_get_UniAlumnos_Result.cs">
       <DependentUpon>Uni_Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="sp_uni_get_alumno_carrera_idEntidad_Result.cs">
-      <DependentUpon>Uni_Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="sp_uni_get_datos_alumno_username_Result.cs">
       <DependentUpon>Uni_Model.tt</DependentUpon>
     </Compile>
@@ -93,14 +90,12 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
     <EntityDeploy Include="Uni_Model.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Uni_Model.Designer.cs</LastGenOutput>
     </EntityDeploy>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-    <None Include="packages.config" />
     <None Include="Uni_Model.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Uni_Model.edmx</DependentUpon>

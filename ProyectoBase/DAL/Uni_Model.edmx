@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="Uni_Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="Uni_Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="uniAlumnos">
           <Key>
             <PropertyRef Name="legprovi" />
@@ -107,32 +107,11 @@
           <EntitySet Name="uniAlumnosDetalles" EntityType="Self.uniAlumnosDetalles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UniAlumnosDetalleTitulo" EntityType="Self.UniAlumnosDetalleTitulo" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Uni_Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityContainer Name="Uni_Entities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="uniAlumnos" EntityType="Uni_Model.uniAlumnos" />
-          <EntitySet Name="uniAlumnosDatosPersonales" EntityType="Uni_Model.uniAlumnosDatosPersonales" />
-          <EntitySet Name="UniAlumnosDetalleTitulo" EntityType="Uni_Model.UniAlumnosDetalleTitulo" />
-          <FunctionImport Name="sp_get_UniAlumnos" ReturnType="Collection(Uni_Model.sp_get_UniAlumnos_Result)">
-            <Parameter Name="legprovi" Mode="In" Type="Int32" />
-            <Parameter Name="legdef" Mode="In" Type="Int32" />
-            <Parameter Name="username" Mode="In" Type="String" />
-            <Parameter Name="docnac" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="sp_get_UniAlumnos_detalle" ReturnType="Collection(Uni_Model.sp_get_UniAlumnos_detalle_Result)">
-            <Parameter Name="cursoEdicionId" Mode="In" Type="Int64" />
-            <Parameter Name="convenioId" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_uni_get_alumno_carrera_idEntidad" ReturnType="Collection(Uni_Model.sp_uni_get_alumno_carrera_idEntidad_Result)">
-          <Parameter Name="idEntidad" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_uni_get_datos_alumno_username" ReturnType="Collection(Uni_Model.sp_uni_get_datos_alumno_username_Result)">
-          <Parameter Name="username" Mode="In" Type="String" />
-          </FunctionImport>
-          <EntitySet Name="uniAlumnosDetalles" EntityType="Uni_Model.uniAlumnosDetalles" />
-        </EntityContainer>
         <EntityType Name="uniAlumnos">
           <Key>
             <PropertyRef Name="legprovi" />
@@ -198,6 +177,14 @@
           <Property Name="DirCodPais" Type="Int32" />
           <Property Name="UltimaActualizacion" Type="DateTime" Precision="3" />
         </EntityType>
+        <EntityType Name="uniAlumnosDetalles">
+          <Key>
+            <PropertyRef Name="legprovi" />
+          </Key>
+          <Property Name="legprovi" Type="Int32" Nullable="false" />
+          <Property Name="convenioId" Type="Int32" />
+          <Property Name="cursoExtensionEdicionId" Type="Int64" />
+        </EntityType>
         <EntityType Name="UniAlumnosDetalleTitulo">
           <Key>
             <PropertyRef Name="IdEntidad" />
@@ -208,6 +195,25 @@
           <Property Name="ComentarioTipoTituloNivelMedio" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="FechaActualizacion" Type="DateTime" Precision="3" />
         </EntityType>
+        <EntityContainer Name="Uni_Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="uniAlumnos" EntityType="Self.uniAlumnos" />
+          <EntitySet Name="uniAlumnosDatosPersonales" EntityType="Self.uniAlumnosDatosPersonales" />
+          <EntitySet Name="uniAlumnosDetalles" EntityType="Self.uniAlumnosDetalles" />
+          <EntitySet Name="UniAlumnosDetalleTitulo" EntityType="Self.UniAlumnosDetalleTitulo" />
+          <FunctionImport Name="sp_get_UniAlumnos" ReturnType="Collection(Uni_Model.sp_get_UniAlumnos_Result)">
+            <Parameter Name="legprovi" Mode="In" Type="Int32" />
+            <Parameter Name="legdef" Mode="In" Type="Int32" />
+            <Parameter Name="username" Mode="In" Type="String" />
+            <Parameter Name="docnac" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="sp_get_UniAlumnos_detalle" ReturnType="Collection(Uni_Model.sp_get_UniAlumnos_detalle_Result)">
+            <Parameter Name="cursoEdicionId" Mode="In" Type="Int64" />
+            <Parameter Name="convenioId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_uni_get_datos_alumno_username" ReturnType="Collection(Uni_Model.sp_uni_get_datos_alumno_username_Result)">
+            <Parameter Name="username" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
         <ComplexType Name="sp_get_UniAlumnos_Result">
           <Property Type="Int32" Name="legprovi" Nullable="false" />
           <Property Type="Int32" Name="legdef" Nullable="true" />
@@ -256,12 +262,6 @@
           <Property Type="Int64" Name="cursoExtensionEdicionId" Nullable="true" />
           <Property Type="Int32" Name="convenioId" Nullable="true" />
         </ComplexType>
-        <ComplexType Name="sp_uni_get_alumno_carrera_idEntidad_Result">
-          <Property Type="String" Name="Plan" Nullable="true" MaxLength="4" />
-          <Property Type="String" Name="Modalidad" Nullable="true" MaxLength="10" />
-          <Property Type="String" Name="Carrera" Nullable="true" MaxLength="2" />
-          <Property Type="Boolean" Name="Canvas" Nullable="true" />
-        </ComplexType>
         <ComplexType Name="sp_uni_get_datos_alumno_username_Result">
           <Property Type="Int32" Name="legprovi" Nullable="false" />
           <Property Type="Int32" Name="legdef" Nullable="true" />
@@ -279,14 +279,6 @@
           <Property Type="String" Name="NumeroDocumento" Nullable="true" MaxLength="50" />
           <Property Type="DateTime" Name="UltimaActualizacion" Nullable="true" Precision="23" />
         </ComplexType>
-        <EntityType Name="uniAlumnosDetalles">
-          <Key>
-            <PropertyRef Name="legprovi" />
-          </Key>
-          <Property Name="legprovi" Type="Int32" Nullable="false" />
-          <Property Name="convenioId" Type="Int32" />
-          <Property Name="cursoExtensionEdicionId" Type="Int64" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -296,78 +288,87 @@
           <EntitySetMapping Name="uniAlumnos">
             <EntityTypeMapping TypeName="Uni_Model.uniAlumnos">
               <MappingFragment StoreEntitySet="uniAlumnos">
-                <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
-                <ScalarProperty Name="Usuario" ColumnName="Usuario" />
-                <ScalarProperty Name="CanalDescripcion" ColumnName="CanalDescripcion" />
-                <ScalarProperty Name="IdCanal" ColumnName="IdCanal" />
-                <ScalarProperty Name="Modalidad" ColumnName="Modalidad" />
-                <ScalarProperty Name="CuatriIngreso" ColumnName="CuatriIngreso" />
-                <ScalarProperty Name="CicloIngreso" ColumnName="CicloIngreso" />
-                <ScalarProperty Name="IdEntidad" ColumnName="IdEntidad" />
-                <ScalarProperty Name="Origen" ColumnName="Origen" />
-                <ScalarProperty Name="PaisDocumento" ColumnName="PaisDocumento" />
-                <ScalarProperty Name="documentoExtranjero" ColumnName="documentoExtranjero" />
-                <ScalarProperty Name="version2" ColumnName="version2" />
-                <ScalarProperty Name="regional_cursa" ColumnName="regional_cursa" />
-                <ScalarProperty Name="username" ColumnName="username" />
-                <ScalarProperty Name="email" ColumnName="email" />
-                <ScalarProperty Name="finscrip" ColumnName="finscrip" />
-                <ScalarProperty Name="turno" ColumnName="turno" />
-                <ScalarProperty Name="regional" ColumnName="regional" />
-                <ScalarProperty Name="carrera" ColumnName="carrera" />
-                <ScalarProperty Name="tramite" ColumnName="tramite" />
-                <ScalarProperty Name="nropas" ColumnName="nropas" />
-                <ScalarProperty Name="nacion" ColumnName="nacion" />
-                <ScalarProperty Name="argext" ColumnName="argext" />
-                <ScalarProperty Name="sexo" ColumnName="sexo" />
-                <ScalarProperty Name="libenr" ColumnName="libenr" />
-                <ScalarProperty Name="libciv" ColumnName="libciv" />
-                <ScalarProperty Name="cedide" ColumnName="cedide" />
-                <ScalarProperty Name="docnac" ColumnName="docnac" />
-                <ScalarProperty Name="lugar" ColumnName="lugar" />
-                <ScalarProperty Name="fecnac" ColumnName="fecnac" />
-                <ScalarProperty Name="nombre" ColumnName="nombre" />
-                <ScalarProperty Name="apellido" ColumnName="apellido" />
-                <ScalarProperty Name="legdef" ColumnName="legdef" />
                 <ScalarProperty Name="legprovi" ColumnName="legprovi" />
+                <ScalarProperty Name="legdef" ColumnName="legdef" />
+                <ScalarProperty Name="apellido" ColumnName="apellido" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="fecnac" ColumnName="fecnac" />
+                <ScalarProperty Name="lugar" ColumnName="lugar" />
+                <ScalarProperty Name="docnac" ColumnName="docnac" />
+                <ScalarProperty Name="cedide" ColumnName="cedide" />
+                <ScalarProperty Name="libciv" ColumnName="libciv" />
+                <ScalarProperty Name="libenr" ColumnName="libenr" />
+                <ScalarProperty Name="sexo" ColumnName="sexo" />
+                <ScalarProperty Name="argext" ColumnName="argext" />
+                <ScalarProperty Name="nacion" ColumnName="nacion" />
+                <ScalarProperty Name="nropas" ColumnName="nropas" />
+                <ScalarProperty Name="tramite" ColumnName="tramite" />
+                <ScalarProperty Name="carrera" ColumnName="carrera" />
+                <ScalarProperty Name="regional" ColumnName="regional" />
+                <ScalarProperty Name="turno" ColumnName="turno" />
+                <ScalarProperty Name="finscrip" ColumnName="finscrip" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="regional_cursa" ColumnName="regional_cursa" />
+                <ScalarProperty Name="version2" ColumnName="version2" />
+                <ScalarProperty Name="documentoExtranjero" ColumnName="documentoExtranjero" />
+                <ScalarProperty Name="PaisDocumento" ColumnName="PaisDocumento" />
+                <ScalarProperty Name="Origen" ColumnName="Origen" />
+                <ScalarProperty Name="IdEntidad" ColumnName="IdEntidad" />
+                <ScalarProperty Name="CicloIngreso" ColumnName="CicloIngreso" />
+                <ScalarProperty Name="CuatriIngreso" ColumnName="CuatriIngreso" />
+                <ScalarProperty Name="Modalidad" ColumnName="Modalidad" />
+                <ScalarProperty Name="IdCanal" ColumnName="IdCanal" />
+                <ScalarProperty Name="CanalDescripcion" ColumnName="CanalDescripcion" />
+                <ScalarProperty Name="Usuario" ColumnName="Usuario" />
+                <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="uniAlumnosDatosPersonales">
             <EntityTypeMapping TypeName="Uni_Model.uniAlumnosDatosPersonales">
               <MappingFragment StoreEntitySet="uniAlumnosDatosPersonales">
-                <ScalarProperty Name="UltimaActualizacion" ColumnName="UltimaActualizacion" />
-                <ScalarProperty Name="DirCodPais" ColumnName="DirCodPais" />
-                <ScalarProperty Name="DirCodProvincia" ColumnName="DirCodProvincia" />
-                <ScalarProperty Name="DirCodLocalidad" ColumnName="DirCodLocalidad" />
-                <ScalarProperty Name="DirCodigoPostal" ColumnName="DirCodigoPostal" />
-                <ScalarProperty Name="DirDepto" ColumnName="DirDepto" />
-                <ScalarProperty Name="DirPiso" ColumnName="DirPiso" />
-                <ScalarProperty Name="DirNumero" ColumnName="DirNumero" />
-                <ScalarProperty Name="DirCalle" ColumnName="DirCalle" />
-                <ScalarProperty Name="TelMovilNumero" ColumnName="TelMovilNumero" />
-                <ScalarProperty Name="TelMovilCodArea" ColumnName="TelMovilCodArea" />
-                <ScalarProperty Name="TelMovilCodPais" ColumnName="TelMovilCodPais" />
-                <ScalarProperty Name="TelFijoNumero" ColumnName="TelFijoNumero" />
-                <ScalarProperty Name="TelFijoCodArea" ColumnName="TelFijoCodArea" />
-                <ScalarProperty Name="TelFijoCodPais" ColumnName="TelFijoCodPais" />
-                <ScalarProperty Name="EMail" ColumnName="EMail" />
-                <ScalarProperty Name="Trabaja" ColumnName="Trabaja" />
-                <ScalarProperty Name="EstadoCivil" ColumnName="EstadoCivil" />
-                <ScalarProperty Name="NumeroDocumento" ColumnName="NumeroDocumento" />
-                <ScalarProperty Name="TipoDocumento" ColumnName="TipoDocumento" />
                 <ScalarProperty Name="IdEntidad" ColumnName="IdEntidad" />
+                <ScalarProperty Name="TipoDocumento" ColumnName="TipoDocumento" />
+                <ScalarProperty Name="NumeroDocumento" ColumnName="NumeroDocumento" />
+                <ScalarProperty Name="EstadoCivil" ColumnName="EstadoCivil" />
+                <ScalarProperty Name="Trabaja" ColumnName="Trabaja" />
+                <ScalarProperty Name="EMail" ColumnName="EMail" />
+                <ScalarProperty Name="TelFijoCodPais" ColumnName="TelFijoCodPais" />
+                <ScalarProperty Name="TelFijoCodArea" ColumnName="TelFijoCodArea" />
+                <ScalarProperty Name="TelFijoNumero" ColumnName="TelFijoNumero" />
+                <ScalarProperty Name="TelMovilCodPais" ColumnName="TelMovilCodPais" />
+                <ScalarProperty Name="TelMovilCodArea" ColumnName="TelMovilCodArea" />
+                <ScalarProperty Name="TelMovilNumero" ColumnName="TelMovilNumero" />
+                <ScalarProperty Name="DirCalle" ColumnName="DirCalle" />
+                <ScalarProperty Name="DirNumero" ColumnName="DirNumero" />
+                <ScalarProperty Name="DirPiso" ColumnName="DirPiso" />
+                <ScalarProperty Name="DirDepto" ColumnName="DirDepto" />
+                <ScalarProperty Name="DirCodigoPostal" ColumnName="DirCodigoPostal" />
+                <ScalarProperty Name="DirCodLocalidad" ColumnName="DirCodLocalidad" />
+                <ScalarProperty Name="DirCodProvincia" ColumnName="DirCodProvincia" />
+                <ScalarProperty Name="DirCodPais" ColumnName="DirCodPais" />
+                <ScalarProperty Name="UltimaActualizacion" ColumnName="UltimaActualizacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="uniAlumnosDetalles">
+            <EntityTypeMapping TypeName="Uni_Model.uniAlumnosDetalles">
+              <MappingFragment StoreEntitySet="uniAlumnosDetalles">
+                <ScalarProperty Name="legprovi" ColumnName="legprovi" />
+                <ScalarProperty Name="convenioId" ColumnName="convenioId" />
+                <ScalarProperty Name="cursoExtensionEdicionId" ColumnName="cursoExtensionEdicionId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="UniAlumnosDetalleTitulo">
             <EntityTypeMapping TypeName="Uni_Model.UniAlumnosDetalleTitulo">
               <MappingFragment StoreEntitySet="UniAlumnosDetalleTitulo">
-                <ScalarProperty Name="FechaActualizacion" ColumnName="FechaActualizacion" />
-                <ScalarProperty Name="ComentarioTipoTituloNivelMedio" ColumnName="ComentarioTipoTituloNivelMedio" />
-                <ScalarProperty Name="Convalidado" ColumnName="Convalidado" />
-                <ScalarProperty Name="TipoTituloNivelMedio" ColumnName="TipoTituloNivelMedio" />
                 <ScalarProperty Name="IdEntidad" ColumnName="IdEntidad" />
+                <ScalarProperty Name="TipoTituloNivelMedio" ColumnName="TipoTituloNivelMedio" />
+                <ScalarProperty Name="Convalidado" ColumnName="Convalidado" />
+                <ScalarProperty Name="ComentarioTipoTituloNivelMedio" ColumnName="ComentarioTipoTituloNivelMedio" />
+                <ScalarProperty Name="FechaActualizacion" ColumnName="FechaActualizacion" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -448,15 +449,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <EntitySetMapping Name="uniAlumnosDetalles">
-            <EntityTypeMapping TypeName="Uni_Model.uniAlumnosDetalles">
-              <MappingFragment StoreEntitySet="uniAlumnosDetalles">
-                <ScalarProperty Name="cursoExtensionEdicionId" ColumnName="cursoExtensionEdicionId" />
-                <ScalarProperty Name="convenioId" ColumnName="convenioId" />
-                <ScalarProperty Name="legprovi" ColumnName="legprovi" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
