@@ -41,7 +41,7 @@ namespace Service
                                                         null);
             if (sessionTokenTry != null)
             {
-                return String.Equals(sessionTokenTry.Token, tokenString);
+                return String.Equals("Basic " + sessionTokenTry.Token, tokenString);
             }
             return false;
         }

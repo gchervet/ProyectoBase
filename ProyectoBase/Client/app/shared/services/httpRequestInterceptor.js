@@ -5,7 +5,7 @@
             return {
                 request: function ($config) {
 
-                    $config.headers['Authorization'] = "Basic " + $cookies.get("sessionToken");
+                    $config.headers['Authorization'] = $cookies.get("token");
                     return $config;
                 }
             };

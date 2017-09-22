@@ -1,6 +1,6 @@
 ﻿angular.module('app')
-    .factory('utilityService', ['$http', '$rootScope', '$uibModal', '$q', '$filter', '$interval', 'myUrl', '$sessionStorage',
-        function utilityService($http, $rootScope, $uibModal, $q, $filter, $interval, myUrl, $sessionStorage) {
+    .factory('utilityService', ['$http', '$rootScope', '$uibModal', '$q', '$filter', '$interval', 'myUrl', '$cookies',
+        function utilityService($http, $rootScope, $uibModal, $q, $filter, $interval, myUrl, $cookies) {
             var service = {
                 showMessages: showMessages,
                 callHttp: callHttp,
@@ -293,13 +293,7 @@
 
                 $.extend(callConfig, httpCallConfig);
 
-                var usernameHeader = '';
-
-                if ($sessionStorage && $sessionStorage.user && $sessionStorage.user.Username) {
-                    usernameHeader = $sessionStorage.user.Username;
-                }
-
-                $http({ noBlock: callConfig.noblock, method: callConfig.method, headers: { 'Content-Type': "application/json", 'User': usernameHeader }, url: callConfig.host + callConfig.url, data: callConfig.data })
+                $http({ noBlock: callConfig.noblock, method: callConfig.method, headers: { 'Content-Type': "application/json", 'User': $cookies.get("user") }, url: callConfig.host + callConfig.url, data: callConfig.data })
                     .then(function (response) {
                         callConfig.callbackSuccess(response);
                     }), function errorCallback(response, status, headers, config) {

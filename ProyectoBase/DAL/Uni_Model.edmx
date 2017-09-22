@@ -98,9 +98,6 @@
           <Parameter Name="cursoEdicionId" Type="bigint" Mode="In" />
           <Parameter Name="convenioId" Type="int" Mode="In" />
         </Function>
-        <Function Name="sp_uni_get_alumno_carrera_idEntidad" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="idEntidad" Type="int" Mode="In" />
-        </Function>
         <Function Name="sp_uni_get_datos_alumno_username" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="username" Type="varchar" Mode="In" />
         </Function>
@@ -117,7 +114,6 @@
         <EntityContainer Name="Uni_Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="uniAlumnos" EntityType="Uni_Model.uniAlumnos" />
           <EntitySet Name="uniAlumnosDatosPersonales" EntityType="Uni_Model.uniAlumnosDatosPersonales" />
-          <EntitySet Name="uniAlumnosDetalles" EntityType="Uni_Model.uniAlumnosDetalles" />
           <EntitySet Name="UniAlumnosDetalleTitulo" EntityType="Uni_Model.UniAlumnosDetalleTitulo" />
           <FunctionImport Name="sp_get_UniAlumnos" ReturnType="Collection(Uni_Model.sp_get_UniAlumnos_Result)">
             <Parameter Name="legprovi" Mode="In" Type="Int32" />
@@ -130,11 +126,12 @@
             <Parameter Name="convenioId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_uni_get_alumno_carrera_idEntidad" ReturnType="Collection(Uni_Model.sp_uni_get_alumno_carrera_idEntidad_Result)">
-            <Parameter Name="idEntidad" Mode="In" Type="Int32" />
+          <Parameter Name="idEntidad" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_uni_get_datos_alumno_username" ReturnType="Collection(Uni_Model.sp_uni_get_datos_alumno_username_Result)">
-            <Parameter Name="username" Mode="In" Type="String" />
+          <Parameter Name="username" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="uniAlumnosDetalles" EntityType="Uni_Model.uniAlumnosDetalles" />
         </EntityContainer>
         <EntityType Name="uniAlumnos">
           <Key>
@@ -200,14 +197,6 @@
           <Property Name="DirCodProvincia" Type="Int32" />
           <Property Name="DirCodPais" Type="Int32" />
           <Property Name="UltimaActualizacion" Type="DateTime" Precision="3" />
-        </EntityType>
-        <EntityType Name="uniAlumnosDetalles">
-          <Key>
-            <PropertyRef Name="legprovi" />
-          </Key>
-          <Property Name="legprovi" Type="Int32" Nullable="false" />
-          <Property Name="convenioId" Type="Int32" />
-          <Property Name="cursoExtensionEdicionId" Type="Int64" />
         </EntityType>
         <EntityType Name="UniAlumnosDetalleTitulo">
           <Key>
@@ -290,6 +279,14 @@
           <Property Type="String" Name="NumeroDocumento" Nullable="true" MaxLength="50" />
           <Property Type="DateTime" Name="UltimaActualizacion" Nullable="true" Precision="23" />
         </ComplexType>
+        <EntityType Name="uniAlumnosDetalles">
+          <Key>
+            <PropertyRef Name="legprovi" />
+          </Key>
+          <Property Name="legprovi" Type="Int32" Nullable="false" />
+          <Property Name="convenioId" Type="Int32" />
+          <Property Name="cursoExtensionEdicionId" Type="Int64" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -363,15 +360,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="uniAlumnosDetalles">
-            <EntityTypeMapping TypeName="Uni_Model.uniAlumnosDetalles">
-              <MappingFragment StoreEntitySet="uniAlumnosDetalles">
-                <ScalarProperty Name="cursoExtensionEdicionId" ColumnName="cursoExtensionEdicionId" />
-                <ScalarProperty Name="convenioId" ColumnName="convenioId" />
-                <ScalarProperty Name="legprovi" ColumnName="legprovi" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="UniAlumnosDetalleTitulo">
             <EntityTypeMapping TypeName="Uni_Model.UniAlumnosDetalleTitulo">
               <MappingFragment StoreEntitySet="UniAlumnosDetalleTitulo">
@@ -439,16 +427,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_uni_get_alumno_carrera_idEntidad" FunctionName="Uni_Model.Store.sp_uni_get_alumno_carrera_idEntidad">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="Uni_Model.sp_uni_get_alumno_carrera_idEntidad_Result">
-                <ScalarProperty Name="Plan" ColumnName="Plan" />
-                <ScalarProperty Name="Modalidad" ColumnName="Modalidad" />
-                <ScalarProperty Name="Carrera" ColumnName="Carrera" />
-                <ScalarProperty Name="Canvas" ColumnName="Canvas" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_uni_get_datos_alumno_username" FunctionName="Uni_Model.Store.sp_uni_get_datos_alumno_username">
             <ResultMapping>
               <ComplexTypeMapping TypeName="Uni_Model.sp_uni_get_datos_alumno_username_Result">
@@ -470,6 +448,15 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="uniAlumnosDetalles">
+            <EntityTypeMapping TypeName="Uni_Model.uniAlumnosDetalles">
+              <MappingFragment StoreEntitySet="uniAlumnosDetalles">
+                <ScalarProperty Name="cursoExtensionEdicionId" ColumnName="cursoExtensionEdicionId" />
+                <ScalarProperty Name="convenioId" ColumnName="convenioId" />
+                <ScalarProperty Name="legprovi" ColumnName="legprovi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

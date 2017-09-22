@@ -16,13 +16,13 @@ namespace Data
             }
         }
 
-        public static sp_uni_get_alumno_carrera_idEntidad_Result GetByIdEntidad(int idEntidad)
-        {
-            using (var context = new Uni_Entities())
-            {
-                return context.sp_uni_get_alumno_carrera_idEntidad(idEntidad).FirstOrDefault();
-            }
-        }
+        //public static sp_uni_get_alumno_carrera_idEntidad_Result GetByIdEntidad(int idEntidad)
+        //{
+        //    using (var context = new Uni_Entities())
+        //    {
+        //        return context.sp_uni_get_alumno_carrera_idEntidad(idEntidad).FirstOrDefault();
+        //    }
+        //}
 
         public static sp_uni_get_datos_alumno_username_Result GetByUsername(string username)
         {
