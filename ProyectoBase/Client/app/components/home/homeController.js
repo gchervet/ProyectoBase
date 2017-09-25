@@ -6,10 +6,12 @@
       homeController.init = function () {
           
           Auth.tokenCookieExists();
-
+          
           if ($sessionStorage.user == null) {
               $rootScope.logout();
           }
+
+          homeController.userFullName = $sessionStorage.user.name;
 
           //if (Auth.userHasPermission(["administration"])) {
           //    var userName = Auth.currentUser().name;
