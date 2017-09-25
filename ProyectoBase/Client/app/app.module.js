@@ -5,5 +5,6 @@ var app = angular.module("app", [
     'ui.router',
     'ui.bootstrap',
     'ngCookies',
-    'AuthServices'
+    'AuthServices',
+    "blockUI"
 ]);

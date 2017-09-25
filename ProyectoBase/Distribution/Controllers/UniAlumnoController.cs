@@ -31,9 +31,9 @@ namespace Distribution.Controllers
 
                 if (SessionTokenService.ValidRequestByUserAndToken(tokenString, userString))
                 {
-
+                    return HttpResponseController.Return_200_OK(UniAlumnoService.GetByLegajo(legajo));
                 }
-                return HttpResponseController.Return_200_OK(UniAlumnoService.GetByLegajo(legajo));
+                return HttpResponseController.Return_401_Unauthorized(string.Empty);
             }
             catch
             {

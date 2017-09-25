@@ -23,8 +23,8 @@
 
     }]);
 
-app.run(['myUrl', '$rootScope', '$location', 'Auth',
-    function (myUrl, $rootScope, $location, Auth) {
+app.run(['myUrl', '$rootScope', '$location', 'Auth', 'blockUIConfig',
+    function (myUrl, $rootScope, $location, Auth, blockUIConfig) {
 
         // Setting the authorization Instance
         Auth.init();
@@ -39,5 +39,9 @@ app.run(['myUrl', '$rootScope', '$location', 'Auth',
 
         // Setting service url
         $rootScope.myUrl = myUrl;
+
+        blockUIConfig.message = "Cargando ...";
+        blockUIConfig.requestFilter = function (request) { return (request.noBlock) ? false : blockUIConfig.message; };
+
 
     }]);

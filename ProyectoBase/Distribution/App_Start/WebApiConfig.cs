@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
@@ -7,9 +8,12 @@ namespace Distribution
 {
     public static class WebApiConfig
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         public static void Register(HttpConfiguration config)
         {
-            // Web API configuration and services
+            // Web API configuration and services            
+            logger.Info(" - APPLICATION START");
 
             // Web API routes
             config.MapHttpAttributeRoutes();
