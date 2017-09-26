@@ -48,6 +48,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DTO\Menu\MenuDTO.cs" />
+    <Compile Include="DTO\Menu\MenuGroupDTO.cs" />
+    <Compile Include="DTO\Permission\PermissionDTO.cs" />
     <Compile Include="DTO\SessionToken\SessionTokenDTO.cs" />
     <Compile Include="DTO\UniAlumno\UniAlumnoDatosPersonalesDTO.cs" />
     <Compile Include="DTO\UniAlumno\UniAlumnoDTO.cs" />
@@ -61,6 +64,10 @@
       <Project>{c94bb278-9638-4760-a832-9e1b2b220bfe}</Project>
       <Name>CommonLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ConfigurationData\ConfigurationData.csproj">
+      <Project>{2e380532-60fc-43ce-a625-5cf2ef174a2d}</Project>
+      <Name>ConfigurationData</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DAL\Data.csproj">
       <Project>{3a508724-74f0-41ac-95ec-cc03e5dfbd8f}</Project>
       <Name>Data</Name>
@@ -68,6 +75,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DTO\Role\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
