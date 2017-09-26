@@ -28,7 +28,25 @@
                 <ul class="nav navbar-nav">
                     <li class="active"><a>Home</a></li>
 
+                    <li ng-repeat="menuGroup in vm.menuGroupList track by menuGroup.Id" class="dropdown">
+                        <a class="dropdown-toggle cursor-pointer" data-toggle="dropdown">{{menuGroup.Name}}<span class="caret"></span></a>
+                        <ul ng-repeat="menu in menuGroup.MenuList track by menu.Id" class="dropdown-menu">
+                            <li><a>{{menu.Name}}</a></li>
+                        </ul>
+                    </li>
                     <!-- INSCRIPCIONES -->
+                    <!--<li class="dropdown">
+                        <a class="dropdown-toggle cursor-pointer" data-toggle="dropdown">Inscripciones <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a>Matriculación y arancelamiento</a></li>
+                            <li><a>Consulta de matriculaciones</a></li>
+                            <li><a>Inscripción a materias</a></li>
+                            <li><a>Consulta de inscripción a materias</a></li>
+                            <li><a>Consulta de derechos de examen</a></li>
+                            <li><a>Inscripción a exámenes</a></li>
+                            <li><a>Consulta de inscripción a exámenes</a></li>
+                        </ul>
+                    </li>
                     <li class="dropdown">
                         <a class="dropdown-toggle cursor-pointer" data-toggle="dropdown">Inscripciones <span class="caret"></span></a>
                         <ul class="dropdown-menu">
@@ -41,19 +59,7 @@
                             <li><a>Consulta de inscripción a exámenes</a></li>
                         </ul>
                     </li>
-                    <!-- INSCRIPCIONES -->
-                    <li class="dropdown">
-                        <a class="dropdown-toggle cursor-pointer" data-toggle="dropdown">Inscripciones <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a>Matriculación y arancelamiento</a></li>
-                            <li><a>Consulta de matriculaciones</a></li>
-                            <li><a>Inscripción a materias</a></li>
-                            <li><a>Consulta de inscripción a materias</a></li>
-                            <li><a>Consulta de derechos de examen</a></li>
-                            <li><a>Inscripción a exámenes</a></li>
-                            <li><a>Consulta de inscripción a exámenes</a></li>
-                        </ul>
-                    </li>
+                    -->
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a>Bienvenido, {{vm.userFullName}}</a></li>
