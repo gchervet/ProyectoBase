@@ -2,6 +2,9 @@
   .controller('homeController', function ($scope, $rootScope, $location, $sessionStorage, utilityService, Auth) {
 
       var homeController = this;
+      homeController.userFullName = '';
+      homeController.userPermission = '';
+
       homeController.menuGroupList = [];
 
       homeController.init = function () {
@@ -13,6 +16,7 @@
           }
 
           homeController.userFullName = $sessionStorage.user.name;
+          homeController.userPermission = $sessionStorage.user.permissions;
 
           homeController.getAllMenu();
 
@@ -52,9 +56,41 @@
 
 
           var getAllMenuCallback = function (response) {
-              debugger;
               if (response) {
+
+                  // Se setea el valor de menú al front end
                   homeController.menuGroupList = response.data;
+
+                  for (var menuGroupIndex in homeController.menuGroupList) {
+                      var actualMenuGroup = homeController.menuGroupList[menuGroupIndex];
+
+                      // Variable que define si el menú debe mostrarse o no
+                      actualMenuGroup.Show = false;
+                      for (var menuIndex in actualMenuGroup.MenuList) {
+                          
+                          // Algoritmo que resuelve los permisos por cada pantalla, en cada botón
+                          var actualMenu = actualMenuGroup.MenuList[menuIndex];
+                          actualMenu.PermissionString = "[";
+                          for (var permissionIndex in actualMenu.PermissionList) {
+                              var actualMenuPermission = actualMenu.PermissionList[permissionIndex];
+
+                              // Si el usuario cuenta con al menos un permiso de la lista, se muestra el menú principal
+                              if (homeController.userPermission.indexOf(actualMenuPermission.Name) != -1) {
+                                  actualMenuGroup.Show = true;
+                              }
+
+                              actualMenu.PermissionString += "'" + actualMenuPermission.Name + "'";
+                              if (actualMenu.PermissionList.length > 1 && (Number(permissionIndex) + 1) < actualMenu.PermissionList.length) {
+                                  actualMenu.PermissionString += ',';
+                              }
+                          }
+                          actualMenu.PermissionString += "]";
+                      }
+
+                      
+                      
+                  }
+
               }
           };
 

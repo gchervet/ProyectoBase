@@ -29,9 +29,9 @@
                     <li class="active"><a>Home</a></li>
 
                     <li ng-repeat="menuGroup in vm.menuGroupList track by menuGroup.Id" class="dropdown">
-                        <a class="dropdown-toggle cursor-pointer" data-toggle="dropdown">{{menuGroup.Name}}<span class="caret"></span></a>
+                        <a id="MenuGroup_{{menuGroup.Id}}" class="dropdown-toggle cursor-pointer" data-toggle="dropdown" ng-show="menuGroup.Show">{{menuGroup.Name}}<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li ng-repeat="menu in menuGroup.MenuList track by menu.Id"><a>{{menu.Detail}}</a></li>
+                            <li ng-repeat="menu in menuGroup.MenuList track by menu.Id" permission="menu.PermissionString"><a class="dropdown-menu-custom">{{menu.Detail}}</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -44,6 +44,6 @@
     </nav>
 
     <div class="container">
-  
+     <!-- ESPACIO PARA RENDERIZAR LAS VISTAS -->
     </div>
 </div>
