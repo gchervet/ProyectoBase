@@ -84,7 +84,6 @@
                             $rootScope.user = $sessionStorage.user;
                             $rootScope.token = "Basic " + response.data.Token;
 
-                            debugger;
                             /* Seteo de valores en los cookies */
                             $cookies.put('token', $rootScope.token, { expires: now });
                             $cookies.put('user', $sessionStorage.user.name, { expires: now });

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net;
 using System.Web.Configuration;
+using ConfigurationData;
 
 namespace Service
 {
@@ -24,13 +25,13 @@ namespace Service
                     /* El usuario existe, se genera un token y se devuelven sus permisos .
                        Para mayor seguridad, el TokenKey se une con el DomainName. 
                        Recordar que estos valores provienen desde el web.config. */
-                    SessionTokenDTO sessionTokenDTO = SessionTokenService.Create(user, 
-                                                                                WebConfigurationManager.AppSettings["DomainName"] + 
-                                                                                WebConfigurationManager.AppSettings["TokenKey"], 
+                    SessionTokenDTO sessionTokenDTO = SessionTokenService.Create(user,
+                                                                                WebConfigurationManager.AppSettings["DomainName"] +
+                                                                                WebConfigurationManager.AppSettings["TokenKey"],
                                                                                 null);
-                    
-                    List<string> userPermissions = new List<string>();
-                    userPermissions.Add("administration");
+
+                    //TODO BUSCAR LOS PERMISOS DESDE LA BASE
+                    List<string> userPermissions = GetUserPermissionListByUsername(user.UserName);
 
                     int tokenExpirationMinutes = Int32.Parse(WebConfigurationManager.AppSettings["TokenExpiryMinutes"]);
 
@@ -38,7 +39,7 @@ namespace Service
                 }
                 return new LoginResponseDTO(false, "Could not log into the server", string.Empty, HttpStatusCode.Forbidden, loginAttemptCode, null, null, null, 0);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 switch (e.HResult)
                 {
@@ -49,6 +50,24 @@ namespace Service
                 }
                 return new LoginResponseDTO(false, "Could not log into the server", e.Message, HttpStatusCode.Forbidden, loginAttemptCode, null, null, null, 0);
             }
+        }
+
+        public static List<string> GetUserPermissionListByUsername(string username)
+        {
+            List<string> rtn = new List<string>();
+            if (username != null)
+            {
+                List<Permission> permissionModelList = UserDAL.GetUserPermissionList(username);
+
+                foreach (Permission permissionModel in permissionModelList)
+                {
+                    if (!rtn.Any(z => z == permissionModel.Name))
+                    {
+                        rtn.Add(permissionModel.Name);
+                    }
+                }
+            }
+            return rtn;
         }
     }
 }

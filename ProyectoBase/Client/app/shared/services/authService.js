@@ -94,6 +94,55 @@
     };
 
 
+    auth.userHasPermissionNonExcluding = function (permissions) {
+
+        /* Antes de verificar los permisos, verificamos si el usuario se encuentra logueado */
+        if (!auth.isLoggedIn()) {
+            return false;
+        }
+
+        var found = false;
+
+        if ($sessionStorage.user.permissions) {
+            angular.forEach(permissions, function (permission, index) {
+                if ($sessionStorage.user.permissions.indexOf(permission) >= 0) {
+                    found = true;
+                    return;
+                }
+            });
+        }
+        else {
+            found = true;
+        }
+
+        return found;
+    };
+
+
+    auth.userHasPermissionExluding = function (permissions) {
+
+        /* Antes de verificar los permisos, verificamos si el usuario se encuentra logueado */
+        if (!auth.isLoggedIn()) {
+            return false;
+        }
+
+        var found = true;
+
+        if ($sessionStorage.user.permissions) {
+            angular.forEach(permissions, function (permission, index) {
+                if (!($sessionStorage.user.permissions.indexOf(permission) >= 0)) {
+                    found = false;
+                    return;
+                }
+            });
+        }
+        else {
+            found = true;
+        }
+
+        return found;
+    };
+
     auth.currentUser = function () {
         return $sessionStorage.user;
     };

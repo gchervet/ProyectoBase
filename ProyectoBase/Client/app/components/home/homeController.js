@@ -79,7 +79,7 @@
                                   actualMenuGroup.Show = true;
                               }
 
-                              actualMenu.PermissionString += "'" + actualMenuPermission.Name + "'";
+                              actualMenu.PermissionString += '"' + actualMenuPermission.Name + '"';
                               if (actualMenu.PermissionList.length > 1 && (Number(permissionIndex) + 1) < actualMenu.PermissionList.length) {
                                   actualMenu.PermissionString += ',';
                               }

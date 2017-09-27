@@ -68,6 +68,7 @@
     <Compile Include="DAL\PermissionDAL.cs" />
     <Compile Include="DAL\RoleDAL.cs" />
     <Compile Include="DAL\MenuDAL.cs" />
+    <Compile Include="DAL\UserDAL.cs" />
     <Compile Include="Menu.cs">
       <DependentUpon>Configuration_Model.tt</DependentUpon>
     </Compile>
