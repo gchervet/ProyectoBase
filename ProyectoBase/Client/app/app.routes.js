@@ -16,8 +16,7 @@
           .when('/main', {
               templateUrl: '/app/components/main/main.html',
               controller: 'mainController as vm',
-              requiresAuthentication: true,
-              permissions: ["administration"]
+              requiresAuthentication: true
           })
           .otherwise({ redirectTo: "login" });
 

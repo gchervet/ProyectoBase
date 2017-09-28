@@ -65,6 +65,8 @@
     <Content Include="app\app.module.js" />
     <Content Include="app\components\home\home.html" />
     <Content Include="app\components\home\homeController.js" />
+    <Content Include="app\components\inscripciones\matriculacionYArancelamiento.html" />
+    <Content Include="app\components\inscripciones\matriculacionYArancelamiento.js" />
     <Content Include="app\components\login\login.html" />
     <Content Include="app\components\login\loginController.js" />
     <Content Include="app\components\main\main.html" />
@@ -111,7 +113,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="app\components\inscripciones\" />
     <Folder Include="assets\js\" />
   </ItemGroup>
   <PropertyGroup>

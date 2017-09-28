@@ -1,5 +1,5 @@
 ﻿angular.module('app')
-  .controller('mainController', function ($scope, $rootScope, $location, Auth) {
+  .controller('matriculacionYArancelamientoController', function ($scope, $rootScope, $location, Auth) {
 
       var mainController = this;
 
