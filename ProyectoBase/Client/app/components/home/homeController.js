@@ -85,12 +85,8 @@
                               }
                           }
                           actualMenu.PermissionString += "]";
-                      }
-
-                      
-                      
+                      }                      
                   }
-
               }
           };
 

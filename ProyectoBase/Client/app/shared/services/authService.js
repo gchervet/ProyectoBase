@@ -68,8 +68,32 @@
         return auth.userHasPermission(view.permissions);
     };
 
+    /* MÉTODO ANTERIOR */
+    //auth.userHasPermission = function (permissions) {
+    //
+    //    /* Antes de verificar los permisos, verificamos si el usuario se encuentra logueado */
+    //    if (!auth.isLoggedIn()) {
+    //        return false;
+    //    }
+    //
+    //    var found = false;
+    //
+    //    if ($sessionStorage.user.permissions) {
+    //        angular.forEach(permissions, function (permission, index) {
+    //            if ($sessionStorage.user.permissions.indexOf(permission) >= 0) {
+    //                found = true;
+    //                return;
+    //            }
+    //        });
+    //    }
+    //    else {
+    //        found = true;
+    //    }
+    //
+    //    return found;
+    //};
 
-    auth.userHasPermission = function (permissions) {
+    auth.userHasPermission = function (permissions, permissionType) {
 
         /* Antes de verificar los permisos, verificamos si el usuario se encuentra logueado */
         if (!auth.isLoggedIn()) {
@@ -78,16 +102,11 @@
 
         var found = false;
 
-        if ($sessionStorage.user.permissions) {
-            angular.forEach(permissions, function (permission, index) {
-                if ($sessionStorage.user.permissions.indexOf(permission) >= 0) {
-                    found = true;
-                    return;
-                }
-            });
+        if (permissionType == 'Excluding') {
+            return auth.userHasPermissionExluding(permissions);
         }
-        else {
-            found = true;
+        if (permissionType == 'NonExcluding') {
+            return auth.userHasPermissionNonExcluding(permissions);
         }
 
         return found;
