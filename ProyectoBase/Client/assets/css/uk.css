@@ -1,0 +1,111 @@
+﻿.uk-div-header {
+    background-color: #edefef;
+    background-image: none;
+    background-repeat: inherit;
+    background-attachment: scroll;
+    height: 76px;
+    background-size: cover;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.4) !important;
+}
+
+    .uk-div-header .uk-div-container .uk-div-iso-logotipo {
+        padding: 10px 0px 10px 0px;
+        width: 522px;
+        float: left;
+    }
+
+.uk-div-content {
+    padding: 4px 0px 50px 0px;
+    width: 522px;
+    float: left;
+}
+
+.uk-span-input-text-label {
+    border: 0px;
+    font-size: 13px;
+    margin: 50px auto 10px;
+    color: gray;
+    position: relative;
+    bottom: 4px;
+}
+
+.uk-button-login {
+    font-family: Calibri;
+    font-size: 14px;
+    border-radius: 0;
+    background-color: #353739;
+    border-color: #353739;
+    color: #fff;
+    margin-top: 10px;
+    height: 36px;
+    border: 0px;
+    padding: 0px;
+}
+
+.uk-input-text {
+    background-color: white;
+    border-radius: 0;
+}
+
+.uk-div-footer {
+    background-color: #353739;
+    background-image: none;
+    background-attachment: fixed;
+    background-size: cover;
+    z-index: 300;
+    position: relative;
+    border-bottom: 1px solid #464647;
+}
+
+    .uk-div-footer .uk-div-content {
+        width: 1000px;
+        color: #d5d5d5;
+        font-size: 14px;
+        clear: both;
+        margin: 0 auto !important;
+        padding: 10px 0 10px 0;
+    }
+
+        .uk-div-footer .uk-div-content .first {
+            width: 25%;
+            float: left;
+            margin-right: 5%;
+        }
+
+        .uk-div-footer .uk-div-content .last {
+            width: 25%;
+            float: left;
+            margin-right: 0;
+        }
+
+.uk-footer-columns {
+    width: 35%;
+    float: left;
+    margin-right: 5%;
+}
+
+.uk-div-clear{
+    clear: both;
+}
+
+.uk-footer-wrap {
+}
+
+.uk-footer-wrap-inside {
+        margin-bottom: 25px;
+}
+
+.uk-footer-wrap-inside-title {color: #d5d5d5;
+    border-bottom: 1px solid #B7B4B4;
+}
+
+.uk-footer-wrap-inside-subTitle {
+}
+
+.uk-div-comodo-secure {
+}
+
+.social-list{
+    display: table;
+    margin-top: 40px;
+}

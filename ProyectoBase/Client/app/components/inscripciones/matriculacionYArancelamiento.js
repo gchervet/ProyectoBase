@@ -1,10 +1,9 @@
 ﻿angular.module('app')
   .controller('matriculacionYArancelamientoController', function ($scope, $rootScope, $location, Auth) {
 
-      var mainController = this;
+      var matriculacionYArancelamientoController = this;
 
-      mainController.init = function () {
-          debugger;
+      matriculacionYArancelamientoController.init = function () {
 
           Auth.tokenCookieExists();
 

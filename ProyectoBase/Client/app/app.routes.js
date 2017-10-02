@@ -10,15 +10,51 @@
           })
           .when('/home', {
               templateUrl: '/app/components/home/home.html',
-              controller: 'homeController as vm',
+              controller: 'homeController as home',
               requiresAuthentication: true
           })
           .when('/main', {
               templateUrl: '/app/components/main/main.html',
-              controller: 'mainController as vm',
+              controller: 'mainController as main',
               requiresAuthentication: true
           })
-          .otherwise({ redirectTo: "login" });
+          /* INGRESOS */
+          .when('/MatriculacionYArancelamiento', {
+              templateUrl: '/app/components/inscripciones/matriculacionYArancelamiento.html',
+              controller: 'matriculacionYArancelamientoController as vm',
+              requiresAuthentication: true
+          })
+          .when('/ConsultaDeMatriculaciones', {
+              templateUrl: '/app/components/inscripciones/consultaDeMatriculaciones.html',
+              controller: 'consultaDeMatriculacionesController as vm',
+              requiresAuthentication: true
+          })
+          .when('/InscripcionAMaterias', {
+              templateUrl: '/app/components/inscripciones/inscripcionAMaterias.html',
+              controller: 'inscripcionAMateriasController as vm',
+              requiresAuthentication: true
+          })
+          .when('/ConsultaDeInscripcionAMaterias', {
+              templateUrl: '/app/components/inscripciones/consultaDeInscripcionAMaterias.html',
+              controller: 'consultaDeInscripcionAMateriasController as vm',
+              requiresAuthentication: true
+          })
+          .when('/ConsultaDeDerechosDeExamen', {
+              templateUrl: '/app/components/inscripciones/consultaDeDerechosDeExamen.html',
+              controller: 'consultaDeDerechosDeExamenController as vm',
+              requiresAuthentication: true
+          })
+          .when('/InscripcionAExamenes', {
+              templateUrl: '/app/components/inscripciones/inscripcionAExamenes.html',
+              controller: 'inscripcionAExamenesController as vm',
+              requiresAuthentication: true
+          })
+          .when('/ConsultaDeInscripcionAExamenes', {
+              templateUrl: '/app/components/inscripciones/consultaDeInscripcionAExamenes.html',
+              controller: 'consultaDeInscripcionAExamenesController as vm',
+              requiresAuthentication: true
+          })
+          .otherwise({ redirectTo: "home" });
 
     }]);
 

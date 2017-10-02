@@ -1,5 +1,19 @@
 ﻿<title>KENNEDY LOGIN</title>
 <div data-ng-init="vm.init()" class="fill">
+
+    <div class="uk-div-header">
+        <div class="uk-div-content">
+            <div class="uk-div-container">
+                <div class="uk-div-content">
+                    <div id="uk-div-iso-logotipo">
+                        <img src="/assets/img/Logo_kennedy_login.png" id="ctl00_Img1" alt="Universidad Kennedy" title="Universidad Kennedy">
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
     <section class="col-xs-12 fill">
 
         <div class="row">
@@ -42,11 +56,11 @@
             <form name="form" onsubmit="return false;" class="col-xs-2 col-centered" style="color: white">
                 <div class="row form-group">
                     <div class="col-xs-12">
-                        <label for="inputUserName" class="sr-only">Username</label>
+                        <span for="inputUserName" class="uk-span-input-text-label">Username</span>
                         <input name="inputUserName"
                                ng-model="loginUser.UserName"
                                type="text"
-                               class="form-control"
+                               class="form-control uk-input-text"
                                placeholder="Username"
                                make-validations="form.inputUserName"
                                required />
@@ -54,12 +68,12 @@
                 </div>
                 <div class="row form-group">
                     <div class="col-xs-12">
-                        <label for="inputPassword" class="sr-only">Password</label>
+                        <span for="inputPassword" class="uk-span-input-text-label">Contraseña</span>
                         <input name="inputPassword"
                                ng-model="loginUser.Password"
                                type="password"
-                               class="form-control"
-                               placeholder="Password"
+                               class="form-control uk-input-text"
+                               placeholder="Contraseña"
                                make-validations="form.inputPassword"
                                required />
 
@@ -71,7 +85,7 @@
                     </div>
                 </div>
 
-                <button class="col-xs-12 btn btn-lg btn-primary" type="submit" ng-click="!form.$valid || authorizeAction()" ng-disabled="!form.$valid">Login</button>
+                <button class="col-xs-12 btn btn-lg btn-primary uk-button-login" type="submit" ng-click="!form.$valid || authorizeAction()" ng-disabled="!form.$valid">Iniciar sesión</button>
             </form>
         </div>
     </section>
