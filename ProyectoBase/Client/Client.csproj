@@ -81,6 +81,10 @@
     <Content Include="app\components\inscripciones\matriculacionYArancelamiento.js" />
     <Content Include="app\components\login\login.html" />
     <Content Include="app\components\login\loginController.js" />
+    <Content Include="app\components\main\footer.html" />
+    <Content Include="app\components\main\footerController.js" />
+    <Content Include="app\components\main\header.html" />
+    <Content Include="app\components\main\headerController.js" />
     <Content Include="app\components\main\main.html" />
     <Content Include="app\components\main\mainController.js" />
     <Content Include="app\main.js" />

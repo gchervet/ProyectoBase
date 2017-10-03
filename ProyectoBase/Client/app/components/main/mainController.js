@@ -4,7 +4,6 @@
       var mainController = this;
 
       mainController.init = function () {
-          debugger;
 
           Auth.tokenCookieExists();
 
