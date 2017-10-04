@@ -1,9 +1,66 @@
 ﻿<!DOCTYPE html>
-<div ng-include ng-controller="headerController as header" src="'app/components/main/header.html'"></div>
-<div data-ng-init="vm.init()" xmlns="http://www.w3.org/1999/xhtml">
-
-    <div class="container">
-        <!-- ESPACIO PARA RENDERIZAR LAS VISTAS -->
-    </div>
-
-</div>
+<head>
+    <title>Crear curso</title>
+    <div ng-include ng-controller="headerController as header" src="'app/components/main/header.html'"></div>
+</head>
+<body>
+    <div data-ng-init="vm.init()" class="row">
+        <div class="col-md-11 col-centered">
+            <h2>Crear un curso</h2>
+        </div>
+        <div class="col-md-11 col-centered">
+            <div class="panel panel-info">
+                <div class="panel-heading">General</div>
+                <div class="panel-body">
+                    <form>
+                        <div class="row">
+                            <div class="col-md-12 col-centered">
+                                <div class="col-md-2 form-group">
+                                    <label>Carrera:</label>
+                                    <select class="input-large form-control" id="comboCarrera" ng-options="carrera.code as carrera.name for carrera in vm.carreraList" ng-model="vm.carrera"></select>
+                                </div>
+                                <div class="col-md-2 form-group">
+                                    <label for="pwd">Código de materia:</label>
+                                    <select class="input-large form-control" ng-disabled="!vm.carrera" id="comboMateria" ng-options="materia.code as materia.name for materia in vm.materiaList" ng-model="vm.materia"></select>
+                                </div>
+                                <div class="col-md-1 form-group">
+                                    <label for="pwd">Ciclo:</label>
+                                    <select class="input-large form-control" ng-disabled="!vm.materia" id="comboCiclo" ng-options="ciclo.code as ciclo.name for ciclo in vm.cicloList" ng-model="vm.ciclo"></select>
+                                </div>
+                                <div class="col-md-1 form-group">
+                                    <label for="pwd">Cuatrimestre:</label>
+                                    <select class="input-large form-control" ng-disabled="!vm.ciclo" id="comboCuatrimestre" ng-options="cuatrimestre.code as cuatrimestre.name for cuatrimestre in vm.cuatrimestreList" ng-model="vm.cuatrimestre"></select>
+                                </div>
+                                <div class="col-md-2 form-group">
+                                    <label for="pwd">Modalidad:</label>
+                                    <select class="input-large form-control" ng-disabled="!vm.cuatrimestre" id="comboModalidad" ng-options="modalidad.code as modalidad.name for modalidad in vm.modalidadList" ng-model="vm.modalidad"></select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 col-centered">
+                                <div class="col-md-1 form-group">
+                                    <label>Turno:</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                                <div class="col-md-2 form-group">
+                                    <label for="pwd">Cant de profesores:</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                                <div class="col-md-1 form-group">
+                                    <label for="pwd">Cupo:</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="panel-group">
+                <div class="panel panel-info">
+                    <div class="panel-body">Panel Content</div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-default">Submit</button>
+        </div>
+</body>
