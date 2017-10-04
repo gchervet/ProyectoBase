@@ -54,6 +54,8 @@
     <Compile Include="DTO\SessionToken\SessionTokenDTO.cs" />
     <Compile Include="DTO\UniAlumno\UniAlumnoDatosPersonalesDTO.cs" />
     <Compile Include="DTO\UniAlumno\UniAlumnoDTO.cs" />
+    <Compile Include="DTO\UniEscuela\UniEscuelaDTO.cs" />
+    <Compile Include="DTO\UniEscuela\UniEscuelaModalidadDTO.cs" />
     <Compile Include="DTO\User\LoginResponseDTO.cs" />
     <Compile Include="DTO\User\LoginUserDTO.cs" />
     <Compile Include="Enum\Login\FailedLoginEnum.cs" />

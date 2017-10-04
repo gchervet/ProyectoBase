@@ -9,6 +9,9 @@
         <EntityTypeShape EntityType="Uni_Model.uniAlumnosDatosPersonales" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Uni_Model.uniAlumnosDetalles" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Uni_Model.UniAlumnosDetalleTitulo" Width="1.5" PointX="4.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Uni_Model.uniEscuelas" Width="1.5" PointX="3.375" PointY="7" />
+        <EntityTypeShape EntityType="Uni_Model.UniEscuelasModalidades" Width="1.5" PointX="5.625" PointY="7.375" />
+        <AssociationConnector Association="Uni_Model.FK_UniEscuelasModalidades_uniEscuelas" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

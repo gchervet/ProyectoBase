@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Business\UniEscuela\UniEscuelaService.cs" />
     <Compile Include="Configuration\Menu\MenuService.cs" />
     <Compile Include="Configuration\Permission\PermissionService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

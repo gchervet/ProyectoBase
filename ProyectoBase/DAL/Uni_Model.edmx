@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Uni_Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Uni_Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="uniAlumnos">
           <Key>
             <PropertyRef Name="legprovi" />
@@ -88,6 +88,38 @@
           <Property Name="ComentarioTipoTituloNivelMedio" Type="varchar(max)" />
           <Property Name="FechaActualizacion" Type="datetime" />
         </EntityType>
+        <EntityType Name="uniEscuelas">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="nchar" MaxLength="2" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" />
+          <Property Name="Nivel" Type="varchar" MaxLength="50" />
+          <Property Name="HabilitaInscripcion" Type="bit" />
+          <Property Name="Publicar" Type="bit" />
+          <Property Name="FacultadId" Type="int" />
+          <Property Name="Tipo" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="UniEscuelasModalidades">
+          <Key>
+            <PropertyRef Name="CodigoEscuela" />
+            <PropertyRef Name="CodigoModalidad" />
+          </Key>
+          <Property Name="CodigoEscuela" Type="nchar" MaxLength="2" Nullable="false" />
+          <Property Name="CodigoModalidad" Type="varchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_UniEscuelasModalidades_uniEscuelas">
+          <End Role="uniEscuelas" Type="Self.uniEscuelas" Multiplicity="1" />
+          <End Role="UniEscuelasModalidades" Type="Self.UniEscuelasModalidades" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="uniEscuelas">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="UniEscuelasModalidades">
+              <PropertyRef Name="CodigoEscuela" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Function Name="sp_get_UniAlumnos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="legprovi" Type="int" Mode="In" />
           <Parameter Name="legdef" Type="int" Mode="In" />
@@ -106,9 +138,14 @@
           <EntitySet Name="uniAlumnosDatosPersonales" EntityType="Self.uniAlumnosDatosPersonales" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="uniAlumnosDetalles" EntityType="Self.uniAlumnosDetalles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UniAlumnosDetalleTitulo" EntityType="Self.UniAlumnosDetalleTitulo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="uniEscuelas" EntityType="Self.uniEscuelas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UniEscuelasModalidades" EntityType="Self.UniEscuelasModalidades" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_UniEscuelasModalidades_uniEscuelas" Association="Self.FK_UniEscuelasModalidades_uniEscuelas">
+            <End Role="uniEscuelas" EntitySet="uniEscuelas" />
+            <End Role="UniEscuelasModalidades" EntitySet="UniEscuelasModalidades" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Uni_Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -211,8 +248,14 @@
             <Parameter Name="convenioId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_uni_get_datos_alumno_username" ReturnType="Collection(Uni_Model.sp_uni_get_datos_alumno_username_Result)">
-            <Parameter Name="username" Mode="In" Type="String" />
+          <Parameter Name="username" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="uniEscuelas" EntityType="Uni_Model.uniEscuelas" />
+          <EntitySet Name="UniEscuelasModalidades" EntityType="Uni_Model.UniEscuelasModalidades" />
+          <AssociationSet Name="FK_UniEscuelasModalidades_uniEscuelas" Association="Uni_Model.FK_UniEscuelasModalidades_uniEscuelas">
+            <End Role="uniEscuelas" EntitySet="uniEscuelas" />
+            <End Role="UniEscuelasModalidades" EntitySet="UniEscuelasModalidades" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="sp_get_UniAlumnos_Result">
           <Property Type="Int32" Name="legprovi" Nullable="false" />
@@ -279,6 +322,40 @@
           <Property Type="String" Name="NumeroDocumento" Nullable="true" MaxLength="50" />
           <Property Type="DateTime" Name="UltimaActualizacion" Nullable="true" Precision="23" />
         </ComplexType>
+        <EntityType Name="uniEscuelas">
+          <Key>
+            <PropertyRef Name="Codigo" />
+          </Key>
+          <Property Name="Codigo" Type="String" Nullable="false" MaxLength="2" FixedLength="true" Unicode="true" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Nivel" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="HabilitaInscripcion" Type="Boolean" />
+          <Property Name="Publicar" Type="Boolean" />
+          <Property Name="FacultadId" Type="Int32" />
+          <Property Name="Tipo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="UniEscuelasModalidades" Relationship="Uni_Model.FK_UniEscuelasModalidades_uniEscuelas" FromRole="uniEscuelas" ToRole="UniEscuelasModalidades" />
+        </EntityType>
+        <EntityType Name="UniEscuelasModalidades">
+          <Key>
+            <PropertyRef Name="CodigoEscuela" />
+            <PropertyRef Name="CodigoModalidad" />
+          </Key>
+          <Property Name="CodigoEscuela" Type="String" Nullable="false" MaxLength="2" FixedLength="true" Unicode="true" />
+          <Property Name="CodigoModalidad" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="uniEscuelas" Relationship="Uni_Model.FK_UniEscuelasModalidades_uniEscuelas" FromRole="UniEscuelasModalidades" ToRole="uniEscuelas" />
+        </EntityType>
+        <Association Name="FK_UniEscuelasModalidades_uniEscuelas">
+          <End Type="Uni_Model.uniEscuelas" Role="uniEscuelas" Multiplicity="1" />
+          <End Type="Uni_Model.UniEscuelasModalidades" Role="UniEscuelasModalidades" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="uniEscuelas">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="UniEscuelasModalidades">
+              <PropertyRef Name="CodigoEscuela" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -449,6 +526,27 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="uniEscuelas">
+            <EntityTypeMapping TypeName="Uni_Model.uniEscuelas">
+              <MappingFragment StoreEntitySet="uniEscuelas">
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+                <ScalarProperty Name="FacultadId" ColumnName="FacultadId" />
+                <ScalarProperty Name="Publicar" ColumnName="Publicar" />
+                <ScalarProperty Name="HabilitaInscripcion" ColumnName="HabilitaInscripcion" />
+                <ScalarProperty Name="Nivel" ColumnName="Nivel" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UniEscuelasModalidades">
+            <EntityTypeMapping TypeName="Uni_Model.UniEscuelasModalidades">
+              <MappingFragment StoreEntitySet="UniEscuelasModalidades">
+                <ScalarProperty Name="CodigoModalidad" ColumnName="CodigoModalidad" />
+                <ScalarProperty Name="CodigoEscuela" ColumnName="CodigoEscuela" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

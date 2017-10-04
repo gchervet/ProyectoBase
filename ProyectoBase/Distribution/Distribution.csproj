@@ -89,10 +89,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\HttpResponseController.cs" />
-    <Compile Include="Controllers\MenuController.cs" />
-    <Compile Include="Controllers\UniAlumnoController.cs" />
-    <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\Business\HttpResponseController.cs" />
+    <Compile Include="Controllers\Configuration\MenuController.cs" />
+    <Compile Include="Controllers\Business\UniAlumnoController.cs" />
+    <Compile Include="Controllers\Business\UniEscuelaController.cs" />
+    <Compile Include="Controllers\Business\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
