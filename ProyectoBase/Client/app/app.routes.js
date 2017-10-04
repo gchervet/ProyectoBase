@@ -59,6 +59,22 @@
               controller: 'consultaDeInscripcionAExamenesController as vm',
               requiresAuthentication: true
           })
+          /* PROGRAMACIÓN ACADÉMICA */
+          .when('/CrearCursoAislado', {
+              templateUrl: '/app/components/programacionAcademica/crearCursoAislado.html',
+              controller: 'crearCursoAisladoController as vm',
+              requiresAuthentication: true
+          })
+          .when('/CrearCursoDesdeCarrera', {
+              templateUrl: '/app/components/programacionAcademica/crearCursoDesdeCarrera.html',
+              controller: 'crearCursoDesdeCarreraController as vm',
+              requiresAuthentication: true
+          })
+          .when('/CrearCursoDesdeCurso', {
+              templateUrl: '/app/components/programacionAcademica/crearCursoDesdeCurso.html',
+              controller: 'crearCursoDesdeCursoController as vm',
+              requiresAuthentication: true
+          })
           .otherwise({ redirectTo: "home" });
 
     }]);

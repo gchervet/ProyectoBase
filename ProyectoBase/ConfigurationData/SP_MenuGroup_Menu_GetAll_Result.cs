@@ -17,5 +17,6 @@ namespace ConfigurationData
         public string MenuGroupName { get; set; }
         public int IdMenu { get; set; }
         public string MenuName { get; set; }
+        public string MenuGroupDetail { get; set; }
     }
 }

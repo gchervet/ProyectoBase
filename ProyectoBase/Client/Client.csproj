@@ -87,6 +87,12 @@
     <Content Include="app\components\main\headerController.js" />
     <Content Include="app\components\main\main.html" />
     <Content Include="app\components\main\mainController.js" />
+    <Content Include="app\components\programacionAcademica\crearCursoDesdeCarrera.html" />
+    <Content Include="app\components\programacionAcademica\crearCursoDesdeCurso.html" />
+    <Content Include="app\components\programacionAcademica\crearCursoAislado.html" />
+    <Content Include="app\components\programacionAcademica\crearCursoDesdeCarreraController.js" />
+    <Content Include="app\components\programacionAcademica\crearCursoDesdeCursoController.js" />
+    <Content Include="app\components\programacionAcademica\crearCursoAisladoController.js" />
     <Content Include="app\components\user\userProfile.html" />
     <Content Include="app\components\user\userProfileController.js" />
     <Content Include="app\main.js" />

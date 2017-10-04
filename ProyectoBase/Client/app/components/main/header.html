@@ -21,7 +21,7 @@
                     </li>
 
                     <li ng-repeat="menuGroup in header.menuGroupList track by menuGroup.Id" class="dropdown">
-                        <a id="MenuGroup_{{menuGroup.Id}}" class="dropdown-toggle cursor-pointer" data-toggle="dropdown" ng-show="menuGroup.Show">{{menuGroup.Name}}<span class="caret"></span></a>
+                        <a id="MenuGroup_{{menuGroup.Id}}" class="dropdown-toggle cursor-pointer" data-toggle="dropdown" ng-show="menuGroup.Show">{{menuGroup.Detail}}<span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li ng-repeat="menu in menuGroup.MenuList track by menu.Id"
                                 permission="{{menu.PermissionString}}"

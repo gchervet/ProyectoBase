@@ -68,6 +68,7 @@ namespace Service
                     MenuGroupDTO menuGroup = new MenuGroupDTO();
                     menuGroup.Id = menuGroupModel.IdMenuGroup;
                     menuGroup.Name = menuGroupModel.MenuGroupName;
+                    menuGroup.Detail = menuGroupModel.MenuGroupDetail;
                     menuGroup.MenuList = new List<MenuDTO>();
                     menuGroup.MenuList.Add(MenuService.GetById(menuGroupModel.IdMenu));
 
