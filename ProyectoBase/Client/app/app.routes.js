@@ -18,6 +18,11 @@
               controller: 'mainController as main',
               requiresAuthentication: true
           })
+          .when('/user', {
+              templateUrl: '/app/components/user/userProfile.html',
+              controller: 'userProfileController as vm',
+              requiresAuthentication: true
+          })
           /* INGRESOS */
           .when('/MatriculacionYArancelamiento', {
               templateUrl: '/app/components/inscripciones/matriculacionYArancelamiento.html',

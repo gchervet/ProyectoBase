@@ -87,6 +87,8 @@
     <Content Include="app\components\main\headerController.js" />
     <Content Include="app\components\main\main.html" />
     <Content Include="app\components\main\mainController.js" />
+    <Content Include="app\components\user\userProfile.html" />
+    <Content Include="app\components\user\userProfileController.js" />
     <Content Include="app\main.js" />
     <Content Include="app\shared\directives\permissionDirective.js" />
     <Content Include="app\shared\libs\angular-block-ui.js" />
