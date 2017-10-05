@@ -17,8 +17,8 @@ namespace Distribution
         /// </summary>
         /// <param name="user">LoginUser con user, pass y tiempo de expiracion</param>
         /// <returns>Un objeto que representa </returns>
-        [Route("Authenticate")]
-        [HttpPost]
+        [Route("GetAll")]
+        [HttpGet]
         [AllowAnonymous]
         public HttpResponseMessage GetAll()
         {
