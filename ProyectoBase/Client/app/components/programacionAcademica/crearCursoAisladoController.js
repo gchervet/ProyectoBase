@@ -13,12 +13,12 @@
       crearCursoAisladoController.materiaList = [];
       crearCursoAisladoController.modalidadList = [];
 
-      crearCursoAisladoController.edificioList = [{name:1, code:2}];
-      crearCursoAisladoController.diaList = [{ name: 1, code: 2 }];
-      crearCursoAisladoController.aulaList = [{ name: 1, code: 2 }];
-      crearCursoAisladoController.horaDesdeList = [{ name: 1, code: 2 }];
-      crearCursoAisladoController.horaHastaList = [{ name: 1, code: 2 }];
-      crearCursoAisladoController.cantClasesList = [{ name: 1, code: 2 }];
+      crearCursoAisladoController.edificioList = [{ name: 1, code: 1 }, { name: 2, code: 2 }, { name: 3, code: 3 }];
+      crearCursoAisladoController.diaList = [{ name: 1, code: 1 }, { name: 2, code: 2 }, { name: 3, code: 3 }];
+      crearCursoAisladoController.aulaList = [{ name: 1, code: 1 }, { name: 2, code: 2 }, { name: 3, code: 3 }];
+      crearCursoAisladoController.horaDesdeList = [{ name: 1, code: 1 }, { name: 2, code: 2 }, { name: 3, code: 3 }];
+      crearCursoAisladoController.horaHastaList = [{ name: 1, code: 1 }, { name: 2, code: 2 }, { name: 3, code: 3 }];
+      crearCursoAisladoController.cantClasesList = [{ name: 1, code: 1 }, { name: 2, code: 2 }, { name: 3, code: 3 }];
 
       // Listas originales para trabajar en memoria
       crearCursoAisladoController.carreraOriginal = null;
@@ -26,7 +26,7 @@
       crearCursoAisladoController.materiaOriginalList = [];
       crearCursoAisladoController.modalidadOriginalList = [];
 
-      crearCursoAisladoController.horarioList = [{}];
+      crearCursoAisladoController.horarioList = [{ edificio: null, dia: null, aula: null, horaDesde: null, horaHasta: null, cantClases: null}];
 
       /* CARRERA */
       crearCursoAisladoController.getCarreraList = function () {
