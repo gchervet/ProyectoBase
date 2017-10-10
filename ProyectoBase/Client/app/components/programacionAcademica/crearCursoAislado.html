@@ -79,7 +79,7 @@
                                                 ng-options="edificio.code as edificio.name for edificio in vm.edificioList"
                                                 ng-model="vm.horarioLists"></select>
                                     </div>
-                                    <div class="col-md-2 form-group">
+                                    <div class="col-md-1 form-group">
                                         <label>Día:</label>
                                         <select id="comboDia_{{$index}}"
                                                 class="input-large form-control"
@@ -87,7 +87,7 @@
                                                 ng-model="vm.horarioLists"
                                                 ng-disabled="!comboEdificio_{{$index}}"></select>
                                     </div>
-                                    <div class="col-md-2 form-group">
+                                    <div class="col-md-1 form-group">
                                         <label>Aula:</label>
                                         <select id="comboAula_{{$index}}"
                                                 class="input-large form-control"
@@ -95,7 +95,7 @@
                                                 ng-model="vm.horarioLists"
                                                 ng-disabled="!comboDia_{{$index}}"></select>
                                     </div>
-                                    <div class="col-md-2 form-group">
+                                    <div class="col-md-1 form-group">
                                         <label>Hora desde:</label>
                                         <select id="comboHoraDesde_{{$index}}"
                                                 class="input-large form-control"
@@ -103,7 +103,7 @@
                                                 ng-model="vm.horarioLists"
                                                 ng-disabled="!comboHoraDesde_{{$index}}"></select>
                                     </div>
-                                    <div class="col-md-2 form-group">
+                                    <div class="col-md-1 form-group">
                                         <label>Horas hasta:</label>
                                         <select id="comboHoraHasta_{{$index}}"
                                                 class="input-large form-control"
@@ -111,7 +111,7 @@
                                                 ng-model="vm.horarioLists"
                                                 ng-disabled="!comboEdificio_{{$index}}"></select>
                                     </div>
-                                    <div class="col-md-2 form-group">
+                                    <div class="col-md-1 form-group">
                                         <label>Cant clases:</label>
                                         <select id="comboCantClases_{{$index}}"
                                                 class="input-large form-control"
