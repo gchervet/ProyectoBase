@@ -90,6 +90,7 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\Business\HttpResponseController.cs" />
+    <Compile Include="Controllers\Business\UniEdificioController.cs" />
     <Compile Include="Controllers\Configuration\MenuController.cs" />
     <Compile Include="Controllers\Business\UniAlumnoController.cs" />
     <Compile Include="Controllers\Business\UniEscuelaController.cs" />

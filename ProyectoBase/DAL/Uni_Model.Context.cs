@@ -33,6 +33,9 @@ namespace Data
         public virtual DbSet<UniAlumnosDetalleTitulo> UniAlumnosDetalleTitulo { get; set; }
         public virtual DbSet<uniEscuelas> uniEscuelas { get; set; }
         public virtual DbSet<UniEscuelasModalidades> UniEscuelasModalidades { get; set; }
+        public virtual DbSet<uniTurnosExamenes> uniTurnosExamenes { get; set; }
+        public virtual DbSet<uniTurnosHabilitados> uniTurnosHabilitados { get; set; }
+        public virtual DbSet<uniEdificios> uniEdificios { get; set; }
     
         public virtual ObjectResult<sp_get_UniAlumnos_Result> sp_get_UniAlumnos(Nullable<int> legprovi, Nullable<int> legdef, string username, Nullable<long> docnac)
         {

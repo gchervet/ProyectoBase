@@ -88,6 +88,23 @@
           <Property Name="ComentarioTipoTituloNivelMedio" Type="varchar(max)" />
           <Property Name="FechaActualizacion" Type="datetime" />
         </EntityType>
+        <EntityType Name="uniEdificios">
+          <Key>
+            <PropertyRef Name="codins" />
+          </Key>
+          <Property Name="codins" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="nomins" Type="varchar" MaxLength="30" />
+          <Property Name="domins" Type="varchar" MaxLength="30" />
+          <Property Name="cantalu" Type="int" />
+          <Property Name="usrnom" Type="varchar" MaxLength="12" />
+          <Property Name="ftrn" Type="datetime" />
+          <Property Name="cantlab" Type="int" />
+          <Property Name="canttal" Type="int" />
+          <Property Name="cantaul" Type="int" />
+          <Property Name="cantcli" Type="int" />
+          <Property Name="cantcco" Type="int" />
+          <Property Name="regional" Type="int" />
+        </EntityType>
         <EntityType Name="uniEscuelas">
           <Key>
             <PropertyRef Name="Codigo" />
@@ -107,6 +124,34 @@
           </Key>
           <Property Name="CodigoEscuela" Type="nchar" MaxLength="2" Nullable="false" />
           <Property Name="CodigoModalidad" Type="varchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="uniTurnosExamenes">
+          <Key>
+            <PropertyRef Name="Clave" />
+          </Key>
+          <Property Name="Clave" Type="int" Nullable="false" />
+          <Property Name="TurnoExamen" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="TurnoExamenDescripcion" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Mes" Type="int" />
+          <Property Name="Comun" Type="bit" />
+        </EntityType>
+        <EntityType Name="uniTurnosHabilitados">
+          <Key>
+            <PropertyRef Name="codesc" />
+            <PropertyRef Name="modalidad" />
+            <PropertyRef Name="turno" />
+            <PropertyRef Name="regional" />
+            <PropertyRef Name="anio" />
+          </Key>
+          <Property Name="codesc" Type="varchar" MaxLength="2" Nullable="false" />
+          <Property Name="modalidad" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="turno" Type="varchar" MaxLength="1" Nullable="false" />
+          <Property Name="regional" Type="int" Nullable="false" />
+          <Property Name="anio" Type="int" Nullable="false" />
+          <Property Name="activo" Type="bit" Nullable="false" />
+          <Property Name="usrnom" Type="varchar" MaxLength="50" />
+          <Property Name="ftrn" Type="datetime" />
+          <Property Name="fila" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK_UniEscuelasModalidades_uniEscuelas">
           <End Role="uniEscuelas" Type="Self.uniEscuelas" Multiplicity="1" />
@@ -138,8 +183,11 @@
           <EntitySet Name="uniAlumnosDatosPersonales" EntityType="Self.uniAlumnosDatosPersonales" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="uniAlumnosDetalles" EntityType="Self.uniAlumnosDetalles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UniAlumnosDetalleTitulo" EntityType="Self.UniAlumnosDetalleTitulo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="uniEdificios" EntityType="Self.uniEdificios" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="uniEscuelas" EntityType="Self.uniEscuelas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UniEscuelasModalidades" EntityType="Self.UniEscuelasModalidades" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="uniTurnosExamenes" EntityType="Self.uniTurnosExamenes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="uniTurnosHabilitados" EntityType="Self.uniTurnosHabilitados" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_UniEscuelasModalidades_uniEscuelas" Association="Self.FK_UniEscuelasModalidades_uniEscuelas">
             <End Role="uniEscuelas" EntitySet="uniEscuelas" />
             <End Role="UniEscuelasModalidades" EntitySet="UniEscuelasModalidades" />
@@ -256,6 +304,9 @@
             <End Role="uniEscuelas" EntitySet="uniEscuelas" />
             <End Role="UniEscuelasModalidades" EntitySet="UniEscuelasModalidades" />
           </AssociationSet>
+          <EntitySet Name="uniTurnosExamenes" EntityType="Uni_Model.uniTurnosExamenes" />
+          <EntitySet Name="uniTurnosHabilitados" EntityType="Uni_Model.uniTurnosHabilitados" />
+          <EntitySet Name="uniEdificios" EntityType="Uni_Model.uniEdificios" />
         </EntityContainer>
         <ComplexType Name="sp_get_UniAlumnos_Result">
           <Property Type="Int32" Name="legprovi" Nullable="false" />
@@ -356,6 +407,51 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="uniTurnosExamenes">
+          <Key>
+            <PropertyRef Name="Clave" />
+          </Key>
+          <Property Name="Clave" Type="Int32" Nullable="false" />
+          <Property Name="TurnoExamen" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="TurnoExamenDescripcion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Mes" Type="Int32" />
+          <Property Name="Comun" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="uniTurnosHabilitados">
+          <Key>
+            <PropertyRef Name="codesc" />
+            <PropertyRef Name="modalidad" />
+            <PropertyRef Name="turno" />
+            <PropertyRef Name="regional" />
+            <PropertyRef Name="anio" />
+          </Key>
+          <Property Name="codesc" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="modalidad" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="turno" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="regional" Type="Int32" Nullable="false" />
+          <Property Name="anio" Type="Int32" Nullable="false" />
+          <Property Name="activo" Type="Boolean" Nullable="false" />
+          <Property Name="usrnom" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ftrn" Type="DateTime" Precision="3" />
+          <Property Name="fila" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="uniEdificios">
+          <Key>
+            <PropertyRef Name="codins" />
+          </Key>
+          <Property Name="codins" Type="String" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="nomins" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="domins" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="cantalu" Type="Int32" />
+          <Property Name="usrnom" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="ftrn" Type="DateTime" Precision="3" />
+          <Property Name="cantlab" Type="Int32" />
+          <Property Name="canttal" Type="Int32" />
+          <Property Name="cantaul" Type="Int32" />
+          <Property Name="cantcli" Type="Int32" />
+          <Property Name="cantcco" Type="Int32" />
+          <Property Name="regional" Type="Int32" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -544,6 +640,50 @@
               <MappingFragment StoreEntitySet="UniEscuelasModalidades">
                 <ScalarProperty Name="CodigoModalidad" ColumnName="CodigoModalidad" />
                 <ScalarProperty Name="CodigoEscuela" ColumnName="CodigoEscuela" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="uniTurnosExamenes">
+            <EntityTypeMapping TypeName="Uni_Model.uniTurnosExamenes">
+              <MappingFragment StoreEntitySet="uniTurnosExamenes">
+                <ScalarProperty Name="Comun" ColumnName="Comun" />
+                <ScalarProperty Name="Mes" ColumnName="Mes" />
+                <ScalarProperty Name="TurnoExamenDescripcion" ColumnName="TurnoExamenDescripcion" />
+                <ScalarProperty Name="TurnoExamen" ColumnName="TurnoExamen" />
+                <ScalarProperty Name="Clave" ColumnName="Clave" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="uniTurnosHabilitados">
+            <EntityTypeMapping TypeName="Uni_Model.uniTurnosHabilitados">
+              <MappingFragment StoreEntitySet="uniTurnosHabilitados">
+                <ScalarProperty Name="fila" ColumnName="fila" />
+                <ScalarProperty Name="ftrn" ColumnName="ftrn" />
+                <ScalarProperty Name="usrnom" ColumnName="usrnom" />
+                <ScalarProperty Name="activo" ColumnName="activo" />
+                <ScalarProperty Name="anio" ColumnName="anio" />
+                <ScalarProperty Name="regional" ColumnName="regional" />
+                <ScalarProperty Name="turno" ColumnName="turno" />
+                <ScalarProperty Name="modalidad" ColumnName="modalidad" />
+                <ScalarProperty Name="codesc" ColumnName="codesc" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="uniEdificios">
+            <EntityTypeMapping TypeName="Uni_Model.uniEdificios">
+              <MappingFragment StoreEntitySet="uniEdificios">
+                <ScalarProperty Name="regional" ColumnName="regional" />
+                <ScalarProperty Name="cantcco" ColumnName="cantcco" />
+                <ScalarProperty Name="cantcli" ColumnName="cantcli" />
+                <ScalarProperty Name="cantaul" ColumnName="cantaul" />
+                <ScalarProperty Name="canttal" ColumnName="canttal" />
+                <ScalarProperty Name="cantlab" ColumnName="cantlab" />
+                <ScalarProperty Name="ftrn" ColumnName="ftrn" />
+                <ScalarProperty Name="usrnom" ColumnName="usrnom" />
+                <ScalarProperty Name="cantalu" ColumnName="cantalu" />
+                <ScalarProperty Name="domins" ColumnName="domins" />
+                <ScalarProperty Name="nomins" ColumnName="nomins" />
+                <ScalarProperty Name="codins" ColumnName="codins" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
