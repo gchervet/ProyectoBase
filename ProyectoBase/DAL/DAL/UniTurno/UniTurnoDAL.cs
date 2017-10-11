@@ -8,5 +8,12 @@ namespace Data
 {
     public class UniTurnoDAL
     {
+        public static List<uniTurnosHabilitados> GetAll()
+        {
+            using (var context = new Uni_Entities())
+            {
+                return context.uniTurnosHabilitados.ToList();
+            }
+        }
     }
 }

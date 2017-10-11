@@ -68,6 +68,38 @@
                             </div>
                         </div>
                     </form>
+                    
+
+                    <section class="kanban-demo">
+
+                        <h2 class="section-title"><span>Kanban Demo</span></h2>
+
+                        <div class="board" style="height: 445px;">
+                            <div class="board-column todo">
+                                <div class="board-column-header">To do</div>
+                                <div class="board-column-content" style="height: 395px;">
+                                    <div class="board-item"><div class="board-item-content"><span>Item #</span>1</div></div>
+                                    <div class="board-item"><div class="board-item-content"><span>Item #</span>2</div></div>
+                                    <div class="board-item"><div class="board-item-content"><span>Item #</span>3</div></div>
+                                    <div class="board-item"><div class="board-item-content"><span>Item #</span>4</div></div>
+                                    <div class="board-item"><div class="board-item-content"><span>Item #</span>5</div></div>
+                                </div>
+                            </div>
+                            <div class="board-column working">
+                                <div class="board-column-header">Working</div>
+                                <div class="board-column-content" style="height: 395px;">
+                                    <div class="board-item"><div class="board-item-content"><span>Item #</span>6</div></div>
+                                    <div class="board-item"><div class="board-item-content"><span>Item #</span>7</div></div>
+                                    <div class="board-item"><div class="board-item-content"><span>Item #</span>8</div></div>
+                                    <div class="board-item"><div class="board-item-content"><span>Item #</span>9</div></div>
+                                    <div class="board-item"><div class="board-item-content"><span>Item #</span>10</div></div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </section>
+
+
                 </div>
             </div>
             <div class="panel-group">
@@ -78,14 +110,14 @@
                             <h4>Horario {{$index+1}}</h4>
                             <div class="row">
                                 <div class="col-md-12 col-centered">
-                                    <div class="col-md-2 form-group">
+                                    <div class="col-md-1 form-group">
                                         <label>Día:</label>
                                         <select id="comboDia_{{$index}}"
                                                 class="input-large form-control"
                                                 ng-options="dia.code as dia.name for dia in vm.diaList"
                                                 ng-model="vm.horarioList[$index].dia"></select>
                                     </div>
-                                    <div class="col-md-2 form-group">
+                                    <div class="col-md-1 form-group">
                                         <label>Hora desde:</label>
                                         <select id="comboHoraDesde_{{$index}}"
                                                 class="input-large form-control"
@@ -93,7 +125,7 @@
                                                 ng-model="vm.horarioList[$index].horaDesde"
                                                 ng-disabled="!vm.horarioList[{{$index}}].dia"></select>
                                     </div>
-                                    <div class="col-md-2 form-group">
+                                    <div class="col-md-1 form-group">
                                         <label>Horas hasta:</label>
                                         <select id="comboHoraHasta_{{$index}}"
                                                 class="input-large form-control"
@@ -108,7 +140,7 @@
                                                 ng-options="edificio.code as edificio.name for edificio in vm.edificioList"
                                                 ng-model="vm.horarioList[$index].edificio"></select>
                                     </div>
-                                    <div class="col-md-2 form-group">
+                                    <div class="col-md-1 form-group">
                                         <label>Aula:</label>
                                         <select id="comboAula_{{$index}}"
                                                 class="input-large form-control"
@@ -123,6 +155,7 @@
                 </div>
             </div>
             {{vm.horarioList}}
-            <button type="submit" ng-click="vm.horarioList.push({})"class="btn btn-default">Submit</button>
+            <button type="submit" ng-click="vm.horarioList.push({})" class="btn btn-default">Submit</button>
         </div>
+    </div>
 </body>
