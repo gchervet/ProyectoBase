@@ -17,6 +17,7 @@ namespace Data
         public uniEscuelas()
         {
             this.UniEscuelasModalidades = new HashSet<UniEscuelasModalidades>();
+            this.uniPlanes = new HashSet<uniPlanes>();
         }
     
         public string Codigo { get; set; }
@@ -28,5 +29,6 @@ namespace Data
         public string Tipo { get; set; }
     
         public virtual ICollection<UniEscuelasModalidades> UniEscuelasModalidades { get; set; }
+        public virtual ICollection<uniPlanes> uniPlanes { get; set; }
     }
 }

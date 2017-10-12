@@ -125,6 +125,49 @@
           <Property Name="CodigoEscuela" Type="nchar" MaxLength="2" Nullable="false" />
           <Property Name="CodigoModalidad" Type="varchar" MaxLength="10" Nullable="false" />
         </EntityType>
+        <EntityType Name="uniPlanes">
+          <Key>
+            <PropertyRef Name="codcar" />
+          </Key>
+          <Property Name="codcar" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="cantop" Type="int" />
+          <Property Name="nomcar" Type="varchar" MaxLength="50" />
+          <Property Name="fvig" Type="datetime" />
+          <Property Name="tipo" Type="int" />
+          <Property Name="fcadu" Type="datetime" />
+          <Property Name="cantmat" Type="int" />
+          <Property Name="usrnom" Type="varchar" MaxLength="50" />
+          <Property Name="ftrn" Type="datetime" />
+          <Property Name="c_uniaca" Type="int" />
+          <Property Name="c_titulo" Type="int" />
+          <Property Name="codesc" Type="nchar" MaxLength="2" />
+          <Property Name="version" Type="int" Nullable="false" />
+          <Property Name="cantidad_anios" Type="int" />
+          <Property Name="Titulo" Type="varchar" MaxLength="100" />
+          <Property Name="TituloIntermedio" Type="varchar" MaxLength="100" />
+          <Property Name="AnioTituloIntermedio" Type="int" />
+          <Property Name="publicable" Type="bit" />
+        </EntityType>
+        <EntityType Name="uniPlanesMaterias">
+          <Key>
+            <PropertyRef Name="codigo" />
+            <PropertyRef Name="mater" />
+          </Key>
+          <Property Name="codigo" Type="varchar" MaxLength="4" Nullable="false" />
+          <Property Name="mater" Type="varchar" MaxLength="6" Nullable="false" />
+          <Property Name="anio" Type="int" />
+          <Property Name="cuatri" Type="int" />
+          <Property Name="obliga1" Type="int" />
+          <Property Name="usrnom" Type="varchar" MaxLength="50" />
+          <Property Name="ftrn" Type="smalldatetime" />
+          <Property Name="Fila" Type="int" Nullable="false" />
+          <Property Name="TipoMateria" Type="int" Nullable="false" />
+          <Property Name="Idioma" Type="bit" Nullable="false" />
+          <Property Name="modalidad" Type="int" />
+          <Property Name="anual" Type="bit" />
+          <Property Name="modulosdistancia" Type="int" />
+          <Property Name="clasespresenciales" Type="int" />
+        </EntityType>
         <EntityType Name="uniTurnosExamenes">
           <Key>
             <PropertyRef Name="Clave" />
@@ -165,6 +208,21 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_uniPlanes_uniEscuelas">
+          <End Role="uniEscuelas" Type="Self.uniEscuelas" Multiplicity="0..1" />
+          <End Role="uniPlanes" Type="Self.uniPlanes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="uniEscuelas">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="uniPlanes">
+              <PropertyRef Name="codesc" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="sp_get_PlanesMateriasDetalladasByCodigoPlan" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="codigo" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="sp_get_UniAlumnos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="legprovi" Type="int" Mode="In" />
           <Parameter Name="legdef" Type="int" Mode="In" />
@@ -186,11 +244,17 @@
           <EntitySet Name="uniEdificios" EntityType="Self.uniEdificios" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="uniEscuelas" EntityType="Self.uniEscuelas" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UniEscuelasModalidades" EntityType="Self.UniEscuelasModalidades" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="uniPlanes" EntityType="Self.uniPlanes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="uniPlanesMaterias" EntityType="Self.uniPlanesMaterias" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="uniTurnosExamenes" EntityType="Self.uniTurnosExamenes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="uniTurnosHabilitados" EntityType="Self.uniTurnosHabilitados" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_UniEscuelasModalidades_uniEscuelas" Association="Self.FK_UniEscuelasModalidades_uniEscuelas">
             <End Role="uniEscuelas" EntitySet="uniEscuelas" />
             <End Role="UniEscuelasModalidades" EntitySet="UniEscuelasModalidades" />
+          </AssociationSet>
+          <AssociationSet Name="FK_uniPlanes_uniEscuelas" Association="Self.FK_uniPlanes_uniEscuelas">
+            <End Role="uniEscuelas" EntitySet="uniEscuelas" />
+            <End Role="uniPlanes" EntitySet="uniPlanes" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -307,6 +371,15 @@
           <EntitySet Name="uniTurnosExamenes" EntityType="Uni_Model.uniTurnosExamenes" />
           <EntitySet Name="uniTurnosHabilitados" EntityType="Uni_Model.uniTurnosHabilitados" />
           <EntitySet Name="uniEdificios" EntityType="Uni_Model.uniEdificios" />
+          <EntitySet Name="uniPlanes" EntityType="Uni_Model.uniPlanes" />
+          <EntitySet Name="uniPlanesMaterias" EntityType="Uni_Model.uniPlanesMaterias" />
+          <AssociationSet Name="FK_uniPlanes_uniEscuelas" Association="Uni_Model.FK_uniPlanes_uniEscuelas">
+            <End Role="uniEscuelas" EntitySet="uniEscuelas" />
+            <End Role="uniPlanes" EntitySet="uniPlanes" />
+          </AssociationSet>
+          <FunctionImport Name="sp_get_PlanesMateriasDetalladasByCodigoPlan" ReturnType="Collection(Uni_Model.sp_get_PlanesMateriasDetalladasByCodigoPlan_Result)">
+            <Parameter Name="codigo" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_get_UniAlumnos_Result">
           <Property Type="Int32" Name="legprovi" Nullable="false" />
@@ -385,6 +458,7 @@
           <Property Name="FacultadId" Type="Int32" />
           <Property Name="Tipo" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="UniEscuelasModalidades" Relationship="Uni_Model.FK_UniEscuelasModalidades_uniEscuelas" FromRole="uniEscuelas" ToRole="UniEscuelasModalidades" />
+          <NavigationProperty Name="uniPlanes" Relationship="Uni_Model.FK_uniPlanes_uniEscuelas" FromRole="uniEscuelas" ToRole="uniPlanes" />
         </EntityType>
         <EntityType Name="UniEscuelasModalidades">
           <Key>
@@ -452,6 +526,80 @@
           <Property Name="cantcco" Type="Int32" />
           <Property Name="regional" Type="Int32" />
         </EntityType>
+        <EntityType Name="uniPlanes">
+          <Key>
+            <PropertyRef Name="codcar" />
+          </Key>
+          <Property Name="codcar" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="cantop" Type="Int32" />
+          <Property Name="nomcar" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="fvig" Type="DateTime" Precision="3" />
+          <Property Name="tipo" Type="Int32" />
+          <Property Name="fcadu" Type="DateTime" Precision="3" />
+          <Property Name="cantmat" Type="Int32" />
+          <Property Name="usrnom" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ftrn" Type="DateTime" Precision="3" />
+          <Property Name="c_uniaca" Type="Int32" />
+          <Property Name="c_titulo" Type="Int32" />
+          <Property Name="codesc" Type="String" MaxLength="2" FixedLength="true" Unicode="true" />
+          <Property Name="version" Type="Int32" Nullable="false" />
+          <Property Name="cantidad_anios" Type="Int32" />
+          <Property Name="Titulo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="TituloIntermedio" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="AnioTituloIntermedio" Type="Int32" />
+          <Property Name="publicable" Type="Boolean" />
+          <NavigationProperty Name="uniEscuelas" Relationship="Uni_Model.FK_uniPlanes_uniEscuelas" FromRole="uniPlanes" ToRole="uniEscuelas" />
+        </EntityType>
+        <EntityType Name="uniPlanesMaterias">
+          <Key>
+            <PropertyRef Name="codigo" />
+            <PropertyRef Name="mater" />
+          </Key>
+          <Property Name="codigo" Type="String" Nullable="false" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="mater" Type="String" Nullable="false" MaxLength="6" FixedLength="false" Unicode="false" />
+          <Property Name="anio" Type="Int32" />
+          <Property Name="cuatri" Type="Int32" />
+          <Property Name="obliga1" Type="Int32" />
+          <Property Name="usrnom" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ftrn" Type="DateTime" Precision="0" />
+          <Property Name="Fila" Type="Int32" Nullable="false" />
+          <Property Name="TipoMateria" Type="Int32" Nullable="false" />
+          <Property Name="Idioma" Type="Boolean" Nullable="false" />
+          <Property Name="modalidad" Type="Int32" />
+          <Property Name="anual" Type="Boolean" />
+          <Property Name="modulosdistancia" Type="Int32" />
+          <Property Name="clasespresenciales" Type="Int32" />
+        </EntityType>
+        <Association Name="FK_uniPlanes_uniEscuelas">
+          <End Type="Uni_Model.uniEscuelas" Role="uniEscuelas" Multiplicity="0..1" />
+          <End Type="Uni_Model.uniPlanes" Role="uniPlanes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="uniEscuelas">
+              <PropertyRef Name="Codigo" />
+            </Principal>
+            <Dependent Role="uniPlanes">
+              <PropertyRef Name="codesc" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="sp_get_PlanesMateriasDetalladasByCodigoPlan_Result">
+          <Property Type="String" Name="codigo" Nullable="false" MaxLength="4" />
+          <Property Type="String" Name="mater" Nullable="false" MaxLength="6" />
+          <Property Type="Int32" Name="Fila" Nullable="false" />
+          <Property Type="Int32" Name="anio" Nullable="true" />
+          <Property Type="Int32" Name="cuatri" Nullable="true" />
+          <Property Type="Int32" Name="obliga1" Nullable="true" />
+          <Property Type="String" Name="usrnom" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="ftrn" Nullable="true" Precision="16" />
+          <Property Type="Int32" Name="TipoMateria" Nullable="false" />
+          <Property Type="Boolean" Name="Idioma" Nullable="false" />
+          <Property Type="Int32" Name="modalidad" Nullable="true" />
+          <Property Type="Int32" Name="clasespresenciales" Nullable="true" />
+          <Property Type="Int32" Name="modulosdistancia" Nullable="true" />
+          <Property Type="Boolean" Name="anual" Nullable="true" />
+          <Property Type="String" Name="NombreMateria" Nullable="true" MaxLength="35" />
+          <Property Type="String" Name="ConceptoId" Nullable="true" MaxLength="10" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -687,6 +835,72 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="uniPlanes">
+            <EntityTypeMapping TypeName="Uni_Model.uniPlanes">
+              <MappingFragment StoreEntitySet="uniPlanes">
+                <ScalarProperty Name="publicable" ColumnName="publicable" />
+                <ScalarProperty Name="AnioTituloIntermedio" ColumnName="AnioTituloIntermedio" />
+                <ScalarProperty Name="TituloIntermedio" ColumnName="TituloIntermedio" />
+                <ScalarProperty Name="Titulo" ColumnName="Titulo" />
+                <ScalarProperty Name="cantidad_anios" ColumnName="cantidad_anios" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="codesc" ColumnName="codesc" />
+                <ScalarProperty Name="c_titulo" ColumnName="c_titulo" />
+                <ScalarProperty Name="c_uniaca" ColumnName="c_uniaca" />
+                <ScalarProperty Name="ftrn" ColumnName="ftrn" />
+                <ScalarProperty Name="usrnom" ColumnName="usrnom" />
+                <ScalarProperty Name="cantmat" ColumnName="cantmat" />
+                <ScalarProperty Name="fcadu" ColumnName="fcadu" />
+                <ScalarProperty Name="tipo" ColumnName="tipo" />
+                <ScalarProperty Name="fvig" ColumnName="fvig" />
+                <ScalarProperty Name="nomcar" ColumnName="nomcar" />
+                <ScalarProperty Name="cantop" ColumnName="cantop" />
+                <ScalarProperty Name="codcar" ColumnName="codcar" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="uniPlanesMaterias">
+            <EntityTypeMapping TypeName="Uni_Model.uniPlanesMaterias">
+              <MappingFragment StoreEntitySet="uniPlanesMaterias">
+                <ScalarProperty Name="clasespresenciales" ColumnName="clasespresenciales" />
+                <ScalarProperty Name="modulosdistancia" ColumnName="modulosdistancia" />
+                <ScalarProperty Name="anual" ColumnName="anual" />
+                <ScalarProperty Name="modalidad" ColumnName="modalidad" />
+                <ScalarProperty Name="Idioma" ColumnName="Idioma" />
+                <ScalarProperty Name="TipoMateria" ColumnName="TipoMateria" />
+                <ScalarProperty Name="Fila" ColumnName="Fila" />
+                <ScalarProperty Name="ftrn" ColumnName="ftrn" />
+                <ScalarProperty Name="usrnom" ColumnName="usrnom" />
+                <ScalarProperty Name="obliga1" ColumnName="obliga1" />
+                <ScalarProperty Name="cuatri" ColumnName="cuatri" />
+                <ScalarProperty Name="anio" ColumnName="anio" />
+                <ScalarProperty Name="mater" ColumnName="mater" />
+                <ScalarProperty Name="codigo" ColumnName="codigo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_get_PlanesMateriasDetalladasByCodigoPlan" FunctionName="Uni_Model.Store.sp_get_PlanesMateriasDetalladasByCodigoPlan">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Uni_Model.sp_get_PlanesMateriasDetalladasByCodigoPlan_Result">
+                <ScalarProperty Name="codigo" ColumnName="codigo" />
+                <ScalarProperty Name="mater" ColumnName="mater" />
+                <ScalarProperty Name="Fila" ColumnName="Fila" />
+                <ScalarProperty Name="anio" ColumnName="anio" />
+                <ScalarProperty Name="cuatri" ColumnName="cuatri" />
+                <ScalarProperty Name="obliga1" ColumnName="obliga1" />
+                <ScalarProperty Name="usrnom" ColumnName="usrnom" />
+                <ScalarProperty Name="ftrn" ColumnName="ftrn" />
+                <ScalarProperty Name="TipoMateria" ColumnName="TipoMateria" />
+                <ScalarProperty Name="Idioma" ColumnName="Idioma" />
+                <ScalarProperty Name="modalidad" ColumnName="modalidad" />
+                <ScalarProperty Name="clasespresenciales" ColumnName="clasespresenciales" />
+                <ScalarProperty Name="modulosdistancia" ColumnName="modulosdistancia" />
+                <ScalarProperty Name="anual" ColumnName="anual" />
+                <ScalarProperty Name="NombreMateria" ColumnName="NombreMateria" />
+                <ScalarProperty Name="ConceptoId" ColumnName="ConceptoId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

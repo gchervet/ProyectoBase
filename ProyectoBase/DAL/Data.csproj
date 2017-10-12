@@ -53,8 +53,12 @@
     <Compile Include="DAL\UniAlumno\UniAlumnoDAL.cs" />
     <Compile Include="DAL\UniEdificio\UniEdificioDAL.cs" />
     <Compile Include="DAL\UniEscuela\UniEscuelaDAL.cs" />
+    <Compile Include="DAL\UniPlan\UniPlanDAL.cs" />
     <Compile Include="DAL\UniTurno\UniTurnoDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="sp_get_PlanesMateriasDetalladasByCodigoPlan_Result.cs">
+      <DependentUpon>Uni_Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="sp_get_UniAlumnos_detalle_Result.cs">
       <DependentUpon>Uni_Model.tt</DependentUpon>
     </Compile>
@@ -83,6 +87,12 @@
       <DependentUpon>Uni_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="UniEscuelasModalidades.cs">
+      <DependentUpon>Uni_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="uniPlanes.cs">
+      <DependentUpon>Uni_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="uniPlanesMaterias.cs">
       <DependentUpon>Uni_Model.tt</DependentUpon>
     </Compile>
     <Compile Include="uniTurnosExamenes.cs">

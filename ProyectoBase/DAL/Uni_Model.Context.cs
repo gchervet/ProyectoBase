@@ -36,6 +36,8 @@ namespace Data
         public virtual DbSet<uniTurnosExamenes> uniTurnosExamenes { get; set; }
         public virtual DbSet<uniTurnosHabilitados> uniTurnosHabilitados { get; set; }
         public virtual DbSet<uniEdificios> uniEdificios { get; set; }
+        public virtual DbSet<uniPlanes> uniPlanes { get; set; }
+        public virtual DbSet<uniPlanesMaterias> uniPlanesMaterias { get; set; }
     
         public virtual ObjectResult<sp_get_UniAlumnos_Result> sp_get_UniAlumnos(Nullable<int> legprovi, Nullable<int> legdef, string username, Nullable<long> docnac)
         {
@@ -78,6 +80,15 @@ namespace Data
                 new ObjectParameter("username", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_uni_get_datos_alumno_username_Result>("sp_uni_get_datos_alumno_username", usernameParameter);
+        }
+    
+        public virtual ObjectResult<sp_get_PlanesMateriasDetalladasByCodigoPlan_Result> sp_get_PlanesMateriasDetalladasByCodigoPlan(string codigo)
+        {
+            var codigoParameter = codigo != null ?
+                new ObjectParameter("codigo", codigo) :
+                new ObjectParameter("codigo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_get_PlanesMateriasDetalladasByCodigoPlan_Result>("sp_get_PlanesMateriasDetalladasByCodigoPlan", codigoParameter);
         }
     }
 }

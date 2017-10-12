@@ -24,7 +24,6 @@ namespace Distribution
         {
             UniEscuelaService uniEscuelaService = new UniEscuelaService();
             return HttpResponseController.Return_200_OK(uniEscuelaService.GetAll());
-        }
-    
+        }    
     }
 }

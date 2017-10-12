@@ -57,6 +57,8 @@
     <Compile Include="DTO\UniEdificio\UniEdificioDTO.cs" />
     <Compile Include="DTO\UniEscuela\UniEscuelaDTO.cs" />
     <Compile Include="DTO\UniEscuela\UniEscuelaModalidadDTO.cs" />
+    <Compile Include="DTO\UniPlan\UniPlanDTO.cs" />
+    <Compile Include="DTO\UniPlan\UniPlanMateriaDTO.cs" />
     <Compile Include="DTO\UniTurno\UniTurnoDTO.cs" />
     <Compile Include="DTO\User\LoginResponseDTO.cs" />
     <Compile Include="DTO\User\LoginUserDTO.cs" />

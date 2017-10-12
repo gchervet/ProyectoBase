@@ -15,6 +15,9 @@
         <EntityTypeShape EntityType="Uni_Model.uniTurnosExamenes" Width="1.5" PointX="7.375" PointY="0.75" />
         <EntityTypeShape EntityType="Uni_Model.uniTurnosHabilitados" Width="1.5" PointX="7.375" PointY="3.75" />
         <EntityTypeShape EntityType="Uni_Model.uniEdificios" Width="1.5" PointX="8.375" PointY="7.75" />
+        <EntityTypeShape EntityType="Uni_Model.uniPlanes" Width="1.5" PointX="5.625" PointY="10" />
+        <EntityTypeShape EntityType="Uni_Model.uniPlanesMaterias" Width="1.5" PointX="9.375" PointY="0.75" />
+        <AssociationConnector Association="Uni_Model.FK_uniPlanes_uniEscuelas" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
