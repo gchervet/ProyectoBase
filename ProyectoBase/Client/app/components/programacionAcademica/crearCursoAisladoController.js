@@ -145,7 +145,7 @@
       };
 
 
-      // TEMPORAL PARA SELECCION DE PLAN
+      // LLEVAR A UN JAVASCRIPT APARTE // MEJORAR EL INPUT PARA QUE EL FILTRO ESTE DIRECTAMENTE ESCRITO
       $.fn.bsDropDownFilter = function (options) {
 
           return this.filter(".dropdown-menu").each(function () {
