@@ -10,11 +10,15 @@ namespace Service
 {
     public class UniPlanService
     {
-        public static List<UniPlanDTO> GetPlanByCodigoCarrera(string codcar)
+        public static List<UniPlanMateriaDTO> GetPlanByCodigoCarrera(string codcar)
         {
-            List<UniPlanDTO> rtn = new List<UniPlanDTO>();
-            List<sp_get_PlanesMateriasDetalladasByCodigoPlan_Result> uniPlanesByCodigoPlan = UniPlanDAL.GetPlanByCodigoCarrera(codcar);
-            
+            List<UniPlanMateriaDTO> rtn = new List<UniPlanMateriaDTO>();
+            List<sp_get_PlanesMateriasDetalladasByCodigoPlan_Result> uniPlanesByCodigoPlanList = UniPlanDAL.GetPlanByCodigoCarrera(codcar);
+
+            foreach (sp_get_PlanesMateriasDetalladasByCodigoPlan_Result uniPlanesByCodigoPlan in uniPlanesByCodigoPlanList)
+            {
+                rtn.Add(new UniPlanMateriaDTO(uniPlanesByCodigoPlan));
+            }
             return rtn;
         }
     }
