@@ -43,7 +43,7 @@ namespace Distribution
         /// </summary>
         /// <param name="legajo">Número de legajo.</param>
         /// <returns>Objeto UniAlumnoDTO.</returns>
-        [Route("GetAll")]
+        [Route("GetEdificioByCodins")]
         [HttpGet]
         [AllowAnonymous]
         public HttpResponseMessage GetEdificioByCodins(string codins)

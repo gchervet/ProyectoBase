@@ -32,6 +32,18 @@
     height: 50px;
 }
 
+.dropdown-label{
+    width: 363px;
+    position: relative;
+    display: block;
+    background: white;
+    float: left;
+    border: 1px solid #cccccc;
+    height: 34px;
+    border-radius: 4px;
+    padding-top: 7px;
+    padding-left: 7px;
+}
 .grid {
   position: relative;
 }

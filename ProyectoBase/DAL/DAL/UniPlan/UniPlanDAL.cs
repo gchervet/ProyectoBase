@@ -19,5 +19,13 @@ namespace Data
             }
             return new List<sp_get_PlanesMateriasDetalladasByCodigoPlan_Result>();
         }
+
+        public static List<uniPlanes> GetAll()
+        {
+            using (var context = new Uni_Entities())
+            {
+                return context.uniPlanes.ToList();
+            }
+        }
     }
 }

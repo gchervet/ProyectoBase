@@ -21,5 +21,19 @@ namespace Service
             }
             return rtn;
         }
+
+        public static List<UniPlanDTO> GetAll()
+        {
+            List<UniPlanDTO> rtn = new List<UniPlanDTO>();
+            List<uniPlanes> uniPlanesModelList = UniPlanDAL.GetAll();
+
+            foreach (uniPlanes uniPlanesModel in uniPlanesModelList)
+            {
+                UniPlanDTO uniPlan = new UniPlanDTO(uniPlanesModel);
+                uniPlan.MateriaList = GetPlanByCodigoCarrera(uniPlanesModel.codcar);
+                rtn.Add(uniPlan);
+            }
+            return rtn;
+        }
     }
 }
