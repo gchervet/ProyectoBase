@@ -68,36 +68,28 @@
                             </div>
                         </div>
                     </form>
-                    
 
-                    <section class="kanban-demo">
+                    <div class="parent">
+                        <label for="hy">Move stuff between these two containers. Note how the stuff gets inserted near the mouse pointer? Great stuff.</label>
+                        <div class="wrapper">
+                            <div id="left" class="container">
+                                <div>You can move these elements between these two containers</div>
 
-                        <h2 class="section-title"><span>Kanban Demo</span></h2>
 
-                        <div class="board" style="height: 445px;">
-                            <div class="board-column todo">
-                                <div class="board-column-header">To do</div>
-                                <div class="board-column-content" style="height: 395px;">
-                                    <div class="board-item"><div class="board-item-content"><span>Item #</span>1</div></div>
-                                    <div class="board-item"><div class="board-item-content"><span>Item #</span>2</div></div>
-                                    <div class="board-item"><div class="board-item-content"><span>Item #</span>3</div></div>
-                                    <div class="board-item"><div class="board-item-content"><span>Item #</span>4</div></div>
-                                    <div class="board-item"><div class="board-item-content"><span>Item #</span>5</div></div>
+                                <div class="">Moving them anywhere else isn't quite possible</div><div class="">This is the default use case. You only need to specify the containers you want to use</div><div class="">
+                                    Anything can be moved around. That includes images, <a href="https://github.com/bevacqua/dragula">links</a>, or any other nested elements.
+                                    <div class="image-thing"></div><sub>(You can still click on links, as usual!)</sub>
                                 </div>
                             </div>
-                            <div class="board-column working">
-                                <div class="board-column-header">Working</div>
-                                <div class="board-column-content" style="height: 395px;">
-                                    <div class="board-item"><div class="board-item-content"><span>Item #</span>6</div></div>
-                                    <div class="board-item"><div class="board-item-content"><span>Item #</span>7</div></div>
-                                    <div class="board-item"><div class="board-item-content"><span>Item #</span>8</div></div>
-                                    <div class="board-item"><div class="board-item-content"><span>Item #</span>9</div></div>
-                                    <div class="board-item"><div class="board-item-content"><span>Item #</span>10</div></div>
-                                </div>
+                            <div id="right" class="container">
+                                <div>There's also the possibility of moving elements around in the same container, changing their position</div>
+
+                                <div>More interactive use cases lie ahead</div>
+                                <div>Moving <code>&lt;input/&gt;</code> elements works just fine. You can still focus them, too. <input placeholder="See?"></div>
+                                <div>Make sure to check out the <a href="https://github.com/bevacqua/dragula#readme">documentation on GitHub!</a></div>
                             </div>
                         </div>
-
-                    </section>
+                    </div>
 
 
                 </div>

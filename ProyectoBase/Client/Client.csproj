@@ -107,14 +107,12 @@
     <Content Include="app\shared\libs\angular.js" />
     <Content Include="app\shared\libs\bootstrap-select.min.js" />
     <Content Include="app\shared\libs\bootstrap.min.js" />
-    <Content Include="app\shared\libs\hammer.js" />
+    <Content Include="app\shared\libs\dragula.js" />
     <Content Include="app\shared\libs\jquery.min.js" />
-    <Content Include="app\shared\libs\muuri.js" />
     <Content Include="app\shared\libs\ngStorage.min.js" />
     <Content Include="app\shared\libs\ui-bootstrap-tpls-0.13.0.min.js" />
     <Content Include="app\shared\libs\ui-bootstrap-tpls-0.14.3.js" />
     <Content Include="app\shared\libs\ui-bootstrap-tpls-1.1.1.js" />
-    <Content Include="app\shared\libs\velocity.js" />
     <Content Include="app\shared\services\authService.js" />
     <Content Include="app\shared\services\httpInterceptor.js" />
     <Content Include="app\shared\services\httpRequestInterceptor.js" />
@@ -123,6 +121,7 @@
     <Content Include="assets\css\bootstrap-select.min.css" />
     <Content Include="assets\css\bootstrap.min.css" />
     <Content Include="assets\css\custom.css" />
+    <Content Include="assets\css\dragula.css" />
     <Content Include="assets\css\font-awesome.min.css" />
     <Content Include="assets\css\jquery-ui.css" />
     <Content Include="assets\css\uk.css" />
