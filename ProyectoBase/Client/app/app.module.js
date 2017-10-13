@@ -6,5 +6,6 @@ var app = angular.module("app", [
     'ui.bootstrap',
     'ngCookies',
     'AuthServices',
-    "blockUI"
+    "blockUI",
+    "ngMaterial"
 ]);

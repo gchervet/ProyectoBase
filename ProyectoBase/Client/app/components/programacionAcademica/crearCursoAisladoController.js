@@ -3,10 +3,8 @@
 
       var crearCursoAisladoController = this;
 
-      // Seteo de Drag and Drop (Dragula)
-      dragula([document.getElementById('left'), document.getElementById('right')]);
-
       // Variables para mapeo de selección
+      crearCursoAisladoController.planSearchText = '';
       crearCursoAisladoController.planSeleccionado = {};
       crearCursoAisladoController.carreraSeleccionada = {};
       crearCursoAisladoController.materiaSeleccionada = {};
@@ -78,13 +76,13 @@
       }
 
       /* MODALIDAD */
-      crearCursoAisladoController.carreraOnChange = function () {
-          debugger;
+      crearCursoAisladoController.carreraOnChange = function (item) {
+
           crearCursoAisladoController.modalidadList = [];
 
           /* Cargar materias */
-          if (crearCursoAisladoController.carrera) {
-              crearCursoAisladoController.getMateriaList(crearCursoAisladoController.carrera + "00")
+          if (item) {
+              crearCursoAisladoController.getMateriaList(item)
           }
 
 
@@ -140,60 +138,38 @@
               $rootScope.logout();
           }
 
-          //crearCursoAisladoController.getCarreraList();
           crearCursoAisladoController.getPlanList();
       };
 
 
-      // LLEVAR A UN JAVASCRIPT APARTE // MEJORAR EL INPUT PARA QUE EL FILTRO ESTE DIRECTAMENTE ESCRITO
-      $.fn.bsDropDownFilter = function (options) {
+      //TODO LLEVAR A UN JAVASCRIPT APARTE
+      crearCursoAisladoController.replaceSpecialCharacters = function (str) {
 
-          return this.filter(".dropdown-menu").each(function () {
-              var opts = $.extend({}, $.fn.bsDropDownFilter.defaults, options);
-              var $this, $li, $search, $droplist;
+          var rtn = str.replace("á", "a");
+          rtn = rtn.replace("é", "e");
+          rtn = rtn.replace("í", "i");
+          rtn = rtn.replace("ó", "o");
+          rtn = rtn.replace("ú", "u");
 
-              $this = $(this).css({
-                  'overflow-x': 'auto',
-                  'max-height': 450
-              });
+          return rtn;
+      }
+      crearCursoAisladoController.createFilterFor = function (query, searchList) {
 
-              opts.label = $this.data('filter-label') || opts.label;
+          var lowercaseQuery = angular.lowercase(query);
+          var replacedQuery = crearCursoAisladoController.replaceSpecialCharacters(lowercaseQuery);
 
-              $this.parent().on('shown.bs.dropdown', function (e) {
-                  $this = $(this);
-                  $this.find('.dropdown-filter input').focus();
-                  $this.find('li').show();
-              }).on('hide.bs.dropdown', function (e) {
-                  $(this).find('.dropdown-filter input').val('');
-              });
+          return function filterFn(searchList) {
 
-              $li = $('<li role="presentation" class="dropdown-filter"></li>').prependTo($this);
+              var searchListCode = searchList.name.toLowerCase();
+              searchListCode = crearCursoAisladoController.replaceSpecialCharacters(searchListCode);
 
-              $search = $('<input type="search" class="form-control" placeholder="' + opts.label + '" style="width:96%; margin:0 auto" />')
-                  .data('dropdownList', $this)
-                  .bind('click', function (e) {
-                      e.stopPropagation();
-                  })
-                  .bind('keyup', function () {
-                      $droplist = $(this).data('dropdownList');
-                      $droplist.find('li').show();
-                      $droplist.find('li:not(:filter("' + this.value + '"))').not('.dropdown-filter').hide();
-                  })
-                  .prependTo($li);
-          });
-      };
-
-      $.fn.bsDropDownFilter.defaults = {
-          label: 'Filter by:'
-      };
-
-      $('[data-filter], .dropdown-filter').bsDropDownFilter();
-
-      // Create a FILTER pseudo class. Like CONTAINS, but case insensitive
-      $.expr[":"].filter = $.expr.createPseudo(function (arg) {
-          return function (elem) {
-              /*global Diacritics*/
-              return Diacritics.clean($(elem).text()).toUpperCase().indexOf(Diacritics.clean(arg).toUpperCase()) >= 0;
+              return (searchListCode.indexOf(replacedQuery) != -1);
           };
-      });
+
+      }
+      crearCursoAisladoController.querySearch = function (query, searchList) {
+          var results = query ? searchList.filter(crearCursoAisladoController.createFilterFor(query, searchList)) : searchList, deferred;
+          return results;
+      }
+
   });

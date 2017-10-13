@@ -97,9 +97,12 @@
     <Content Include="app\components\user\userProfileController.js" />
     <Content Include="app\main.js" />
     <Content Include="app\shared\directives\permissionDirective.js" />
+    <Content Include="app\shared\libs\angular-animate.min.js" />
+    <Content Include="app\shared\libs\angular-aria.min.js" />
     <Content Include="app\shared\libs\angular-block-ui.js" />
     <Content Include="app\shared\libs\angular-cache.js" />
     <Content Include="app\shared\libs\angular-cookies.min.js" />
+    <Content Include="app\shared\libs\angular-material.min.js" />
     <Content Include="app\shared\libs\angular-messages.min.js" />
     <Content Include="app\shared\libs\angular-resource.min.js" />
     <Content Include="app\shared\libs\angular-route.js" />
@@ -107,7 +110,6 @@
     <Content Include="app\shared\libs\angular.js" />
     <Content Include="app\shared\libs\bootstrap-select.min.js" />
     <Content Include="app\shared\libs\bootstrap.min.js" />
-    <Content Include="app\shared\libs\dragula.js" />
     <Content Include="app\shared\libs\jquery.min.js" />
     <Content Include="app\shared\libs\ngStorage.min.js" />
     <Content Include="app\shared\libs\ui-bootstrap-tpls-0.13.0.min.js" />
@@ -118,10 +120,10 @@
     <Content Include="app\shared\services\httpRequestInterceptor.js" />
     <Content Include="app\shared\services\utillityService.js" />
     <Content Include="assets\css\angular-block-ui.css" />
+    <Content Include="assets\css\angular-material.min.css" />
     <Content Include="assets\css\bootstrap-select.min.css" />
     <Content Include="assets\css\bootstrap.min.css" />
     <Content Include="assets\css\custom.css" />
-    <Content Include="assets\css\dragula.css" />
     <Content Include="assets\css\font-awesome.min.css" />
     <Content Include="assets\css\jquery-ui.css" />
     <Content Include="assets\css\uk.css" />

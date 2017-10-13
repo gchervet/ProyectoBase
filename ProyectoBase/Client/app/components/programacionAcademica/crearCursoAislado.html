@@ -17,24 +17,26 @@
                             <div class="col-md-12 col-centered">
                                 <div class="col-md-3 form-group">
                                     <label>Plan:</label>
-                                    <!--<select id="comboCarrera"
-                                            class="input-large form-control"
-                                            ng-options="carrera.code as carrera.name for carrera in vm.carreraList"
-                                            ng-model="vm.carrera"
-                                            ng-change="vm.carreraOnChange()"></select>
-                                        -->
-
-                                    <div class="dropdown ">
-                                        <span class="dropdown-label">{{vm.planSeleccionado.name}}</span>
-                                        <button class="btn dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
-                                            <span class="caret"></span>
-                                        </button>
-                                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" data-filter>
-                                            <li ng-repeat="planIndex in vm.carreraList track by $index"><a role="menuitem" tabindex="-1" ng-click="vm.planSeleccionado.code = planIndex.code; vm.planSeleccionado.name = planIndex.name; vm.carreraOnChange()">{{planIndex.name}}</a></li>
-                                        </ul>
-                                    </div>
-
+                                    <md-content class="dropdown-selector-custom">
+                                        <md-autocomplete md-search-text="vm.planSearchText"
+                                                         md-selected-item="vm.selectedItem"
+                                                         md-selected-item-change="vm.carreraOnChange(plan.code)"
+                                                         md-items="plan in vm.querySearch(vm.planSearchText, vm.carreraList)"
+                                                         md-item-text="plan.name"
+                                                         md-min-length="0"
+                                                         placeholder="Seleccionar plan"
+                                                         style="height:33px; overflow: hidden;">
+                                            <md-item-template>
+                                                <span md-highlight-text="vm.planSearchText" md-highlight-flags="^i">{{plan.name}}</span>
+                                            </md-item-template>
+                                            <md-not-found>
+                                                <span stNo se han encontrado resultados.
+                                            </md-not-found>
+                                        </md-autocomplete>
+                                    </md-content>
+                                
                                 </div>
+
                                 <div class="col-md-2 form-group">
                                     <label>Código de materia:</label>
                                     <select id="comboMateria"
@@ -80,29 +82,6 @@
                             </div>
                         </div>
                     </form>
-
-                    <div class="parent">
-                        <label for="hy">Move stuff between these two containers. Note how the stuff gets inserted near the mouse pointer? Great stuff.</label>
-                        <div class="wrapper">
-                            <div id="left" class="container">
-                                <div>You can move these elements between these two containers</div>
-
-
-                                <div class="">Moving them anywhere else isn't quite possible</div><div class="">This is the default use case. You only need to specify the containers you want to use</div><div class="">
-                                    Anything can be moved around. That includes images, <a href="https://github.com/bevacqua/dragula">links</a>, or any other nested elements.
-                                    <div class="image-thing"></div><sub>(You can still click on links, as usual!)</sub>
-                                </div>
-                            </div>
-                            <div id="right" class="container">
-                                <div>There's also the possibility of moving elements around in the same container, changing their position</div>
-
-                                <div>More interactive use cases lie ahead</div>
-                                <div>Moving <code>&lt;input/&gt;</code> elements works just fine. You can still focus them, too. <input placeholder="See?"></div>
-                                <div>Make sure to check out the <a href="https://github.com/bevacqua/dragula#readme">documentation on GitHub!</a></div>
-                            </div>
-                        </div>
-                    </div>
-
 
                 </div>
             </div>
@@ -158,6 +137,7 @@
                     </div>
                 </div>
             </div>
+
             {{vm.horarioList}}
             <button type="submit" ng-click="vm.horarioList.push({})" class="btn btn-default">Submit</button>
         </div>
