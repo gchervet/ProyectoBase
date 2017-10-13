@@ -11,6 +11,7 @@
       crearCursoAisladoController.modalidadSeleccionada = {};
 
       // Listas que se llenarán para los combos
+      crearCursoAisladoController.planList = [];
       crearCursoAisladoController.carreraList = [];
       crearCursoAisladoController.materiaList = [];
       crearCursoAisladoController.modalidadList = [];
@@ -24,6 +25,7 @@
 
       // Listas originales para trabajar en memoria
       crearCursoAisladoController.carreraOriginal = null;
+      crearCursoAisladoController.planOriginalList = [];
       crearCursoAisladoController.carreraOriginalList = [];
       crearCursoAisladoController.materiaOriginalList = [];
       crearCursoAisladoController.modalidadOriginalList = [];
@@ -36,10 +38,10 @@
 
           var getPlanListCallback = function (response) {
               if (response) {
-                  crearCursoAisladoController.carreraOriginalList = response.data;
+                  crearCursoAisladoController.planOriginalList = response.data;
                   for (i in response.data) {
                       var actualPlan = response.data[i];
-                      crearCursoAisladoController.carreraList.push({ name: "(" + actualPlan.CodCar + ") " + actualPlan.NombreCarrera, code: actualPlan.CodCar, modalidadList: actualPlan.ModalidadList });
+                      crearCursoAisladoController.planList.push({ name: "(" + actualPlan.CodCar + ") " + actualPlan.NombreCarrera, code: actualPlan.CodCar, modalidadList: actualPlan.ModalidadList });
 
                   }
               }
@@ -108,24 +110,20 @@
 
       /* MATERIA */
       crearCursoAisladoController.getMateriaList = function (codcar) {
+          debugger;
+          crearCursoAisladoController.materiaList = [];
 
-          var getMateriaListCallback = function (response) {
-              if (response) {
-                  crearCursoAisladoController.carreraOriginalList = response.data;
-                  for (i in response.data) {
-                      var actualCarrera = response.data[i];
-                      if (actualCarrera.Nombre && actualCarrera.Publicar) {
-                          crearCursoAisladoController.carreraList.push({ name: actualCarrera.Nombre, code: actualCarrera.Codigo, modalidadList: actualCarrera.ModalidadList });
-                      }
+          for (i in crearCursoAisladoController.planOriginalList) {
+              var actualPlan = crearCursoAisladoController.planOriginalList[i];
+
+              if (actualPlan.CodCar == codcar) {
+                  for (h in actualPlan.MateriaList) {
+                      var actualMateria = actualPlan.MateriaList[h];
+                      crearCursoAisladoController.materiaList.push({ name: actualMateria.NombreMateria, code: actualMateria.CodigoMateria });
                   }
+                  break;
               }
-          };
-
-          var getMateriaListErrorCallback = function (response) {
-
           }
-
-          utilityService.callHttp({ method: "GET", url: "/api/UniPlan/GetPlanByCodigoCarrera?codcar=" + codcar, callbackSuccess: getMateriaListCallback, callbackError: getMateriaListErrorCallback });
       }
 
 

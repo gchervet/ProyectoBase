@@ -21,7 +21,7 @@
                                         <md-autocomplete md-search-text="vm.planSearchText"
                                                          md-selected-item="vm.selectedItem"
                                                          md-selected-item-change="vm.carreraOnChange(plan.code)"
-                                                         md-items="plan in vm.querySearch(vm.planSearchText, vm.carreraList)"
+                                                         md-items="plan in vm.querySearch(vm.planSearchText, vm.planList)"
                                                          md-item-text="plan.name"
                                                          md-min-length="0"
                                                          placeholder="Seleccionar plan"
@@ -30,7 +30,7 @@
                                                 <span md-highlight-text="vm.planSearchText" md-highlight-flags="^i">{{plan.name}}</span>
                                             </md-item-template>
                                             <md-not-found>
-                                                <span stNo se han encontrado resultados.
+                                                No se han encontrado resultados.
                                             </md-not-found>
                                         </md-autocomplete>
                                     </md-content>
@@ -41,7 +41,7 @@
                                     <label>Código de materia:</label>
                                     <select id="comboMateria"
                                             class="input-large form-control"
-                                            ng-disabled="!vm.carrera"
+                                            ng-disabled="!vm.selectedItem"
                                             ng-options="materia.code as materia.name for materia in vm.materiaList"
                                             ng-model="vm.materia"></select>
                                 </div>
