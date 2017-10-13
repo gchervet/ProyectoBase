@@ -143,7 +143,8 @@
       //TODO LLEVAR A UN JAVASCRIPT APARTE
       crearCursoAisladoController.replaceSpecialCharacters = function (str) {
 
-          var rtn = str.replace("á", "a");
+          var rtn = str;
+          rtn = rtn.replace("á", "a");
           rtn = rtn.replace("é", "e");
           rtn = rtn.replace("í", "i");
           rtn = rtn.replace("ó", "o");

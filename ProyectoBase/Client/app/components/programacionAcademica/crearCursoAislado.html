@@ -15,6 +15,18 @@
                     <form>
                         <div class="row">
                             <div class="col-md-12 col-centered">
+                                <div class="col-md-1 form-group">
+                                    <label>Ciclo:</label>
+                                    <select id="comboCiclo" class="input-large form-control" ng-disabled="!vm.materia" ng-options="ciclo.code as ciclo.name for ciclo in vm.cicloList" ng-model="vm.ciclo"></select>
+                                </div>
+                                <div class="col-md-1 form-group">
+                                    <label>Cuatrimestre:</label>
+                                    <select id="comboCuatrimestre" class="input-large form-control" ng-disabled="!vm.ciclo" ng-options="cuatrimestre.code as cuatrimestre.name for cuatrimestre in vm.cuatrimestreList" ng-model="vm.cuatrimestre"></select>
+                                </div>
+                                <div class="col-md-2 form-group">
+                                    <label>Modalidad:</label>
+                                    <select id="comboModalidad" class="input-large form-control" ng-disabled="!vm.cuatrimestre" ng-options="modalidad.code as modalidad.name for modalidad in vm.modalidadList" ng-model="vm.modalidad"></select>
+                                </div>
                                 <div class="col-md-3 form-group">
                                     <label>Plan:</label>
                                     <md-content class="dropdown-selector-custom">
@@ -38,25 +50,14 @@
                                 </div>
 
                                 <div class="col-md-2 form-group">
-                                    <label>Código de materia:</label>
+                                    <label>Materia:</label>
                                     <select id="comboMateria"
                                             class="input-large form-control"
                                             ng-disabled="!vm.selectedItem"
                                             ng-options="materia.code as materia.name for materia in vm.materiaList"
                                             ng-model="vm.materia"></select>
                                 </div>
-                                <div class="col-md-1 form-group">
-                                    <label>Ciclo:</label>
-                                    <select id="comboCiclo" class="input-large form-control" ng-disabled="!vm.materia" ng-options="ciclo.code as ciclo.name for ciclo in vm.cicloList" ng-model="vm.ciclo"></select>
-                                </div>
-                                <div class="col-md-1 form-group">
-                                    <label>Cuatrimestre:</label>
-                                    <select id="comboCuatrimestre" class="input-large form-control" ng-disabled="!vm.ciclo" ng-options="cuatrimestre.code as cuatrimestre.name for cuatrimestre in vm.cuatrimestreList" ng-model="vm.cuatrimestre"></select>
-                                </div>
-                                <div class="col-md-2 form-group">
-                                    <label>Modalidad:</label>
-                                    <select id="comboModalidad" class="input-large form-control" ng-disabled="!vm.cuatrimestre" ng-options="modalidad.code as modalidad.name for modalidad in vm.modalidadList" ng-model="vm.modalidad"></select>
-                                </div>
+                              
                             </div>
                         </div>
                         <div class="row">
