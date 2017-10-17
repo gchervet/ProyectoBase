@@ -17,7 +17,7 @@
                             <div class="col-md-12 col-centered">
                                 <div class="col-md-1 form-group">
                                     <label>Ciclo:</label>
-                                    <select id="comboCiclo" class="input-large form-control" ng-disabled="!vm.materia" ng-options="ciclo.code as ciclo.name for ciclo in vm.cicloList" ng-model="vm.ciclo"></select>
+                                    <select id="comboCiclo" class="input-large form-control" ng-options="ciclo.code as ciclo.name for ciclo in vm.cicloList" ng-model="vm.ciclo"></select>
                                 </div>
                                 <div class="col-md-1 form-group">
                                     <label>Cuatrimestre:</label>
@@ -30,8 +30,9 @@
                                 <div class="col-md-3 form-group">
                                     <label>Plan:</label>
                                     <md-content class="dropdown-selector-custom">
-                                        <md-autocomplete md-search-text="vm.planSearchText"
-                                                         md-selected-item="vm.selectedItem"
+                                        <md-autocomplete id="materiaAutocomplete"
+                                                         md-search-text="vm.planSearchText"
+                                                         md-selected-item="vm.selectedPlan"
                                                          md-selected-item-change="vm.carreraOnChange(plan.code)"
                                                          md-items="plan in vm.querySearch(vm.planSearchText, vm.planList)"
                                                          md-item-text="plan.name"
@@ -49,15 +50,26 @@
                                 
                                 </div>
 
-                                <div class="col-md-2 form-group">
+                                <div class="col-md-3 form-group">
                                     <label>Materia:</label>
-                                    <select id="comboMateria"
-                                            class="input-large form-control"
-                                            ng-disabled="!vm.selectedItem"
-                                            ng-options="materia.code as materia.name for materia in vm.materiaList"
-                                            ng-model="vm.materia"></select>
+                                    <md-content class="dropdown-selector-custom">
+                                        <md-autocomplete md-search-text="vm.materiaSearchText"
+                                                         md-selected-item="vm.selectedMateria"
+                                                         md-selected-item-change="vm.materiaOnChange(plan.code)"
+                                                         md-items="materia in vm.querySearch(vm.materiaSearchText, vm.materiaList)"
+                                                         md-item-text="materia.name"
+                                                         md-min-length="0"
+                                                         placeholder="Seleccionar materia"
+                                                         style="height:33px; overflow: hidden;">
+                                            <md-item-template>
+                                                <span md-highlight-text="vm.materiaSearchText" md-highlight-flags="^i">{{materia.name}}</span>
+                                            </md-item-template>
+                                            <md-not-found>
+                                                No se han encontrado resultados.
+                                            </md-not-found>
+                                        </md-autocomplete>
+                                    </md-content>
                                 </div>
-                              
                             </div>
                         </div>
                         <div class="row">
@@ -139,7 +151,6 @@
                 </div>
             </div>
 
-            {{vm.horarioList}}
             <button type="submit" ng-click="vm.horarioList.push({})" class="btn btn-default">Submit</button>
         </div>
     </div>

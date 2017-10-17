@@ -5,7 +5,8 @@
 
       // Variables para mapeo de selección
       crearCursoAisladoController.planSearchText = '';
-      crearCursoAisladoController.planSeleccionado = {};
+      crearCursoAisladoController.materiaSearchText = '';
+      crearCursoAisladoController.selectedMateria = {};
       crearCursoAisladoController.carreraSeleccionada = {};
       crearCursoAisladoController.materiaSeleccionada = {};
       crearCursoAisladoController.modalidadSeleccionada = {};
@@ -42,7 +43,6 @@
                   for (i in response.data) {
                       var actualPlan = response.data[i];
                       crearCursoAisladoController.planList.push({ name: "(" + actualPlan.CodCar + ") " + actualPlan.NombreCarrera, code: actualPlan.CodCar, modalidadList: actualPlan.ModalidadList });
-
                   }
               }
           };
@@ -79,29 +79,29 @@
 
       /* MODALIDAD */
       crearCursoAisladoController.carreraOnChange = function (item) {
-
-          crearCursoAisladoController.modalidadList = [];
-
-          /* Cargar materias */
+          debugger;
           if (item) {
+
+              crearCursoAisladoController.modalidadList = [];
+
+              /* Cargar materias */
               crearCursoAisladoController.getMateriaList(item)
-          }
 
+              /* Cargar modalidades */
+              if (crearCursoAisladoController.carreraOriginalList) {
+                  for (i in crearCursoAisladoController.carreraOriginalList) {
+                      var actualCarreraOriginal = crearCursoAisladoController.carreraOriginalList[i];
 
-          /* Cargar modalidades */
-          if (crearCursoAisladoController.carreraOriginalList) {
-              for (i in crearCursoAisladoController.carreraOriginalList) {
-                  var actualCarreraOriginal = crearCursoAisladoController.carreraOriginalList[i];
+                      if (actualCarreraOriginal.Codigo == crearCursoAisladoController.carrera) {
 
-                  if (actualCarreraOriginal.Codigo == crearCursoAisladoController.carrera) {
+                          if (actualCarreraOriginal.ModalidadList) {
 
-                      if (actualCarreraOriginal.ModalidadList) {
-
-                          for (z in actualCarreraOriginal.ModalidadList) {
-                              actualModalidad = actualCarreraOriginal.ModalidadList[z];
-                              crearCursoAisladoController.modalidadList.push({ name: actualModalidad.CodigoModalidad, code: actualModalidad.CodigoEscuela });
+                              for (z in actualCarreraOriginal.ModalidadList) {
+                                  actualModalidad = actualCarreraOriginal.ModalidadList[z];
+                                  crearCursoAisladoController.modalidadList.push({ name: actualModalidad.CodigoModalidad, code: actualModalidad.CodigoEscuela });
+                              }
+                              break;
                           }
-                          break;
                       }
                   }
               }
@@ -110,8 +110,12 @@
 
       /* MATERIA */
       crearCursoAisladoController.getMateriaList = function (codcar) {
-          debugger;
-          crearCursoAisladoController.materiaList = [];
+
+          crearCursoAisladoController.selectedMateria = null;
+          crearCursoAisladoController.materiaSearchText = null;
+          while (crearCursoAisladoController.materiaList[0]) {
+              crearCursoAisladoController.materiaList.splice(0, 1);
+          }
 
           for (i in crearCursoAisladoController.planOriginalList) {
               var actualPlan = crearCursoAisladoController.planOriginalList[i];
