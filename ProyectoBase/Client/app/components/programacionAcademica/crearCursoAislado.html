@@ -27,49 +27,6 @@
                                     <label>Modalidad:</label>
                                     <select id="comboModalidad" class="input-large form-control" ng-disabled="!vm.cuatrimestre" ng-options="modalidad.code as modalidad.name for modalidad in vm.modalidadList" ng-model="vm.modalidad"></select>
                                 </div>
-                                <div class="col-md-3 form-group">
-                                    <label>Plan:</label>
-                                    <md-content class="dropdown-selector-custom">
-                                        <md-autocomplete id="materiaAutocomplete"
-                                                         md-search-text="vm.planSearchText"
-                                                         md-selected-item="vm.selectedPlan"
-                                                         md-selected-item-change="vm.carreraOnChange(plan.code)"
-                                                         md-items="plan in vm.querySearch(vm.planSearchText, vm.planList)"
-                                                         md-item-text="plan.name"
-                                                         md-min-length="0"
-                                                         placeholder="Seleccionar plan"
-                                                         style="height:33px; overflow: hidden;">
-                                            <md-item-template>
-                                                <span md-highlight-text="vm.planSearchText" md-highlight-flags="^i">{{plan.name}}</span>
-                                            </md-item-template>
-                                            <md-not-found>
-                                                No se han encontrado resultados.
-                                            </md-not-found>
-                                        </md-autocomplete>
-                                    </md-content>
-                                
-                                </div>
-
-                                <div class="col-md-3 form-group">
-                                    <label>Materia:</label>
-                                    <md-content class="dropdown-selector-custom">
-                                        <md-autocomplete md-search-text="vm.materiaSearchText"
-                                                         md-selected-item="vm.selectedMateria"
-                                                         md-selected-item-change="vm.materiaOnChange(plan.code)"
-                                                         md-items="materia in vm.querySearch(vm.materiaSearchText, vm.materiaList)"
-                                                         md-item-text="materia.name"
-                                                         md-min-length="0"
-                                                         placeholder="Seleccionar materia"
-                                                         style="height:33px; overflow: hidden;">
-                                            <md-item-template>
-                                                <span md-highlight-text="vm.materiaSearchText" md-highlight-flags="^i">{{materia.name}}</span>
-                                            </md-item-template>
-                                            <md-not-found>
-                                                No se han encontrado resultados.
-                                            </md-not-found>
-                                        </md-autocomplete>
-                                    </md-content>
-                                </div>
                             </div>
                         </div>
                         <div class="row">
@@ -96,6 +53,81 @@
                         </div>
                     </form>
 
+                </div>
+            </div>
+            <div class="panel panel-info">
+                <div class="panel-heading">Planes | Materias</div>
+                <div class="panel-body">
+                    <form>
+                        <div class="row">
+                            <div class="col-md-12 col-centered">
+                                <div class="col-md-4 form-group">
+                                    <label>Plan:</label>
+                                    <md-content class="dropdown-selector-custom">
+                                        <md-autocomplete id="materiaAutocomplete"
+                                                         md-search-text="vm.planSearchText"
+                                                         md-selected-item="vm.selectedPlan"
+                                                         md-selected-item-change="vm.carreraOnChange(plan.code)"
+                                                         md-items="plan in vm.querySearch(vm.planSearchText, vm.planList)"
+                                                         md-item-text="plan.name"
+                                                         md-min-length="0"
+                                                         placeholder="Seleccionar plan"
+                                                         style="height:33px; overflow: hidden;">
+                                            <md-item-template>
+                                                <span md-highlight-text="vm.planSearchText" md-highlight-flags="^i">{{plan.name}}</span>
+                                            </md-item-template>
+                                            <md-not-found>
+                                                No se han encontrado resultados.
+                                            </md-not-found>
+                                        </md-autocomplete>
+                                    </md-content>
+
+                                </div>
+
+                                <div class="col-md-4 form-group">
+                                    <label>Materia:</label>
+                                    <md-content class="dropdown-selector-custom">
+                                        <md-autocomplete md-search-text="vm.materiaSearchText"
+                                                         md-selected-item="vm.selectedMateria"
+                                                         md-selected-item-change="vm.materiaOnChange(plan.code)"
+                                                         md-items="materia in vm.querySearch(vm.materiaSearchText, vm.materiaList)"
+                                                         md-item-text="materia.name"
+                                                         md-min-length="0"
+                                                         placeholder="Seleccionar materia"
+                                                         style="height:33px; overflow: hidden;">
+                                            <md-item-template>
+                                                <span md-highlight-text="vm.materiaSearchText" md-highlight-flags="^i">{{materia.name}}</span>
+                                            </md-item-template>
+                                            <md-not-found>
+                                                No se han encontrado resultados.
+                                            </md-not-found>
+                                        </md-autocomplete>
+                                    </md-content>
+                                </div>
+
+                                <!--OUTPUT MATERIAS-->
+                                <div class="col-md-4 form-group">
+                                    <label>Materias seleccionadas:</label>
+                                    <div class="padded-row">
+                                        <span>Choose two countries</span>
+                                        <div angucomplete-alt
+                                             id="ex8a"
+                                             placeholder="Search countries"
+                                             pause="100"
+                                             selected-object="countrySelected8a"
+                                             local-data="countries"
+                                             search-fields="name"
+                                             title-field="name"
+                                             minlength="1"
+                                             input-class="form-control form-control-small"
+                                             match-class="highlight"
+                                             field-required="true"
+                                             input-name="country8a">
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
             <div class="panel-group">

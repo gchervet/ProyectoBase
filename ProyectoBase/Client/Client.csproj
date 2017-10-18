@@ -97,6 +97,7 @@
     <Content Include="app\components\user\userProfileController.js" />
     <Content Include="app\main.js" />
     <Content Include="app\shared\directives\permissionDirective.js" />
+    <Content Include="app\shared\libs\angucomplete-alt.min.js" />
     <Content Include="app\shared\libs\angular-animate.min.js" />
     <Content Include="app\shared\libs\angular-aria.min.js" />
     <Content Include="app\shared\libs\angular-block-ui.js" />

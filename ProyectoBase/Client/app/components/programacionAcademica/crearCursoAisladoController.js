@@ -6,7 +6,7 @@
       // Variables para mapeo de selección
       crearCursoAisladoController.planSearchText = '';
       crearCursoAisladoController.materiaSearchText = '';
-      crearCursoAisladoController.selectedMateria = {};
+      crearCursoAisladoController.selectedMateria = '';
       crearCursoAisladoController.carreraSeleccionada = {};
       crearCursoAisladoController.materiaSeleccionada = {};
       crearCursoAisladoController.modalidadSeleccionada = {};
@@ -79,7 +79,6 @@
 
       /* MODALIDAD */
       crearCursoAisladoController.carreraOnChange = function (item) {
-          debugger;
           if (item) {
 
               crearCursoAisladoController.modalidadList = [];
@@ -111,11 +110,13 @@
       /* MATERIA */
       crearCursoAisladoController.getMateriaList = function (codcar) {
 
-          crearCursoAisladoController.selectedMateria = null;
-          crearCursoAisladoController.materiaSearchText = null;
           while (crearCursoAisladoController.materiaList[0]) {
               crearCursoAisladoController.materiaList.splice(0, 1);
           }
+
+          crearCursoAisladoController.materiaSearchText = null;
+          crearCursoAisladoController.selectedMateria = null;
+
 
           for (i in crearCursoAisladoController.planOriginalList) {
               var actualPlan = crearCursoAisladoController.planOriginalList[i];
