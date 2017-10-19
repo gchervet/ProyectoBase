@@ -47,6 +47,21 @@
                   'col3': '1.3',
                   'col4': '1.4',
                   'col5': '1.5'
+              },
+              {
+                  'col3': '1.3',
+                  'col4': '1.4',
+                  'col5': '1.5'
+              },
+              {
+                  'col3': '1.3',
+                  'col4': '1.4',
+                  'col5': '1.5'
+              },
+              {
+                  'col3': '1.3',
+                  'col4': '1.4',
+                  'col5': '1.5'
               }]
           }, {
               'col1': '2.1',
@@ -86,7 +101,8 @@
                   $detail.html('<table></table>').find('table').bootstrapTable({
                       columns: [{
                           field: 'col3',
-                          title: 'Col3'
+                          title: 'Col3',
+                          control: 'input'
                       }, {
                           field: 'col4',
                           title: 'Col4'
