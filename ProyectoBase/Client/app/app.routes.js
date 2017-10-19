@@ -75,6 +75,12 @@
               controller: 'crearCursoDesdeCursoController as vm',
               requiresAuthentication: true
           })
+          /* INDICADORES DE PERMANENCIA */
+          .when('/IndicadoresDePermanencia', {
+              templateUrl: '/app/components/indicadoresDePermanencia/indicadoresDePermanencia.html',
+              controller: 'indicadoresDePermanenciaController as vm',
+              requiresAuthentication: true
+          })
           .otherwise({ redirectTo: "home" });
 
     }]);

@@ -1,0 +1,101 @@
+﻿<!DOCTYPE html>
+<head>
+    <title>Indicadores de permanencia</title>
+    <div ng-include ng-controller="headerController as header" src="'app/components/main/header.html'"></div>
+</head>
+<body>
+    <div data-ng-init="vm.init()" class="row">
+        <div class="col-md-11 col-centered">
+            <h2>Indicadores de permenencia</h2>
+        </div>
+        <div class="col-md-11 col-centered">
+            <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="pill" href="!/IndicadoresDePermanencia#administracionTab">KPI Administración</a></li>
+                <li><a data-toggle="pill" href="!/IndicadoresDePermanencia#academicoTab">KPI Académico</a></li>
+            </ul>
+
+            <div class="tab-content">
+                <div id="administracionTab" class="tab-pane active">
+                    <h3>Menu 1</h3>
+                    <div class="row">
+                        <div class="col-md-12 col-centered">
+                            <div class="col-md-3 form-group">
+                                <label>Ciclo:</label>
+                                <select id="comboCiclo" class="input-large form-control" ng-options="ciclo for ciclo in vm.cicloList" ng-model="vm.cicloSelected"></select>
+                            </div>
+                            <div class="col-md-3 form-group">
+                                <label>Cuatrimestre:</label>
+                                <select id="comboCuatrimestre" class="input-large form-control" ng-options="cuatrimestre for cuatrimestre in vm.cuatrimestreList" ng-model="vm.cuatrimestreSelected"></select>
+                            </div>
+                            <div class="col-md-3 form-group">
+                                <label>Sede:</label>
+                                <select id="comboModalidad" class="input-large form-control" ng-options="sede for sede in vm.sedeList" ng-model="vm.sedeSelected"></select>
+                            </div>
+                            <div class="col-md-3 form-group">
+                                <label>Carrera:</label>
+                                <select id="comboModalidad" class="input-large form-control" ng-options="carrera for carrera in vm.carreraList" ng-model="vm.carreraSelected"></select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col-centered">
+                            <div class="col-md-3 form-group">
+                                <label>Legajo:</label> <!--Autocomplete-->
+                                <!--<input type="text" class="form-control" ng-model="vm.legajoSelected">-->
+                                <div angucomplete-alt id="ex2"
+                                     placeholder="Search people"
+                                     pause="300"
+                                     selected-object="selectedPerson"
+                                     local-data="people"
+                                     local-search="localSearch"
+                                     title-field="firstName,surname"
+                                     description-field="twitter"
+                                     image-field="pic"
+                                     minlength="1"
+                                     input-class="form-control form-control-small"
+                                     match-class="highlight">
+                                </div>
+                            </div>
+                            <div class="col-md-3 form-group">
+                                <label>Nombre:</label>
+                                <input type="text" class="form-control" ng-model="vm.nombreSelected">
+                            </div>
+                            <div class="col-md-3 form-group">
+                                <label>Apellido:</label>
+                                <input type="text" class="form-control" ng-model="vm.apellidoSelected">
+                            </div>
+                            <div class="col-md-3 form-group">
+                                <label>DNI:</label>
+                                <input type="text" class="form-control" ng-model="vm.dniSelected">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col-centered">
+                            <div class="col-md-3 form-group">
+                                <label>KPI:</label>
+                                <select id="comboCiclo" class="input-large form-control" ng-options="kpi for kpi in vm.kpiList" ng-model="vm.kpiSelected"></select>
+                            </div>
+                            <div class="col-md-3 form-group">
+                                <label>Nivel de riesgo:</label>
+                                <select id="comboCuatrimestre" class="input-large form-control" ng-options="nivelDeRiesgo for nivelDeRiesgo in vm.nivelDeRiesgoList" ng-model="vm.nivelDeRiesgoSelected"></select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col-centered">
+                            <div id="administracionGrid">
+                                
+                                <table id="administracionTable"></table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="academicoTab" class="tab-pane fade">
+                <h3>Menu 2</h3>
+            </div>
+        </div>
+    </div>
+</body>
