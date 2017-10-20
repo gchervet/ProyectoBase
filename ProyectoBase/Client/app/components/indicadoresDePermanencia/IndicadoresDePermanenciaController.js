@@ -42,14 +42,23 @@
       indicadoresDePermanenciaController.loadPersonMethods = function () {
           indicadoresDePermanenciaController.legajoSelected = null;
           indicadoresDePermanenciaController.legajoList = [
-              { legajo: "12334", nombre: "Gonzalo Germán", apellido: "Chervet" },
-              { legajo: "87922", nombre: "Marcelo Daniel", apellido: "Martini" },
-              { legajo: "99876", nombre: "Gustavo Martin", apellido: "Blumberg" }];
+              { legajo: "12334", nombre: "Gonzalo Germán", apellido: "Chervet" , dni:"37375737"},
+              { legajo: "87922", nombre: "Marcelo Daniel", apellido: "Martini" , dni:"19195419"},
+              { legajo: "99876", nombre: "Gustavo Martin", apellido: "Blumberg", dni:"46467979" }];
+
+          indicadoresDePermanenciaController.legajoWasSelected = function (select) {
+              indicadoresDePermanenciaController.legajoSelected = select.originalObject;
+
+              indicadoresDePermanenciaController.nombreSelected = select.originalObject.nombre;
+              indicadoresDePermanenciaController.apellidoSelected = select.originalObject.apellido;
+              indicadoresDePermanenciaController.dniSelected = select.originalObject.dni;
+
+          };
 
           indicadoresDePermanenciaController.legajoInputChanged = function (str) {
               if (str.length >= 2) {
               }
-          }
+          };
 
       };
 
@@ -100,15 +109,38 @@
               }]
           }];
 
-
           $('#administracionTable').bootstrapTable({
 
               columns: [{
-                  field: 'col1',
-                  title: 'Col1'
+                  field: 'Legajo',
+                  title: 'Legajo'
               }, {
-                  field: 'col2',
-                  title: 'Col2'
+                  field: 'Nombre',
+                  title: 'Nombre'
+              }, {
+                  field: 'Apellido',
+                  title: 'Apellido'
+              }, {
+                  field: 'DNI',
+                  title: 'DNI'
+              }, {
+                  field: 'Carrera',
+                  title: 'Carrera'
+              }, {
+                  field: 'Ciclo',
+                  title: 'Ciclo'
+              }, {
+                  field: 'Cuatrimestre',
+                  title: 'Cuatrimestre'
+              }, {
+                  field: 'Inasistencia',
+                  title: 'Inasistencia'
+              }, {
+                  field: 'Examenes',
+                  title: 'Exámenes'
+              }, {
+                  field: 'FinalesReprobados',
+                  title: 'Finales reprobados'
               }],
               data: indicadoresDePermanenciaController.resultList,
               detailView: true,
@@ -116,23 +148,24 @@
                   console.log(row)
                   $detail.html('<table></table>').find('table').bootstrapTable({
                       columns: [{
-                          field: 'col3',
-                          title: 'Col3',
-                          filterControl: 'input',
-                          filter: 'input',
-                          filtercontrol: 'input'
+                          field: 'Materia',
+                          title: 'Materia'
                       }, {
-                          field: 'col4',
-                          title: 'Col4'
+                          field: 'Inasistencia',
+                          title: 'Inasistencia'
                       }, {
-                          field: 'col5',
-                          title: 'Col5'
+                          field: 'Examenes',
+                          title: 'Exámenes'
+                      }, {
+                          field: 'FinalesReprobados',
+                          title: 'Finales reprobados'
                       }],
                       data: row.nested,
                       // Simple contextual, assumes all entries have further nesting
                       // Just shows example of how you might differentiate some rows, though also remember row class and similar possible flags
-                      detailView: row.nested[0]['other'] !== undefined,
-                      onExpandRow: function (indexb, rowb, $detailb) {
+                      detailView: row.nested[0]['other'] !== undefined
+                      //Para agregar otra más (BORRAR)
+                      /*,onExpandRow: function (indexb, rowb, $detailb) {
                           $detailb.html('<table></table>').find('table').bootstrapTable({
                               columns: [{
                                   field: 'col6',
@@ -143,7 +176,7 @@
                               }],
                               data: rowb.other
                           });
-                      }
+                      }*/
                   });
 
               }
