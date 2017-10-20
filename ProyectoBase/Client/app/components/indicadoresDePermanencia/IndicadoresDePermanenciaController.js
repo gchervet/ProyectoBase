@@ -12,6 +12,7 @@
           }
 
           indicadoresDePermanenciaController.loadLists();
+          indicadoresDePermanenciaController.loadPersonMethods();
           indicadoresDePermanenciaController.loadGrids();
       };
 
@@ -36,7 +37,21 @@
           indicadoresDePermanenciaController.kpiList = [1];
           indicadoresDePermanenciaController.nivelDeRiesgoList = [1];
 
-      }
+      };
+
+      indicadoresDePermanenciaController.loadPersonMethods = function () {
+          indicadoresDePermanenciaController.legajoSelected = null;
+          indicadoresDePermanenciaController.legajoList = [
+              { legajo: "12334", nombre: "Gonzalo Germán", apellido: "Chervet" },
+              { legajo: "87922", nombre: "Marcelo Daniel", apellido: "Martini" },
+              { legajo: "99876", nombre: "Gustavo Martin", apellido: "Blumberg" }];
+
+          indicadoresDePermanenciaController.legajoInputChanged = function (str) {
+              if (str.length >= 2) {
+              }
+          }
+
+      };
 
       indicadoresDePermanenciaController.loadGrids = function () {
 
@@ -84,9 +99,10 @@
                   }]
               }]
           }];
-          
+
 
           $('#administracionTable').bootstrapTable({
+
               columns: [{
                   field: 'col1',
                   title: 'Col1'
@@ -102,7 +118,9 @@
                       columns: [{
                           field: 'col3',
                           title: 'Col3',
-                          control: 'input'
+                          filterControl: 'input',
+                          filter: 'input',
+                          filtercontrol: 'input'
                       }, {
                           field: 'col4',
                           title: 'Col4'
@@ -130,5 +148,5 @@
 
               }
           });
-      }
+      };
   });

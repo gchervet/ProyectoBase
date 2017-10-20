@@ -41,20 +41,17 @@
                         <div class="col-md-12 col-centered">
                             <div class="col-md-3 form-group">
                                 <label>Legajo:</label> <!--Autocomplete-->
-                                <!--<input type="text" class="form-control" ng-model="vm.legajoSelected">-->
-                                <div angucomplete-alt id="ex2"
-                                     placeholder="Search people"
-                                     pause="300"
-                                     selected-object="selectedPerson"
-                                     local-data="people"
-                                     local-search="localSearch"
-                                     title-field="firstName,surname"
-                                     description-field="twitter"
-                                     image-field="pic"
+                                <div angucomplete-alt id="legajoInput"
+                                     placeholder="Buscar legajo"
+                                     pause="100"
+                                     selected-object="vm.legajoSelected"
+                                     local-data="vm.legajoList"
+                                     search-fields="legajo"
+                                     title-field="legajo"
+                                     description-field="nombre.apellido"
+                                     input-changed="vm.legajoInputChanged"
                                      minlength="1"
-                                     input-class="form-control form-control-small"
-                                     match-class="highlight">
-                                </div>
+                                     input-class="form-control"></div>
                             </div>
                             <div class="col-md-3 form-group">
                                 <label>Nombre:</label>
@@ -85,7 +82,7 @@
                     <div class="row">
                         <div class="col-md-12 col-centered">
                             <div id="administracionGrid">
-                                
+
                                 <table id="administracionTable"></table>
 
                             </div>

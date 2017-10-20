@@ -123,6 +123,7 @@
     <Content Include="app\shared\services\httpInterceptor.js" />
     <Content Include="app\shared\services\httpRequestInterceptor.js" />
     <Content Include="app\shared\services\utillityService.js" />
+    <Content Include="assets\css\angucomplete-alt.css" />
     <Content Include="assets\css\angular-block-ui.css" />
     <Content Include="assets\css\angular-material.min.css" />
     <Content Include="assets\css\bootstrap-select.min.css" />
