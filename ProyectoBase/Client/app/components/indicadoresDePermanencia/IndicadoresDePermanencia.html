@@ -22,8 +22,83 @@
                             <div class="col-md-12 col-centered">
                                 <div class="col-md-3 form-group">
                                     <p>
-                                        <label>Ciclo:</label><!--obligastorio-->
-                                        <select required name="comboCiclo" class="input-large form-control" ng-options="ciclo for ciclo in vm.cicloList" ng-model="vm.cicloSelected"><option></option></select>
+                                        <label>Sede:</label>
+                                        <select required name="comboSede" class="input-large form-control" ng-options="sede.code as sede.name for sede in vm.sedeList" ng-model="vm.adm_sedeSelected"></select>
+                                        <span style="color:red" ng-show="administracionForm.comboModalidad.$dirty && administracionForm.comboModalidad.$invalid">
+                                            <span ng-show="administracionForm.comboModalidad.$error.required">Username is required.</span>
+                                        </span>
+                                    </p>
+                                </div>
+                                <div class="col-md-3 form-group">
+                                    <label>Carrera:</label>
+                                    <select required name="comboPlan" class="input-large form-control" ng-options="plan.code as plan.name for plan in vm.planList" ng-model="vm.adm_planSelected"></select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 col-centered">
+                                <div class="col-md-3 form-group">
+                                    <label>Legajo:</label> <!--Autocomplete-->
+                                    <div angucomplete-alt id="legajoInput"
+                                         placeholder="Buscar legajo"
+                                         pause="100"
+                                         selected-object="vm.legajoWasSelected"
+                                         local-data="vm.legajoList"
+                                         search-fields="legajo"
+                                         title-field="legajo"
+                                         description-field="nombre.apellido"
+                                         input-changed="vm.legajoInputChanged"
+                                         minlength="1"
+                                         tab-prefix="adm"
+                                         input-class="form-control"></div>
+                                </div>
+                                <div class="col-md-3 form-group">
+                                    <label>Nombre:</label>
+                                    <input type="text" class="form-control" ng-model="vm.adm_nombreSelected">
+                                </div>
+                                <div class="col-md-3 form-group">
+                                    <label>Apellido:</label>
+                                    <input type="text" class="form-control" ng-model="vm.adm_apellidoSelected">
+                                </div>
+                                <div class="col-md-3 form-group">
+                                    <label>DNI:</label>
+                                    <input type="text" class="form-control" ng-model="vm.adm_dniSelected">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 col-centered">
+                                <div class="col-md-3 form-group">
+                                    <label>KPI:</label>
+                                    <select id="comboCiclo" class="input-large form-control" ng-options="kpi for kpi in vm.kpiList" ng-model="vm.adm_kpiSelected"></select>
+                                </div>
+                                <div class="col-md-3 form-group">
+                                    <label>Nivel de riesgo:</label>
+                                    <select id="comboCuatrimestre" class="input-large form-control" ng-options="nivelDeRiesgo for nivelDeRiesgo in vm.nivelDeRiesgoList" ng-model="vm.adm_nivelDeRiesgoSelected"></select>
+                                </div>
+                            </div>
+                        </div>
+                        <p><button type="submit" class="btn btn-primary" ng-disabled="administracionform.combociclo.$dirty && administracionform.combocuatrimestre.$invalid || administracionform.combocuatrimestre.$dirty">Buscar</button></p>
+                    </form>
+                    <div class="row">
+                        <div class="col-md-12 col-centered">
+                            <div id="administracionGrid">
+
+                                <table id="administracionTable"></table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="academicoTab" class="tab-pane fade">
+                    <h4>Filtrar búsqueda:</h4>
+                    <form name="administracionForm">
+                        <div class="row">
+                            <div class="col-md-12 col-centered">
+                                <div class="col-md-3 form-group">
+                                    <p>
+                                        <label>Ciclo:</label><!--obligatorio-->
+                                        <input required type="text" name="comboCiclo" class="input-large form-control" placeholder="Ingresar ciclo" />
                                         <span style="color:red" ng-show="administracionForm.comboCiclo.$dirty && administracionForm.comboCiclo.$invalid">
                                             <span ng-show="administracionForm.comboCiclo.$error.required">Username is required.</span>
                                         </span>
@@ -31,8 +106,8 @@
                                 </div>
                                 <div class="col-md-3 form-group">
                                     <p>
-                                        <label>Cuatrimestre:</label><!--obligastorio-->
-                                        <select required name="comboCuatrimestre" class="input-large form-control" ng-options="cuatrimestre for cuatrimestre in vm.cuatrimestreList" ng-model="vm.cuatrimestreSelected"><option></option></select>
+                                        <label>Cuatrimestre:</label><!--obligatorio-->
+                                        <select required name="comboCuatrimestre" class="input-large form-control" ng-options="cuatrimestre for cuatrimestre in vm.cuatrimestreList" ng-model="vm.aca_cuatrimestreSelected"><option></option></select>
                                         <span style="color:red" ng-show="administracionForm.comboCuatrimestre.$dirty && administracionForm.comboCuatrimestre.$invalid">
                                             <span ng-show="administracionForm.comboCuatrimestre.$error.required">Username is required.</span>
                                         </span>
@@ -41,7 +116,7 @@
                                 <div class="col-md-3 form-group">
                                     <p>
                                         <label>Sede:</label>
-                                        <select required name="comboModalidad" class="input-large form-control" ng-options="sede for sede in vm.sedeList" ng-model="vm.sedeSelected"><option></option></select>
+                                        <select required name="comboModalidad" class="input-large form-control" ng-options="sede.code as sede.name for sede in vm.sedeList" ng-model="vm.aca_sedeSelected"></select>
                                         <span style="color:red" ng-show="administracionForm.comboModalidad.$dirty && administracionForm.comboModalidad.$invalid">
                                             <span ng-show="administracionForm.comboModalidad.$error.required">Username is required.</span>
                                         </span>
@@ -49,7 +124,7 @@
                                 </div>
                                 <div class="col-md-3 form-group">
                                     <label>Carrera:</label>
-                                    <select id="comboModalidad" class="input-large form-control" ng-options="carrera for carrera in vm.carreraList" ng-model="vm.carreraSelected"></select>
+                                    <select id="comboModalidad" class="input-large form-control" ng-options="carrera for carrera in vm.carreraList" ng-model="vm.aca_carreraSelected"></select>
                                 </div>
                             </div>
                         </div>
@@ -71,15 +146,15 @@
                                 </div>
                                 <div class="col-md-3 form-group">
                                     <label>Nombre:</label>
-                                    <input type="text" class="form-control" ng-model="vm.nombreSelected">
+                                    <input type="text" class="form-control" ng-model="vm.aca_nombreSelected">
                                 </div>
                                 <div class="col-md-3 form-group">
                                     <label>Apellido:</label>
-                                    <input type="text" class="form-control" ng-model="vm.apellidoSelected">
+                                    <input type="text" class="form-control" ng-model="vm.aca_apellidoSelected">
                                 </div>
                                 <div class="col-md-3 form-group">
                                     <label>DNI:</label>
-                                    <input type="text" class="form-control" ng-model="vm.dniSelected">
+                                    <input type="text" class="form-control" ng-model="vm.aca_dniSelected">
                                 </div>
                             </div>
                         </div>
@@ -87,15 +162,15 @@
                             <div class="col-md-12 col-centered">
                                 <div class="col-md-3 form-group">
                                     <label>KPI:</label>
-                                    <select id="comboCiclo" class="input-large form-control" ng-options="kpi for kpi in vm.kpiList" ng-model="vm.kpiSelected"></select>
+                                    <select id="comboCiclo" class="input-large form-control" ng-options="kpi for kpi in vm.kpiList" ng-model="vm.aca_kpiSelected"></select>
                                 </div>
                                 <div class="col-md-3 form-group">
                                     <label>Nivel de riesgo:</label>
-                                    <select id="comboCuatrimestre" class="input-large form-control" ng-options="nivelDeRiesgo for nivelDeRiesgo in vm.nivelDeRiesgoList" ng-model="vm.nivelDeRiesgoSelected"></select>
+                                    <select id="comboCuatrimestre" class="input-large form-control" ng-options="nivelDeRiesgo for nivelDeRiesgo in vm.nivelDeRiesgoList" ng-model="vm.aca_nivelDeRiesgoSelected"></select>
                                 </div>
                             </div>
                         </div>
-                        <p><input type="submit" ng-disabled="administracionForm.comboCiclo.$dirty && administracionForm.comboCuatrimestre.$invalid || administracionForm.comboCuatrimestre.$dirty"></p>
+                        <p><button type="submit" class="btn btn-primary" ng-disabled="administracionform.combociclo.$dirty && administracionform.combocuatrimestre.$invalid || administracionform.combocuatrimestre.$dirty">Buscar</button></p>
                     </form>
                     <div class="row">
                         <div class="col-md-12 col-centered">
@@ -106,9 +181,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div id="academicoTab" class="tab-pane fade">
-                    <h3>Menu 2</h3>
                 </div>
             </div>
         </div>

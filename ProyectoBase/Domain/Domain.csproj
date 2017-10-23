@@ -52,6 +52,7 @@
     <Compile Include="DTO\Menu\MenuGroupDTO.cs" />
     <Compile Include="DTO\Permission\PermissionDTO.cs" />
     <Compile Include="DTO\SessionToken\SessionTokenDTO.cs" />
+    <Compile Include="DTO\UniAlumno\KPIMorososDTO.cs" />
     <Compile Include="DTO\UniAlumno\UniAlumnoDatosPersonalesDTO.cs" />
     <Compile Include="DTO\UniAlumno\UniAlumnoDTO.cs" />
     <Compile Include="DTO\UniEdificio\UniEdificioDTO.cs" />
@@ -59,6 +60,7 @@
     <Compile Include="DTO\UniEscuela\UniEscuelaModalidadDTO.cs" />
     <Compile Include="DTO\UniPlan\UniPlanDTO.cs" />
     <Compile Include="DTO\UniPlan\UniPlanMateriaDTO.cs" />
+    <Compile Include="DTO\UniRegional\UniRegionalDTO.cs" />
     <Compile Include="DTO\UniTurno\UniTurnoDTO.cs" />
     <Compile Include="DTO\User\LoginResponseDTO.cs" />
     <Compile Include="DTO\User\LoginUserDTO.cs" />

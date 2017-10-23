@@ -92,6 +92,7 @@
     <Compile Include="Controllers\Business\HttpResponseController.cs" />
     <Compile Include="Controllers\Business\UniEdificioController.cs" />
     <Compile Include="Controllers\Business\UniPlanController.cs" />
+    <Compile Include="Controllers\Business\UniRegionalController.cs" />
     <Compile Include="Controllers\Configuration\MenuController.cs" />
     <Compile Include="Controllers\Business\UniAlumnoController.cs" />
     <Compile Include="Controllers\Business\UniEscuelaController.cs" />

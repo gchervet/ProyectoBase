@@ -31,5 +31,13 @@ namespace Data
                 return context.sp_uni_get_datos_alumno_username(username).FirstOrDefault();
             }
         }
+
+        public static List<sp_KPI_Morosos_Result> GetKPIMorosos(int? minimoDiasDeuda, int? minimoDiasPago, int? legajo, int? sede, string carrera, string nombre, string apellido, decimal? dni, int? kpi_monto_mayor, int? kpi_monto_menor)
+        {
+            using (var context = new Uni_Entities())
+            {
+                return context.sp_KPI_Morosos(minimoDiasDeuda, minimoDiasPago, legajo, sede, carrera, nombre, apellido, dni, kpi_monto_mayor, kpi_monto_menor).ToList();
+            }
+        }
     }
 }

@@ -3,6 +3,8 @@
 
       var indicadoresDePermanenciaController = this;
 
+      currentTabPrefix = 'adm';
+
       indicadoresDePermanenciaController.init = function () {
 
           Auth.tokenCookieExists();
@@ -11,6 +13,15 @@
               $rootScope.logout();
           }
 
+          $('a[data-toggle="pill"]').on('shown.bs.tab', function (e) {
+              
+              if (currentTabPrefix == 'adm') {
+                  currentTabPrefix = 'aca';
+              } else {
+                  currentTabPrefix = 'adm';
+              }
+          });
+
           indicadoresDePermanenciaController.loadLists();
           indicadoresDePermanenciaController.loadPersonMethods();
           indicadoresDePermanenciaController.loadGrids();
@@ -18,40 +29,104 @@
 
       indicadoresDePermanenciaController.loadLists = function () {
 
-          indicadoresDePermanenciaController.legajoSelected = null;
-          indicadoresDePermanenciaController.nombreSelected = null;
-          indicadoresDePermanenciaController.apellidoSelected = null;
-          indicadoresDePermanenciaController.dniSelected = null;
+          // Variables para Tab-Administración
+          indicadoresDePermanenciaController.adm_legajoSelected = null;
+          indicadoresDePermanenciaController.adm_nombreSelected = null;
+          indicadoresDePermanenciaController.adm_apellidoSelected = null;
+          indicadoresDePermanenciaController.adm_dniSelected = null;
 
-          indicadoresDePermanenciaController.cicloSelected = null;
-          indicadoresDePermanenciaController.cuatrimestreSelected = null;
-          indicadoresDePermanenciaController.sedeSelected = null;
-          indicadoresDePermanenciaController.carreraSelected = null;
-          indicadoresDePermanenciaController.kpiSelected = null;
-          indicadoresDePermanenciaController.nivelDeRiesgoSelected = null;
+          indicadoresDePermanenciaController.adm_cicloSelected = null;
+          indicadoresDePermanenciaController.adm_cuatrimestreSelected = null;
+          indicadoresDePermanenciaController.adm_sedeSelected = null;
+          indicadoresDePermanenciaController.adm_carreraSelected = null;
+          indicadoresDePermanenciaController.adm_kpiSelected = null;
+          indicadoresDePermanenciaController.adm_nivelDeRiesgoSelected = null;
 
-          indicadoresDePermanenciaController.cicloList = [1];
-          indicadoresDePermanenciaController.cuatrimestreList = [1, 2];
-          indicadoresDePermanenciaController.sedeList = [1];
-          indicadoresDePermanenciaController.carreraList = [1];
-          indicadoresDePermanenciaController.kpiList = [1];
-          indicadoresDePermanenciaController.nivelDeRiesgoList = [1];
+          // Variables para Tab-Académico
+          indicadoresDePermanenciaController.aca_legajoSelected = null;
+          indicadoresDePermanenciaController.aca_nombreSelected = null;
+          indicadoresDePermanenciaController.aca_apellidoSelected = null;
+          indicadoresDePermanenciaController.aca_dniSelected = null;
+
+          indicadoresDePermanenciaController.aca_cicloSelected = null;
+          indicadoresDePermanenciaController.aca_cuatrimestreSelected = null;
+          indicadoresDePermanenciaController.aca_sedeSelected = null;
+          indicadoresDePermanenciaController.aca_planSelected = null;
+          indicadoresDePermanenciaController.aca_kpiSelected = null;
+          indicadoresDePermanenciaController.aca_nivelDeRiesgoSelected = null;
+
+          // Variables generales
+          indicadoresDePermanenciaController.cicloList = [];
+          indicadoresDePermanenciaController.cuatrimestreList = [];
+          indicadoresDePermanenciaController.sedeList = [];
+          indicadoresDePermanenciaController.planList = [];
+          indicadoresDePermanenciaController.kpiList = [];
+          indicadoresDePermanenciaController.nivelDeRiesgoList = [];
+
+          var getErrorCallback = function (response) {
+
+          }
+
+          var getRegionalListCallback = function (response) {
+              if (response) {
+                  for (i in response.data) {
+                      var actualSede = response.data[i];
+                      indicadoresDePermanenciaController.sedeList.push(
+                                {
+                                    name: actualSede.Nombre,
+                                    code: actualSede.Codigo,
+                                    customName: actualSede.NombreCustom                                    
+                                });
+                  }
+              }
+          };
+
+          var getPlanListCallback = function (response) {
+              if (response) {
+                  for (i in response.data) {
+                      var actualPlan = response.data[i];
+                      if (actualPlan && actualPlan.CodCar && actualPlan.NombreCarrera) {
+                          indicadoresDePermanenciaController.planList.push(
+                                    {
+                                        name: "(" + actualPlan.CodCar + ") " + actualPlan.NombreCarrera,
+                                        code: actualPlan.CodCar,
+                                        modalidadList: actualPlan.ModalidadList
+                                    });
+                      }
+                  }
+              }
+          };
+
+          utilityService.callHttp({ method: "GET", url: "/api/UniPlan/GetAll", callbackSuccess: getPlanListCallback, callbackError: getErrorCallback });
+          utilityService.callHttp({ method: "GET", url: "/api/UniRegional/GetAll", callbackSuccess: getRegionalListCallback, callbackError: getErrorCallback });
 
       };
 
       indicadoresDePermanenciaController.loadPersonMethods = function () {
-          indicadoresDePermanenciaController.legajoSelected = null;
+
+          indicadoresDePermanenciaController.adm_legajoSelected = null;
+          indicadoresDePermanenciaController.aca_legajoSelected = null;
           indicadoresDePermanenciaController.legajoList = [
               { legajo: "12334", nombre: "Gonzalo Germán", apellido: "Chervet" , dni:"37375737"},
               { legajo: "87922", nombre: "Marcelo Daniel", apellido: "Martini" , dni:"19195419"},
               { legajo: "99876", nombre: "Gustavo Martin", apellido: "Blumberg", dni:"46467979" }];
-
+          
           indicadoresDePermanenciaController.legajoWasSelected = function (select) {
-              indicadoresDePermanenciaController.legajoSelected = select.originalObject;
 
-              indicadoresDePermanenciaController.nombreSelected = select.originalObject.nombre;
-              indicadoresDePermanenciaController.apellidoSelected = select.originalObject.apellido;
-              indicadoresDePermanenciaController.dniSelected = select.originalObject.dni;
+              if (currentTabPrefix == 'aca') {
+                  indicadoresDePermanenciaController.aca_legajoSelected = select.originalObject;
+
+                  indicadoresDePermanenciaController.aca_nombreSelected = select.originalObject.nombre;
+                  indicadoresDePermanenciaController.aca_apellidoSelected = select.originalObject.apellido;
+                  indicadoresDePermanenciaController.aca_dniSelected = select.originalObject.dni;
+              }
+              if (currentTabPrefix == 'adm') {
+                  indicadoresDePermanenciaController.adm_legajoSelected = select.originalObject;
+
+                  indicadoresDePermanenciaController.adm_nombreSelected = select.originalObject.nombre;
+                  indicadoresDePermanenciaController.adm_apellidoSelected = select.originalObject.apellido;
+                  indicadoresDePermanenciaController.adm_dniSelected = select.originalObject.dni;
+              }
 
           };
 
@@ -141,6 +216,12 @@
               }, {
                   field: 'FinalesReprobados',
                   title: 'Finales reprobados'
+              }, {
+                  field: 'Telefono',
+                  title: 'Teléfono'
+              }, {
+                  field: 'CorreoElectronico',
+                  title: 'Correo electrónico'
               }],
               data: indicadoresDePermanenciaController.resultList,
               detailView: true,

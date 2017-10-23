@@ -46,6 +46,7 @@
     <Compile Include="Business\UniEdificio\UniEdificioService.cs" />
     <Compile Include="Business\UniEscuela\UniEscuelaService.cs" />
     <Compile Include="Business\UniPlan\UniPlanService.cs" />
+    <Compile Include="Business\UniRegional\UniRegionalService.cs" />
     <Compile Include="Business\UniTurno\UniTurnoService.cs" />
     <Compile Include="Configuration\Menu\MenuService.cs" />
     <Compile Include="Configuration\Permission\PermissionService.cs" />

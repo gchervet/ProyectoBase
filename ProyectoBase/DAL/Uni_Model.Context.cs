@@ -38,6 +38,7 @@ namespace Data
         public virtual DbSet<uniEdificios> uniEdificios { get; set; }
         public virtual DbSet<uniPlanes> uniPlanes { get; set; }
         public virtual DbSet<uniPlanesMaterias> uniPlanesMaterias { get; set; }
+        public virtual DbSet<uniRegionales> uniRegionales { get; set; }
     
         public virtual ObjectResult<sp_get_UniAlumnos_Result> sp_get_UniAlumnos(Nullable<int> legprovi, Nullable<int> legdef, string username, Nullable<long> docnac)
         {
@@ -89,6 +90,51 @@ namespace Data
                 new ObjectParameter("codigo", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_get_PlanesMateriasDetalladasByCodigoPlan_Result>("sp_get_PlanesMateriasDetalladasByCodigoPlan", codigoParameter);
+        }
+    
+        public virtual ObjectResult<sp_KPI_Morosos_Result> sp_KPI_Morosos(Nullable<int> minimoDiasDeuda, Nullable<int> minimoDiasPago, Nullable<int> legajo, Nullable<int> sede, string carrera, string nombre, string apellido, Nullable<decimal> dni, Nullable<int> kpi_monto_mayor, Nullable<int> kpi_monto_menor)
+        {
+            var minimoDiasDeudaParameter = minimoDiasDeuda.HasValue ?
+                new ObjectParameter("minimoDiasDeuda", minimoDiasDeuda) :
+                new ObjectParameter("minimoDiasDeuda", typeof(int));
+    
+            var minimoDiasPagoParameter = minimoDiasPago.HasValue ?
+                new ObjectParameter("minimoDiasPago", minimoDiasPago) :
+                new ObjectParameter("minimoDiasPago", typeof(int));
+    
+            var legajoParameter = legajo.HasValue ?
+                new ObjectParameter("legajo", legajo) :
+                new ObjectParameter("legajo", typeof(int));
+    
+            var sedeParameter = sede.HasValue ?
+                new ObjectParameter("sede", sede) :
+                new ObjectParameter("sede", typeof(int));
+    
+            var carreraParameter = carrera != null ?
+                new ObjectParameter("carrera", carrera) :
+                new ObjectParameter("carrera", typeof(string));
+    
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("nombre", nombre) :
+                new ObjectParameter("nombre", typeof(string));
+    
+            var apellidoParameter = apellido != null ?
+                new ObjectParameter("apellido", apellido) :
+                new ObjectParameter("apellido", typeof(string));
+    
+            var dniParameter = dni.HasValue ?
+                new ObjectParameter("dni", dni) :
+                new ObjectParameter("dni", typeof(decimal));
+    
+            var kpi_monto_mayorParameter = kpi_monto_mayor.HasValue ?
+                new ObjectParameter("kpi_monto_mayor", kpi_monto_mayor) :
+                new ObjectParameter("kpi_monto_mayor", typeof(int));
+    
+            var kpi_monto_menorParameter = kpi_monto_menor.HasValue ?
+                new ObjectParameter("kpi_monto_menor", kpi_monto_menor) :
+                new ObjectParameter("kpi_monto_menor", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_KPI_Morosos_Result>("sp_KPI_Morosos", minimoDiasDeudaParameter, minimoDiasPagoParameter, legajoParameter, sedeParameter, carreraParameter, nombreParameter, apellidoParameter, dniParameter, kpi_monto_mayorParameter, kpi_monto_menorParameter);
         }
     }
 }

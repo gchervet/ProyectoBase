@@ -168,6 +168,14 @@
           <Property Name="modulosdistancia" Type="int" />
           <Property Name="clasespresenciales" Type="int" />
         </EntityType>
+        <EntityType Name="uniRegionales">
+          <Key>
+            <PropertyRef Name="codigo" />
+          </Key>
+          <Property Name="codigo" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" />
+          <Property Name="NombreCustom" Type="varchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="uniTurnosExamenes">
           <Key>
             <PropertyRef Name="Clave" />
@@ -233,6 +241,18 @@
           <Parameter Name="cursoEdicionId" Type="bigint" Mode="In" />
           <Parameter Name="convenioId" Type="int" Mode="In" />
         </Function>
+        <Function Name="sp_KPI_Morosos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="minimoDiasDeuda" Type="int" Mode="In" />
+          <Parameter Name="minimoDiasPago" Type="int" Mode="In" />
+          <Parameter Name="legajo" Type="int" Mode="In" />
+          <Parameter Name="sede" Type="int" Mode="In" />
+          <Parameter Name="carrera" Type="varchar" Mode="In" />
+          <Parameter Name="nombre" Type="varchar" Mode="In" />
+          <Parameter Name="apellido" Type="varchar" Mode="In" />
+          <Parameter Name="dni" Type="numeric" Mode="In" />
+          <Parameter Name="kpi_monto_mayor" Type="int" Mode="In" />
+          <Parameter Name="kpi_monto_menor" Type="int" Mode="In" />
+        </Function>
         <Function Name="sp_uni_get_datos_alumno_username" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="username" Type="varchar" Mode="In" />
         </Function>
@@ -246,6 +266,7 @@
           <EntitySet Name="UniEscuelasModalidades" EntityType="Self.UniEscuelasModalidades" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="uniPlanes" EntityType="Self.uniPlanes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="uniPlanesMaterias" EntityType="Self.uniPlanesMaterias" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="uniRegionales" EntityType="Self.uniRegionales" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="uniTurnosExamenes" EntityType="Self.uniTurnosExamenes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="uniTurnosHabilitados" EntityType="Self.uniTurnosHabilitados" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_UniEscuelasModalidades_uniEscuelas" Association="Self.FK_UniEscuelasModalidades_uniEscuelas">
@@ -378,8 +399,21 @@
             <End Role="uniPlanes" EntitySet="uniPlanes" />
           </AssociationSet>
           <FunctionImport Name="sp_get_PlanesMateriasDetalladasByCodigoPlan" ReturnType="Collection(Uni_Model.sp_get_PlanesMateriasDetalladasByCodigoPlan_Result)">
-            <Parameter Name="codigo" Mode="In" Type="String" />
+          <Parameter Name="codigo" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="sp_KPI_Morosos" ReturnType="Collection(Uni_Model.sp_KPI_Morosos_Result)">
+            <Parameter Name="minimoDiasDeuda" Mode="In" Type="Int32" />
+            <Parameter Name="minimoDiasPago" Mode="In" Type="Int32" />
+            <Parameter Name="legajo" Mode="In" Type="Int32" />
+            <Parameter Name="sede" Mode="In" Type="Int32" />
+            <Parameter Name="carrera" Mode="In" Type="String" />
+            <Parameter Name="nombre" Mode="In" Type="String" />
+            <Parameter Name="apellido" Mode="In" Type="String" />
+            <Parameter Name="dni" Mode="In" Type="Decimal" />
+            <Parameter Name="kpi_monto_mayor" Mode="In" Type="Int32" />
+            <Parameter Name="kpi_monto_menor" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="uniRegionales" EntityType="Uni_Model.uniRegionales" />
         </EntityContainer>
         <ComplexType Name="sp_get_UniAlumnos_Result">
           <Property Type="Int32" Name="legprovi" Nullable="false" />
@@ -600,6 +634,28 @@
           <Property Type="String" Name="NombreMateria" Nullable="true" MaxLength="35" />
           <Property Type="String" Name="ConceptoId" Nullable="true" MaxLength="10" />
         </ComplexType>
+        <ComplexType Name="sp_KPI_Morosos_Result">
+          <Property Type="Int32" Name="Legajo" Nullable="false" />
+          <Property Type="String" Name="Carrera" Nullable="true" MaxLength="4" />
+          <Property Type="String" Name="Apellido" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="Nombre" Nullable="true" MaxLength="30" />
+          <Property Type="Decimal" Name="Dni" Nullable="true" Precision="9" Scale="0" />
+          <Property Type="Decimal" Name="DeudaToal" Nullable="true" Precision="38" Scale="4" />
+          <Property Type="Int32" Name="DiasDeuda" Nullable="true" />
+          <Property Type="DateTime" Name="FechaUltimoPago" Nullable="true" />
+          <Property Type="Decimal" Name="ImporteUltimoPago" Nullable="true" Precision="18" Scale="4" />
+          <Property Type="DateTime" Name="UltimaActAca" Nullable="true" />
+          <Property Type="String" Name="Telefono" Nullable="true" MaxLength="25" />
+          <Property Type="String" Name="Mail" Nullable="true" MaxLength="100" />
+        </ComplexType>
+        <EntityType Name="uniRegionales">
+          <Key>
+            <PropertyRef Name="codigo" />
+          </Key>
+          <Property Name="codigo" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="NombreCustom" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -901,6 +957,33 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_KPI_Morosos" FunctionName="Uni_Model.Store.sp_KPI_Morosos">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Uni_Model.sp_KPI_Morosos_Result">
+                <ScalarProperty Name="Legajo" ColumnName="Legajo" />
+                <ScalarProperty Name="Carrera" ColumnName="Carrera" />
+                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Dni" ColumnName="Dni" />
+                <ScalarProperty Name="DeudaToal" ColumnName="DeudaToal" />
+                <ScalarProperty Name="DiasDeuda" ColumnName="DiasDeuda" />
+                <ScalarProperty Name="FechaUltimoPago" ColumnName="FechaUltimoPago" />
+                <ScalarProperty Name="ImporteUltimoPago" ColumnName="ImporteUltimoPago" />
+                <ScalarProperty Name="UltimaActAca" ColumnName="UltimaActAca" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Mail" ColumnName="Mail" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="uniRegionales">
+            <EntityTypeMapping TypeName="Uni_Model.uniRegionales">
+              <MappingFragment StoreEntitySet="uniRegionales">
+                <ScalarProperty Name="NombreCustom" ColumnName="NombreCustom" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="codigo" ColumnName="codigo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
