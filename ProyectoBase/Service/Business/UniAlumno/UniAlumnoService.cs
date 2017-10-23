@@ -31,5 +31,17 @@ namespace Service
             }
             return rtn;
         }
+
+        public static List<UniAlumnoDTO> GetByLegajoMatch(string legajo)
+        {
+            List<UniAlumnoDTO> rtn = new List<UniAlumnoDTO>();
+            List<sp_get_alumno_by_legajo_match_Result> uniAlumnoModelList = UniAlumnoDAL.GetByLegajoMatch(legajo);
+
+            foreach (sp_get_alumno_by_legajo_match_Result uniAlumnoModel in uniAlumnoModelList)
+            {
+                rtn.Add(new UniAlumnoDTO(uniAlumnoModel));
+            }
+            return rtn;
+        }
     }
 }

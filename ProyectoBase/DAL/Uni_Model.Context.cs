@@ -136,5 +136,14 @@ namespace Data
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_KPI_Morosos_Result>("sp_KPI_Morosos", minimoDiasDeudaParameter, minimoDiasPagoParameter, legajoParameter, sedeParameter, carreraParameter, nombreParameter, apellidoParameter, dniParameter, kpi_monto_mayorParameter, kpi_monto_menorParameter);
         }
+    
+        public virtual ObjectResult<sp_get_alumno_by_legajo_match_Result> sp_get_alumno_by_legajo_match(string legajo)
+        {
+            var legajoParameter = legajo != null ?
+                new ObjectParameter("legajo", legajo) :
+                new ObjectParameter("legajo", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_get_alumno_by_legajo_match_Result>("sp_get_alumno_by_legajo_match", legajoParameter);
+        }
     }
 }

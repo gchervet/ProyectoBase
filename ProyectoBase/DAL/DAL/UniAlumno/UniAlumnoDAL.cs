@@ -39,5 +39,13 @@ namespace Data
                 return context.sp_KPI_Morosos(minimoDiasDeuda, minimoDiasPago, legajo, sede, carrera, nombre, apellido, dni, kpi_monto_mayor, kpi_monto_menor).ToList();
             }
         }
+
+        public static List<sp_get_alumno_by_legajo_match_Result> GetByLegajoMatch(string legajo)
+        {
+            using (var context = new Uni_Entities())
+            {
+                return context.sp_get_alumno_by_legajo_match(legajo).ToList();
+            }
+        }
     }
 }

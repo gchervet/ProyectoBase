@@ -228,6 +228,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="sp_get_alumno_by_legajo_match" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="legajo" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="sp_get_PlanesMateriasDetalladasByCodigoPlan" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="codigo" Type="varchar" Mode="In" />
         </Function>
@@ -414,6 +417,9 @@
             <Parameter Name="kpi_monto_menor" Mode="In" Type="Int32" />
           </FunctionImport>
           <EntitySet Name="uniRegionales" EntityType="Uni_Model.uniRegionales" />
+          <FunctionImport Name="sp_get_alumno_by_legajo_match" ReturnType="Collection(Uni_Model.sp_get_alumno_by_legajo_match_Result)">
+            <Parameter Name="legajo" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_get_UniAlumnos_Result">
           <Property Type="Int32" Name="legprovi" Nullable="false" />
@@ -656,6 +662,13 @@
           <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="NombreCustom" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
+        <ComplexType Name="sp_get_alumno_by_legajo_match_Result">
+          <Property Type="Int32" Name="legProvi" Nullable="false" />
+          <Property Type="Int32" Name="legdef" Nullable="true" />
+          <Property Type="String" Name="nombre" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="apellido" Nullable="true" MaxLength="30" />
+          <Property Type="Decimal" Name="docnac" Nullable="true" Precision="9" Scale="0" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -984,6 +997,17 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_get_alumno_by_legajo_match" FunctionName="Uni_Model.Store.sp_get_alumno_by_legajo_match">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Uni_Model.sp_get_alumno_by_legajo_match_Result">
+                <ScalarProperty Name="legProvi" ColumnName="legProvi" />
+                <ScalarProperty Name="legdef" ColumnName="legdef" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="apellido" ColumnName="apellido" />
+                <ScalarProperty Name="docnac" ColumnName="docnac" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

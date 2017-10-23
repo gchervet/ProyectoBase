@@ -12,7 +12,8 @@
           if ($sessionStorage.user == null) {
               $rootScope.logout();
           }
-
+          
+          // Variable toggle de las tabs
           $('a[data-toggle="pill"]').on('shown.bs.tab', function (e) {
               
               if (currentTabPrefix == 'adm') {
@@ -56,8 +57,9 @@
           indicadoresDePermanenciaController.aca_nivelDeRiesgoSelected = null;
 
           // Variables generales
+          indicadoresDePermanenciaController.legajoList = [];
           indicadoresDePermanenciaController.cicloList = [];
-          indicadoresDePermanenciaController.cuatrimestreList = [];
+          indicadoresDePermanenciaController.cuatrimestreList = [1,2];
           indicadoresDePermanenciaController.sedeList = [];
           indicadoresDePermanenciaController.planList = [];
           indicadoresDePermanenciaController.kpiList = [];
@@ -106,11 +108,10 @@
 
           indicadoresDePermanenciaController.adm_legajoSelected = null;
           indicadoresDePermanenciaController.aca_legajoSelected = null;
-          indicadoresDePermanenciaController.legajoList = [
-              { legajo: "12334", nombre: "Gonzalo Germán", apellido: "Chervet" , dni:"37375737"},
-              { legajo: "87922", nombre: "Marcelo Daniel", apellido: "Martini" , dni:"19195419"},
-              { legajo: "99876", nombre: "Gustavo Martin", apellido: "Blumberg", dni:"46467979" }];
-          
+
+          //indicadoresDePermanenciaController.legajoList = [{ legajo: "12334", nombre: "Gonzalo Germán", apellido: "Chervet", dni: "37375737" }, { legajo: "87922", nombre: "Marcelo Daniel", apellido: "Martini", dni: "19195419" }, { legajo: "99876", nombre: "Gustavo Martin", apellido: "Blumberg", dni: "46467979" }];
+          indicadoresDePermanenciaController.legajoList = [];
+
           indicadoresDePermanenciaController.legajoWasSelected = function (select) {
 
               if (currentTabPrefix == 'aca') {
@@ -131,7 +132,29 @@
           };
 
           indicadoresDePermanenciaController.legajoInputChanged = function (str) {
-              if (str.length >= 2) {
+              if (str.length >= 3) {
+                  indicadoresDePermanenciaController.legajoList = [];
+
+                  var getErrorCallback = function (response) {
+
+                  }
+
+                  var getLegajoListCallback = function (response) {
+                      if (response) {
+                          for (i in response.data) {
+                              var actualLegajo = response.data[i];
+                              indicadoresDePermanenciaController.legajoList.push(
+                                        {
+                                            legajo: actualLegajo.Nombre,
+                                            nombre: actualLegajo.Codigo,
+                                            apellido: actualLegajo.NombreCustom,
+                                            dni: actualLegajo.DNI
+                                        });
+                          }
+                      }
+                  };
+
+                  utilityService.callHttp({ method: "GET", url: "/api/UniAlumno/GetByLegajoMatch", callbackSuccess: getPlanListCallback, callbackError: getErrorCallback });
               }
           };
 

@@ -67,5 +67,32 @@ namespace Distribution
                 return HttpResponseController.Return_401_Unauthorized(string.Empty);
             }
         }
+
+        /// <summary>
+        /// Obtiene un objeto de alumno. El legajo puede ser provisorio o definitivo.
+        /// </summary>
+        /// <param name="legajo">Número de legajo.</param>
+        /// <returns>Objeto UniAlumnoDTO.</returns>
+        [Route("GetByLegajoMatch")]
+        [HttpGet]
+        [AllowAnonymous]
+        public HttpResponseMessage GetByLegajoMatch(string legajo)
+        {
+            try
+            {
+                string tokenString = this.ActionContext.Request.Headers.GetValues("Authorization").ToList().FirstOrDefault();
+                string userString = this.ActionContext.Request.Headers.GetValues("User").ToList().FirstOrDefault();
+
+                if (SessionTokenService.ValidRequestByUserAndToken(tokenString, userString))
+                {
+                    return HttpResponseController.Return_200_OK(UniAlumnoService.GetByLegajoMatch(legajo));
+                }
+                return HttpResponseController.Return_401_Unauthorized(string.Empty);
+            }
+            catch
+            {
+                return HttpResponseController.Return_401_Unauthorized(string.Empty);
+            }
+        }
     }
 }

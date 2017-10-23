@@ -98,18 +98,32 @@
                                 <div class="col-md-3 form-group">
                                     <p>
                                         <label>Ciclo:</label><!--obligatorio-->
-                                        <input required type="text" name="comboCiclo" class="input-large form-control" placeholder="Ingresar ciclo" />
-                                        <span style="color:red" ng-show="administracionForm.comboCiclo.$dirty && administracionForm.comboCiclo.$invalid">
-                                            <span ng-show="administracionForm.comboCiclo.$error.required">Username is required.</span>
+                                        <input required 
+                                               type="number" 
+                                               oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                               maxlength="4" 
+                                               max="9999" min="1"
+                                               id="inputCiclo"
+                                               name="nameCiclo"
+                                               class="input-large form-control" 
+                                               placeholder="Ingresar ciclo" />
+                                        <span style="color:red" ng-show="administracionForm.nameCiclo.$dirty && administracionForm.nameCiclo.$invalid">
+                                            <span ng-show="administracionForm.nameCiclo.$error.required">Este campo es requerido.</span>
                                         </span>
                                     </p>
                                 </div>
                                 <div class="col-md-3 form-group">
                                     <p>
                                         <label>Cuatrimestre:</label><!--obligatorio-->
-                                        <select required name="comboCuatrimestre" class="input-large form-control" ng-options="cuatrimestre for cuatrimestre in vm.cuatrimestreList" ng-model="vm.aca_cuatrimestreSelected"><option></option></select>
+                                        <select required 
+                                                name="comboCuatrimestre" 
+                                                class="input-large form-control" 
+                                                ng-options="cuatrimestre for cuatrimestre in vm.cuatrimestreList" 
+                                                ng-model="vm.aca_cuatrimestreSelected">
+                                            <option></option>
+                                        </select>
                                         <span style="color:red" ng-show="administracionForm.comboCuatrimestre.$dirty && administracionForm.comboCuatrimestre.$invalid">
-                                            <span ng-show="administracionForm.comboCuatrimestre.$error.required">Username is required.</span>
+                                            <span ng-show="administracionForm.comboCuatrimestre.$error.required">Este campo es requerido.</span>
                                         </span>
                                     </p>
                                 </div>
@@ -117,9 +131,6 @@
                                     <p>
                                         <label>Sede:</label>
                                         <select required name="comboModalidad" class="input-large form-control" ng-options="sede.code as sede.name for sede in vm.sedeList" ng-model="vm.aca_sedeSelected"></select>
-                                        <span style="color:red" ng-show="administracionForm.comboModalidad.$dirty && administracionForm.comboModalidad.$invalid">
-                                            <span ng-show="administracionForm.comboModalidad.$error.required">Username is required.</span>
-                                        </span>
                                     </p>
                                 </div>
                                 <div class="col-md-3 form-group">
