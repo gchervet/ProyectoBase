@@ -12,10 +12,10 @@
           if ($sessionStorage.user == null) {
               $rootScope.logout();
           }
-          
+
           // Variable toggle de las tabs
           $('a[data-toggle="pill"]').on('shown.bs.tab', function (e) {
-              
+
               if (currentTabPrefix == 'adm') {
                   currentTabPrefix = 'aca';
               } else {
@@ -57,9 +57,10 @@
           indicadoresDePermanenciaController.aca_nivelDeRiesgoSelected = null;
 
           // Variables generales
+          indicadoresDePermanenciaController.legajoSearch = '';
           indicadoresDePermanenciaController.legajoList = [];
           indicadoresDePermanenciaController.cicloList = [];
-          indicadoresDePermanenciaController.cuatrimestreList = [1,2];
+          indicadoresDePermanenciaController.cuatrimestreList = [1, 2];
           indicadoresDePermanenciaController.sedeList = [];
           indicadoresDePermanenciaController.planList = [];
           indicadoresDePermanenciaController.kpiList = [];
@@ -77,7 +78,7 @@
                                 {
                                     name: actualSede.Nombre,
                                     code: actualSede.Codigo,
-                                    customName: actualSede.NombreCustom                                    
+                                    customName: actualSede.NombreCustom
                                 });
                   }
               }
@@ -131,8 +132,26 @@
 
           };
 
+          indicadoresDePermanenciaController.legajoSearch = function (str) {
+              var matches = [];
+              for (i in indicadoresDePermanenciaController.legajoList) {
+                  var actualLegajo = indicadoresDePermanenciaController.legajoList[i];
+
+                  if ((actualLegajo.legajoDefinitivo && actualLegajo.legajoDefinitivo.toString().indexOf(str.toString()) >= 0) ||
+                      (actualLegajo.legajoProvisorio && actualLegajo.legajoProvisorio.toString().indexOf(str.toString()) >= 0)) {
+
+                      matches.push(actualLegajo);
+
+                      if (matches.length == 10) {
+                          break;
+                      }
+                  }
+              };
+              return matches;
+          };
+
           indicadoresDePermanenciaController.legajoInputChanged = function (str) {
-              if (str.length >= 3) {
+              if (str.length >= 4) {
                   indicadoresDePermanenciaController.legajoList = [];
 
                   var getErrorCallback = function (response) {
@@ -145,20 +164,93 @@
                               var actualLegajo = response.data[i];
                               indicadoresDePermanenciaController.legajoList.push(
                                         {
-                                            legajo: actualLegajo.Nombre,
-                                            nombre: actualLegajo.Codigo,
-                                            apellido: actualLegajo.NombreCustom,
+                                            legajoDefinitivo: actualLegajo.LegajoDefinitivo,
+                                            legajoProvisorio: actualLegajo.LegajoProvisorio,
+                                            nombre: actualLegajo.Nombre,
+                                            apellido: actualLegajo.Apellido,
                                             dni: actualLegajo.DNI
                                         });
                           }
                       }
                   };
-
-                  utilityService.callHttp({ method: "GET", url: "/api/UniAlumno/GetByLegajoMatch", callbackSuccess: getPlanListCallback, callbackError: getErrorCallback });
+                  utilityService.callHttp({ method: "GET", url: "/api/UniAlumno/GetByLegajoMatch?legajo=" + str, callbackSuccess: getLegajoListCallback, callbackError: getErrorCallback });
               }
           };
-
       };
+
+      indicadoresDePermanenciaController.loadAdministracionGrid = function () {
+
+          indicadoresDePermanenciaController.administracionResultList = [];
+
+          var getErrorCallback = function (response) {
+
+          }
+
+          var getKPIMorosoListCallback = function (response) {
+              if (response) {
+                  for (i in response.data) {
+
+                      /*
+                      Apellido:"ASANZA TENÈN"
+                      Carrera:"3002"
+                      DeudaToal:83373.42
+                      DiasDeuda:449
+                      Dni:95415788
+                      FechaUltimoPago:null
+                      ImporteUltimoPago:null
+                      Legajo:471010
+                      Mail:"karinaasanza@gmail.com"
+                      Nombre:"KARINA LIZBETH"
+                      Telefono:null
+                      UltimaActAca:"/Date(1467342000000)/"
+                      */
+
+                      var actualKPIMoroso = response.data[i];
+
+                      indicadoresDePermanenciaController.administracionResultList.push({
+
+                          Legajo: actualKPIMoroso.Legajo,
+                          Nombre: actualKPIMoroso.Nombre,
+                          Apellido: actualKPIMoroso.Apellido,
+                          DNI: actualKPIMoroso.Dni,
+                          Carrera: actualKPIMoroso.Carrera,
+                          Ciclo: null,
+                          Cuatrimestre: null,
+                          ValorDeDeuda: 'ALTO',
+                          DeudaMonto: actualKPIMoroso.DeudaToal,
+
+                      })
+                  }
+
+                  $('#administracionTable').bootstrapTable('load', indicadoresDePermanenciaController.administracionResultList);
+              }
+          };
+          //utilityService.callHttp({
+          //    method: "GET", url: "/api/UniAlumno/GetKPIMorosos?legajo=" + indicadoresDePermanenciaController.adm_legajoSelected +
+          //                                                      "&sede=" + indicadoresDePermanenciaController.adm_sedeSelected +
+          //                                                      "&carrera=" + indicadoresDePermanenciaController.adm_planSelected +
+          //                                                      "&nombre=" + indicadoresDePermanenciaController.adm_nombreSelected +
+          //                                                      "&apellido=" +indicadoresDePermanenciaController.adm_apellidoSelected +
+          //                                                      "&dni=" + indicadoresDePermanenciaController.adm_dniSelected +
+          //                                                      "&kpi_monto_mayor=" + indicadoresDePermanenciaController.adm_nivelDeRiesgoSelected
+          //                                                      ,callbackSuccess: getLegajoListCallback, callbackError: getErrorCallback
+          //});
+
+
+          utilityService.callHttp({
+              method: "GET", url: "/api/UniAlumno/GetKPIMorosos?legajo" +
+                                                                "&sede" +
+                                                                "&carrera=3002" +
+                                                                "&nombre" +
+                                                                "&apellido" +
+                                                                "&dni" +
+                                                                "&kpi_monto_mayor=10000" +
+                                                                "&kpi_monto_menor" +
+                                                                "&minimoDiasDeuda=90" +
+                                                                "&minimoDiasPago=0"
+                                                                , callbackSuccess: getKPIMorosoListCallback, callbackError: getErrorCallback
+          });
+      }
 
       indicadoresDePermanenciaController.loadGrids = function () {
 
@@ -207,7 +299,9 @@
               }]
           }];
 
-          $('#administracionTable').bootstrapTable({
+          $('#administracionTable').bootstrapTable({ data: indicadoresDePermanenciaController.administracionResultList });
+
+          $('#academicoTable').bootstrapTable({
 
               columns: [{
                   field: 'Legajo',
