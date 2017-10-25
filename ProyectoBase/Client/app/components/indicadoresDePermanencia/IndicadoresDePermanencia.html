@@ -17,7 +17,7 @@
             <div class="tab-content">
                 <div id="academicoTab" class="tab-pane active">
                     <h4>Filtrar búsqueda:</h4>
-                    <form name="academicoTab">
+                    <form name="academicoForm">
                         <div class="row">                            
                             <div class="col-md-12 col-centered">
                                 <div class="col-md-3 form-group">
@@ -56,8 +56,8 @@
                                     <p>
                                         <label>Sede:</label>
                                         <select required name="comboSede" class="input-large form-control" ng-options="sede.code as sede.name for sede in vm.sedeList" ng-model="vm.aca_sedeSelected"></select>
-                                        <span style="color:red" ng-show="administracionForm.comboModalidad.$dirty && administracionForm.comboModalidad.$invalid">
-                                            <span ng-show="administracionForm.comboModalidad.$error.required">Username is required.</span>
+                                        <span style="color:red" ng-show="academicoForm.comboModalidad.$dirty && academicoForm.comboModalidad.$invalid">
+                                            <span ng-show="academicoForm.comboModalidad.$error.required">Username is required.</span>
                                         </span>
                                     </p>
                                 </div>
@@ -111,7 +111,7 @@
                                 </div>
                             </div>
                         </div>
-                        <p><button type="submit" class="btn btn-primary" ng-disabled="administracionform.combociclo.$dirty && administracionform.combocuatrimestre.$invalid || administracionform.combocuatrimestre.$dirty">Buscar</button></p>
+                        <p><button type="submit" class="btn btn-primary" ng-disabled="academicoForm.combocuatrimestre.$invalid || academicoForm.combocuatrimestre.$dirty">Buscar</button></p>
                     </form>
                     <div class="row">
                         <div class="col-md-12 col-centered">
@@ -126,19 +126,19 @@
 
                 <div id="administracionTab" class="tab-pane fade">
                     <h4>Filtrar búsqueda:</h4>
-                    <form name="administracionTab">
+                    <form name="administracionForm">
                         <div class="row">
                             <div class="col-md-12 col-centered">
                              
                                 <div class="col-md-3 form-group">
                                     <p>
-                                        <label>Sede:</label>
-                                        <select required name="comboModalidad" class="input-large form-control" ng-options="sede.code as sede.name for sede in vm.sedeList" ng-model="vm.adm_sedeSelected"></select>
+                                        <label>Sede:<span style="color: red" title="Campo requerido" ng-show="administracionForm.comboSede.$invalid"> (Campo requerido)</span></label>
+                                        <select required name="comboSede" class="input-large form-control" ng-options="sede.code as sede.name for sede in vm.sedeList" ng-model="vm.adm_sedeSelected"></select>
                                     </p>
                                 </div>
                                 <div class="col-md-3 form-group">
                                     <label>Carrera:</label>
-                                    <select id="comboModalidad" class="input-large form-control" ng-options="carrera for carrera in vm.carreraList" ng-model="vm.adm_carreraSelected"></select>
+                                    <select id="comboCarrera" name="comboCarrera" class="input-large form-control" ng-options="carrera for carrera in vm.carreraList" ng-model="vm.adm_carreraSelected"></select>
                                 </div>
                             </div>
                         </div>
@@ -187,7 +187,7 @@
                                 </div>
                             </div>
                         </div>
-                        <p><button type="submit" class="btn btn-primary" ng-disabled="administracionform.combociclo.$dirty && administracionform.combocuatrimestre.$invalid || administracionform.combocuatrimestre.$dirty" ng-click="vm.loadAdministracionGrid()">Buscar</button></p>
+                        <p><button type="submit" class="btn btn-primary" ng-disabled="administracionForm.comboSede.$invalid" ng-click="vm.loadAdministracionGrid()">Buscar</button></p>
                     </form>
                     <div class="row">
                         <div class="col-md-12 col-centered">

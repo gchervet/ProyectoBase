@@ -165,7 +165,6 @@
           indicadoresDePermanenciaController.adm_legajoSelected = null;
           indicadoresDePermanenciaController.aca_legajoSelected = null;
 
-          //indicadoresDePermanenciaController.legajoList = [{ legajo: "12334", nombre: "Gonzalo Germán", apellido: "Chervet", dni: "37375737" }, { legajo: "87922", nombre: "Marcelo Daniel", apellido: "Martini", dni: "19195419" }, { legajo: "99876", nombre: "Gustavo Martin", apellido: "Blumberg", dni: "46467979" }];
           indicadoresDePermanenciaController.legajoList = [];
 
           indicadoresDePermanenciaController.legajoWasSelected = function (select) {
