@@ -32,7 +32,7 @@
       indicadoresDePermanenciaController.loadRequestMethods = function () {
 
           indicadoresDePermanenciaController.getErrorCallback = function (response) {
-
+              alert(response);
           }
 
           indicadoresDePermanenciaController.getRegionalListCallback = function (response) {
