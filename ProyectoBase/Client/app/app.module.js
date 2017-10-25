@@ -7,6 +7,5 @@ var app = angular.module("app", [
     'ngCookies',
     'AuthServices',
     "blockUI",
-    "angucomplete-alt",
     "ngMaterial"
 ]);

@@ -115,6 +115,7 @@
     <Content Include="app\shared\libs\bootstrap-table-filter-control.js" />
     <Content Include="app\shared\libs\bootstrap-table.js" />
     <Content Include="app\shared\libs\bootstrap.min.js" />
+    <Content Include="app\shared\libs\jquery.autocomplete.js" />
     <Content Include="app\shared\libs\jquery.min.js" />
     <Content Include="app\shared\libs\ngStorage.min.js" />
     <Content Include="app\shared\libs\ui-bootstrap-tpls-0.13.0.min.js" />
@@ -134,6 +135,7 @@
     <Content Include="assets\css\custom.css" />
     <Content Include="assets\css\font-awesome.min.css" />
     <Content Include="assets\css\jquery-ui.css" />
+    <Content Include="assets\css\jquery.autocomplete.css" />
     <Content Include="assets\css\uk.css" />
     <Content Include="assets\fonts\fontawesome-webfont.svg" />
     <Content Include="assets\img\Logo_keneddy_oficial.png" />

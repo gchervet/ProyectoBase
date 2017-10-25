@@ -71,19 +71,7 @@
                             <div class="col-md-12 col-centered">
                                 <div class="col-md-3 form-group">
                                     <label>Legajo:</label> <!--Autocomplete-->
-                                    <div angucomplete-alt id="legajoInput"
-                                         placeholder="Buscar legajo"
-                                         pause="100"
-                                         selected-object="vm.legajoWasSelected"
-                                         local-data="vm.legajoList"
-                                         local-search="vm.legajoSearch"
-                                         search-fields="legajoDefinitivo.legajoProvisorio"
-                                         title-field="legajoDefinitivo"
-                                         description-field="nombre.apellido"
-                                         input-changed="vm.legajoInputChanged"
-                                         minlength="1"
-                                         tab-prefix="adm"
-                                         input-class="form-control"></div>
+                                    <input class="form-control" id="adm_comboLegajo" ng-model="vm.adm_legajoSearchText"/>
                                 </div>
                                 <div class="col-md-3 form-group">
                                     <label>Nombre:</label>
@@ -111,7 +99,7 @@
                                 </div>
                             </div>
                         </div>
-                        <p><button type="submit" class="btn btn-primary" ng-disabled="academicoForm.combocuatrimestre.$invalid || academicoForm.combocuatrimestre.$dirty">Buscar</button></p>
+                        <p><button type="submit" class="btn btn-primary" ng-disabled="academicoForm.combocuatrimestre.$invalid || academicoForm.combocuatrimestre.$dirty" ng-click="vm.updateLegajo()">Buscar</button></p>
                     </form>
 
                     <h4>Resultados:</h4>

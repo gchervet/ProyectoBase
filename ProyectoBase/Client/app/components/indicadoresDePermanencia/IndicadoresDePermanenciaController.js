@@ -64,7 +64,7 @@
                   }
               }
           };
-          
+
           indicadoresDePermanenciaController.getKPIMorosoListCallback = function (response) {
               if (response) {
                   for (i in response.data) {
@@ -117,7 +117,21 @@
           };
       }
 
+      indicadoresDePermanenciaController.updateLegajo = function () {
+
+          indicadoresDePermanenciaController.newSource = ['HOLA', 'CHAU'];
+          $(function () {
+              $("#adm_comboLegajo").autocomplete({ source: indicadoresDePermanenciaController.newSource });
+          });
+      };
+
       indicadoresDePermanenciaController.loadLists = function () {
+          indicadoresDePermanenciaController.source = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California'];
+          $(function () {
+              $("#adm_comboLegajo").autocomplete({
+                  source: [indicadoresDePermanenciaController.source]
+              });
+          });
 
           // Variables para Tab-Administración
           indicadoresDePermanenciaController.adm_legajoSelected = null;
@@ -146,7 +160,8 @@
           indicadoresDePermanenciaController.aca_nivelDeRiesgoSelected = null;
 
           // Variables generales
-          indicadoresDePermanenciaController.legajoSearch = '';
+          indicadoresDePermanenciaController.adm_legajoSearchText = '';
+          indicadoresDePermanenciaController.aca_legajoSearchText = '';
           indicadoresDePermanenciaController.legajoList = [];
           indicadoresDePermanenciaController.cicloList = [];
           indicadoresDePermanenciaController.cuatrimestreList = [1, 2];
@@ -207,8 +222,8 @@
           indicadoresDePermanenciaController.legajoInputChanged = function (str) {
               if (str.length >= 4) {
                   indicadoresDePermanenciaController.legajoList = [];
-                  
-                  
+
+
                   utilityService.callHttp({ method: "GET", url: "/api/UniAlumno/GetByLegajoMatch?legajo=" + str, callbackSuccess: indicadoresDePermanenciaController.getLegajoListCallback, callbackError: indicadoresDePermanenciaController.getErrorCallback });
               }
           };
@@ -218,7 +233,7 @@
       indicadoresDePermanenciaController.loadAdministracionGrid = function () {
 
           indicadoresDePermanenciaController.administracionResultList = [];
-          
+
           //utilityService.callHttp({
           //    method: "GET", url: "/api/UniAlumno/GetKPIMorosos?legajo=" + indicadoresDePermanenciaController.adm_legajoSelected +
           //                                                      "&sede=" + indicadoresDePermanenciaController.adm_sedeSelected +
