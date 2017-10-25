@@ -1,4 +1,6 @@
-﻿app.config(['$qProvider', '$routeProvider', '$stateProvider', '$urlRouterProvider',
+﻿/// <reference path="components/indicadoresDePermanencia/indicadoresDePermanencia.html" />
+/// <reference path="components/indicadoresDePermanencia/indicadoresDePermanencia.html" />
+app.config(['$qProvider', '$routeProvider', '$stateProvider', '$urlRouterProvider',
     function ($qProvider, $routeProvider, $stateProvider, $urlRouterProvider) {
 
         $qProvider.errorOnUnhandledRejections(false);
@@ -101,6 +103,11 @@ app.run(['myUrl', '$rootScope', '$location', 'Auth', 'blockUIConfig',
 
         // Setting service url
         $rootScope.myUrl = myUrl;
+
+        /* Settomg global variables */
+        // 4.Client\app\components\indicadoresDePermanencia\indicadoresDePermanencia.html
+        $rootScope.KPI_DEUDA_LIMITE_MAYOR = 30000;
+        $rootScope.KPI_DEUDA_LIMITE_MENOR = 15000;
 
         blockUIConfig.message = "Cargando ...";
         blockUIConfig.requestFilter = function (request) { return (request.noBlock) ? false : blockUIConfig.message; };

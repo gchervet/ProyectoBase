@@ -205,8 +205,18 @@
                       UltimaActAca:"/Date(1467342000000)/"
                       */
 
-                      var actualKPIMoroso = response.data[i];
+                      var actualKPIMoroso = response.data[i],
+                          valorDeDeuda = '';
 
+                      if (actualKPIMoroso.DeudaToal >= $rootScope.KPI_DEUDA_LIMITE_MAYOR) {
+                          valorDeDeuda = 'ALTO';
+                      }
+                      if ($rootScope.KPI_DEUDA_LIMITE_MENOR < actualKPIMoroso.DeudaToal && actualKPIMoroso.DeudaToal < $rootScope.KPI_DEUDA_LIMITE_MAYOR) {
+                          valorDeDeuda = 'MEDIO';
+                      }
+                      if (actualKPIMoroso.DeudaToal <= $rootScope.KPI_DEUDA_LIMITE_MENOR) {
+                          valorDeDeuda = 'BAJO';
+                      }
                       indicadoresDePermanenciaController.administracionResultList.push({
 
                           Legajo: actualKPIMoroso.Legajo,
@@ -216,7 +226,7 @@
                           Carrera: actualKPIMoroso.Carrera,
                           Ciclo: null,
                           Cuatrimestre: null,
-                          ValorDeDeuda: 'ALTO',
+                          ValorDeDeuda: valorDeDeuda,
                           DeudaMonto: actualKPIMoroso.DeudaToal,
 
                       })
