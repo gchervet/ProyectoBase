@@ -104,7 +104,7 @@ app.run(['myUrl', '$rootScope', '$location', 'Auth', 'blockUIConfig',
         // Setting service url
         $rootScope.myUrl = myUrl;
 
-        /* Settomg global variables */
+        /* Setting global variables */
         // 4.Client\app\components\indicadoresDePermanencia\indicadoresDePermanencia.html
         $rootScope.KPI_DEUDA_LIMITE_MAYOR = 30000;
         $rootScope.KPI_DEUDA_LIMITE_MENOR = 15000;

@@ -23,10 +23,99 @@
               }
           });
 
+          indicadoresDePermanenciaController.loadRequestMethods();
           indicadoresDePermanenciaController.loadLists();
           indicadoresDePermanenciaController.loadPersonMethods();
           indicadoresDePermanenciaController.loadGrids();
       };
+
+      indicadoresDePermanenciaController.loadRequestMethods = function () {
+
+          indicadoresDePermanenciaController.getErrorCallback = function (response) {
+
+          }
+
+          indicadoresDePermanenciaController.getRegionalListCallback = function (response) {
+              if (response) {
+                  for (i in response.data) {
+                      var actualSede = response.data[i];
+                      indicadoresDePermanenciaController.sedeList.push(
+                                {
+                                    name: actualSede.Nombre,
+                                    code: actualSede.Codigo,
+                                    customName: actualSede.NombreCustom
+                                });
+                  }
+              }
+          };
+
+          indicadoresDePermanenciaController.getPlanListCallback = function (response) {
+              if (response) {
+                  for (i in response.data) {
+                      var actualPlan = response.data[i];
+                      if (actualPlan && actualPlan.CodCar && actualPlan.NombreCarrera) {
+                          indicadoresDePermanenciaController.planList.push(
+                                    {
+                                        name: "(" + actualPlan.CodCar + ") " + actualPlan.NombreCarrera,
+                                        code: actualPlan.CodCar,
+                                        modalidadList: actualPlan.ModalidadList
+                                    });
+                      }
+                  }
+              }
+          };
+          
+          indicadoresDePermanenciaController.getKPIMorosoListCallback = function (response) {
+              if (response) {
+                  for (i in response.data) {
+
+                      var actualKPIMoroso = response.data[i],
+                          valorDeDeuda = '';
+
+                      if (actualKPIMoroso.DeudaToal >= $rootScope.KPI_DEUDA_LIMITE_MAYOR) {
+                          valorDeDeuda = 'ALTO';
+                      }
+                      if ($rootScope.KPI_DEUDA_LIMITE_MENOR < actualKPIMoroso.DeudaToal && actualKPIMoroso.DeudaToal < $rootScope.KPI_DEUDA_LIMITE_MAYOR) {
+                          valorDeDeuda = 'MEDIO';
+                      }
+                      if (actualKPIMoroso.DeudaToal <= $rootScope.KPI_DEUDA_LIMITE_MENOR) {
+                          valorDeDeuda = 'BAJO';
+                      }
+                      indicadoresDePermanenciaController.administracionResultList.push({
+
+                          Legajo: actualKPIMoroso.Legajo,
+                          Nombre: actualKPIMoroso.Nombre,
+                          Apellido: actualKPIMoroso.Apellido,
+                          DNI: actualKPIMoroso.Dni,
+                          Carrera: actualKPIMoroso.Carrera,
+                          Ciclo: null,
+                          Cuatrimestre: null,
+                          ValorDeDeuda: valorDeDeuda,
+                          DeudaMonto: actualKPIMoroso.DeudaToal,
+
+                      })
+                  }
+
+                  $('#administracionTable').bootstrapTable('load', indicadoresDePermanenciaController.administracionResultList);
+              }
+          };
+
+          indicadoresDePermanenciaController.getLegajoListCallback = function (response) {
+              if (response) {
+                  for (i in response.data) {
+                      var actualLegajo = response.data[i];
+                      indicadoresDePermanenciaController.legajoList.push(
+                                {
+                                    legajoDefinitivo: actualLegajo.LegajoDefinitivo,
+                                    legajoProvisorio: actualLegajo.LegajoProvisorio,
+                                    nombre: actualLegajo.Nombre,
+                                    apellido: actualLegajo.Apellido,
+                                    dni: actualLegajo.DNI
+                                });
+                  }
+              }
+          };
+      }
 
       indicadoresDePermanenciaController.loadLists = function () {
 
@@ -66,42 +155,8 @@
           indicadoresDePermanenciaController.kpiList = [];
           indicadoresDePermanenciaController.nivelDeRiesgoList = [];
 
-          var getErrorCallback = function (response) {
-
-          }
-
-          var getRegionalListCallback = function (response) {
-              if (response) {
-                  for (i in response.data) {
-                      var actualSede = response.data[i];
-                      indicadoresDePermanenciaController.sedeList.push(
-                                {
-                                    name: actualSede.Nombre,
-                                    code: actualSede.Codigo,
-                                    customName: actualSede.NombreCustom
-                                });
-                  }
-              }
-          };
-
-          var getPlanListCallback = function (response) {
-              if (response) {
-                  for (i in response.data) {
-                      var actualPlan = response.data[i];
-                      if (actualPlan && actualPlan.CodCar && actualPlan.NombreCarrera) {
-                          indicadoresDePermanenciaController.planList.push(
-                                    {
-                                        name: "(" + actualPlan.CodCar + ") " + actualPlan.NombreCarrera,
-                                        code: actualPlan.CodCar,
-                                        modalidadList: actualPlan.ModalidadList
-                                    });
-                      }
-                  }
-              }
-          };
-
-          utilityService.callHttp({ method: "GET", url: "/api/UniPlan/GetAll", callbackSuccess: getPlanListCallback, callbackError: getErrorCallback });
-          utilityService.callHttp({ method: "GET", url: "/api/UniRegional/GetAll", callbackSuccess: getRegionalListCallback, callbackError: getErrorCallback });
+          utilityService.callHttp({ method: "GET", url: "/api/UniPlan/GetAll", callbackSuccess: indicadoresDePermanenciaController.getPlanListCallback, callbackError: indicadoresDePermanenciaController.getErrorCallback });
+          utilityService.callHttp({ method: "GET", url: "/api/UniRegional/GetAll", callbackSuccess: indicadoresDePermanenciaController.getRegionalListCallback, callbackError: indicadoresDePermanenciaController.getErrorCallback });
 
       };
 
@@ -153,88 +208,18 @@
           indicadoresDePermanenciaController.legajoInputChanged = function (str) {
               if (str.length >= 4) {
                   indicadoresDePermanenciaController.legajoList = [];
-
-                  var getErrorCallback = function (response) {
-
-                  }
-
-                  var getLegajoListCallback = function (response) {
-                      if (response) {
-                          for (i in response.data) {
-                              var actualLegajo = response.data[i];
-                              indicadoresDePermanenciaController.legajoList.push(
-                                        {
-                                            legajoDefinitivo: actualLegajo.LegajoDefinitivo,
-                                            legajoProvisorio: actualLegajo.LegajoProvisorio,
-                                            nombre: actualLegajo.Nombre,
-                                            apellido: actualLegajo.Apellido,
-                                            dni: actualLegajo.DNI
-                                        });
-                          }
-                      }
-                  };
-                  utilityService.callHttp({ method: "GET", url: "/api/UniAlumno/GetByLegajoMatch?legajo=" + str, callbackSuccess: getLegajoListCallback, callbackError: getErrorCallback });
+                  
+                  
+                  utilityService.callHttp({ method: "GET", url: "/api/UniAlumno/GetByLegajoMatch?legajo=" + str, callbackSuccess: indicadoresDePermanenciaController.getLegajoListCallback, callbackError: indicadoresDePermanenciaController.getErrorCallback });
               }
           };
+
       };
 
       indicadoresDePermanenciaController.loadAdministracionGrid = function () {
 
           indicadoresDePermanenciaController.administracionResultList = [];
-
-          var getErrorCallback = function (response) {
-
-          }
-
-          var getKPIMorosoListCallback = function (response) {
-              if (response) {
-                  for (i in response.data) {
-
-                      /*
-                      Apellido:"ASANZA TENÈN"
-                      Carrera:"3002"
-                      DeudaToal:83373.42
-                      DiasDeuda:449
-                      Dni:95415788
-                      FechaUltimoPago:null
-                      ImporteUltimoPago:null
-                      Legajo:471010
-                      Mail:"karinaasanza@gmail.com"
-                      Nombre:"KARINA LIZBETH"
-                      Telefono:null
-                      UltimaActAca:"/Date(1467342000000)/"
-                      */
-
-                      var actualKPIMoroso = response.data[i],
-                          valorDeDeuda = '';
-
-                      if (actualKPIMoroso.DeudaToal >= $rootScope.KPI_DEUDA_LIMITE_MAYOR) {
-                          valorDeDeuda = 'ALTO';
-                      }
-                      if ($rootScope.KPI_DEUDA_LIMITE_MENOR < actualKPIMoroso.DeudaToal && actualKPIMoroso.DeudaToal < $rootScope.KPI_DEUDA_LIMITE_MAYOR) {
-                          valorDeDeuda = 'MEDIO';
-                      }
-                      if (actualKPIMoroso.DeudaToal <= $rootScope.KPI_DEUDA_LIMITE_MENOR) {
-                          valorDeDeuda = 'BAJO';
-                      }
-                      indicadoresDePermanenciaController.administracionResultList.push({
-
-                          Legajo: actualKPIMoroso.Legajo,
-                          Nombre: actualKPIMoroso.Nombre,
-                          Apellido: actualKPIMoroso.Apellido,
-                          DNI: actualKPIMoroso.Dni,
-                          Carrera: actualKPIMoroso.Carrera,
-                          Ciclo: null,
-                          Cuatrimestre: null,
-                          ValorDeDeuda: valorDeDeuda,
-                          DeudaMonto: actualKPIMoroso.DeudaToal,
-
-                      })
-                  }
-
-                  $('#administracionTable').bootstrapTable('load', indicadoresDePermanenciaController.administracionResultList);
-              }
-          };
+          
           //utilityService.callHttp({
           //    method: "GET", url: "/api/UniAlumno/GetKPIMorosos?legajo=" + indicadoresDePermanenciaController.adm_legajoSelected +
           //                                                      "&sede=" + indicadoresDePermanenciaController.adm_sedeSelected +
@@ -258,7 +243,7 @@
                                                                 "&kpi_monto_menor" +
                                                                 "&minimoDiasDeuda=90" +
                                                                 "&minimoDiasPago=0"
-                                                                , callbackSuccess: getKPIMorosoListCallback, callbackError: getErrorCallback
+                                                                , callbackSuccess: indicadoresDePermanenciaController.getKPIMorosoListCallback, callbackError: indicadoresDePermanenciaController.getErrorCallback
           });
       }
 
