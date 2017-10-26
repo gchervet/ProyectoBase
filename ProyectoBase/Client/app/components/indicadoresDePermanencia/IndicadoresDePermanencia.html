@@ -18,20 +18,21 @@
                 <div id="academicoTab" class="tab-pane active">
                     <h4>Filtrar búsqueda:</h4>
                     <form name="academicoForm">
-                        <div class="row">                            
+                        <div class="row">
                             <div class="col-md-12 col-centered">
                                 <div class="col-md-3 form-group">
                                     <p>
-                                        <label>Ciclo:</label><!--obligatorio-->
+                                        <label>Ciclo:<span style="color: red" title="Campo requerido" ng-show="academicoForm.comboCiclo.$invalid"> (Campo requerido)</span></label><!--obligatorio-->
                                         <input required
                                                type="number"
                                                oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                                                maxlength="4"
                                                max="9999" min="1"
                                                id="inputCiclo"
-                                               name="nameCiclo"
+                                               name="comboCiclo"
                                                class="input-large form-control"
-                                               placeholder="Ingresar ciclo" />
+                                               placeholder="Ingresar ciclo"
+                                               ng-model="vm.aca_cicloSelected" />
                                         <span style="color:red" ng-show="academicoForm.nameCiclo.$dirty && academicoForm.nameCiclo.$invalid">
                                             <span ng-show="academicoForm.nameCiclo.$error.required">Este campo es requerido.</span>
                                         </span>
@@ -39,12 +40,12 @@
                                 </div>
                                 <div class="col-md-3 form-group">
                                     <p>
-                                        <label>Cuatrimestre:</label><!--obligatorio-->
+                                        <label>Cuatrimestre:<span style="color: red" title="Campo requerido" ng-show="academicoForm.comboCuatrimestre.$invalid"> (Campo requerido)</span></label><!--obligatorio-->
                                         <select required
                                                 name="comboCuatrimestre"
                                                 class="input-large form-control"
                                                 ng-options="cuatrimestre for cuatrimestre in vm.cuatrimestreList"
-                                                ng-model="vm.adm_cuatrimestreSelected">
+                                                ng-model="vm.aca_cuatrimestreSelected">
                                             <option></option>
                                         </select>
                                         <span style="color:red" ng-show="academicoForm.comboCuatrimestre.$dirty && academicoForm.comboCuatrimestre.$invalid">
@@ -71,7 +72,10 @@
                             <div class="col-md-12 col-centered">
                                 <div class="col-md-3 form-group">
                                     <label>Legajo:</label> <!--Autocomplete-->
-                                    <input class="form-control" id="adm_comboLegajo" ng-model="vm.adm_legajoSearchText"/>
+                                    <input class="form-control"
+                                           id="aca_comboLegajo"
+                                           ng-change="vm.legajoInputChanged()"
+                                           ng-model="vm.aca_legajoSearchText" />
                                 </div>
                                 <div class="col-md-3 form-group">
                                     <label>Nombre:</label>
@@ -99,7 +103,7 @@
                                 </div>
                             </div>
                         </div>
-                        <p><button type="submit" class="btn btn-primary" ng-disabled="academicoForm.combocuatrimestre.$invalid || academicoForm.combocuatrimestre.$dirty" ng-click="vm.loadAcademicoGrid()">Buscar</button></p>
+                        <p><button type="submit" class="btn btn-primary" ng-disabled="academicoForm.comboCiclo.$invalid || academicoForm.comboCuatrimestre.$invalid" ng-click="vm.loadAcademicoGrid()">Buscar</button></p>
                     </form>
 
                     <h4>Resultados:</h4>
@@ -108,7 +112,7 @@
                             <div id="administracionGrid">
 
                                 <!--<table id="academicoTable"></table>-->
-                                <table id="academicoTable" 
+                                <table id="academicoTable"
                                        data-detail-view="true"
                                        data-toggle="table"
                                        data-search="true"
@@ -117,7 +121,7 @@
                                        data-show-export="true"
                                        data-click-to-select="true"
                                        data-page-list="[5, 10, 25, 50, 100, ALL]"
-                                       data-page-size="5">
+                                       data-page-size="10">
                                     <thead>
                                         <tr>
                                             <th data-field="Legajo" data-filter-control="input" data-filter-control-placeholder="Buscar">Legajo</th>
@@ -139,106 +143,117 @@
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <div id="administracionTab" class="tab-pane fade">
-                    <h4>Filtrar búsqueda:</h4>
-                    <form name="administracionForm">
-                        <div class="row">
-                            <div class="col-md-12 col-centered">
-                             
-                                <div class="col-md-3 form-group">
-                                    <p>
-                                        <label>Sede:<span style="color: red" title="Campo requerido" ng-show="administracionForm.comboSede.$invalid"> (Campo requerido)</span></label>
-                                        <select required name="comboSede" class="input-large form-control" ng-options="sede.code as sede.name for sede in vm.sedeList" ng-model="vm.adm_sedeSelected"></select>
-                                    </p>
-                                </div>
-                                <div class="col-md-3 form-group">
-                                    <label>Carrera:</label>
-                                    <select id="comboCarrera" name="comboCarrera" class="input-large form-control" ng-options="carrera for carrera in vm.carreraList" ng-model="vm.adm_carreraSelected"></select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12 col-centered">
-                                <div class="col-md-3 form-group">
-                                    <label>Legajo:</label> <!--Autocomplete-->
-                                    <div angucomplete-alt id="legajoInput"
-                                         placeholder="Buscar legajo"
-                                         pause="100"
-                                         selected-object="vm.legajoWasSelected"
-                                         local-data="vm.legajoList"
-                                         local-search="vm.legajoSearch"
-                                         search-fields="legajoDefinitivo.legajoProvisorio"
-                                         title-field="legajoDefinitivo"
-                                         description-field="nombre.apellido"
-                                         input-changed="vm.legajoInputChanged"
-                                         minlength="1"
-                                         tab-prefix="adm"
-                                         input-class="form-control"></div>
-
-                                </div>
-                                <div class="col-md-3 form-group">
-                                    <label>Nombre:</label>
-                                    <input type="text" class="form-control" ng-model="vm.adm_nombreSelected">
-                                </div>
-                                <div class="col-md-3 form-group">
-                                    <label>Apellido:</label>
-                                    <input type="text" class="form-control" ng-model="vm.adm_apellidoSelected">
-                                </div>
-                                <div class="col-md-3 form-group">
-                                    <label>DNI:</label>
-                                    <input type="text" class="form-control" ng-model="vm.adm_dniSelected">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12 col-centered">
-                                <div class="col-md-3 form-group">
-                                    <label>KPI:</label>
-                                    <select id="comboCiclo" class="input-large form-control" ng-options="kpi for kpi in vm.kpiList" ng-model="vm.adm_kpiSelected"></select>
-                                </div>
-                                <div class="col-md-3 form-group">
-                                    <label>Nivel de riesgo:</label>
-                                    <select id="comboCuatrimestre" class="input-large form-control" ng-options="nivelDeRiesgo for nivelDeRiesgo in vm.nivelDeRiesgoList" ng-model="vm.adm_nivelDeRiesgoSelected"></select>
-                                </div>
-                            </div>
-                        </div>
-                        <p><button type="submit" class="btn btn-primary" ng-disabled="administracionForm.comboSede.$invalid" ng-click="vm.loadAdministracionGrid()">Buscar</button></p>
-                    </form>
-
-                    <h4>Resultados:</h4>
                     <div class="row">
-                        <div class="col-md-12 col-centered">
-                            <div id="administracionGrid">
-
-                                <table id="administracionTable"
-                                       data-toggle="table"
-                                       data-filter-control="true"
-                                       data-pagination="true"
-                                       data-show-export="true"
-                                       data-click-to-select="true"
-                                       data-page-list="[5, 10, 25, 50, 100, ALL]"
-                                       data-page-size="5">
-                                    <thead>
-                                        <tr>
-                                            <th data-field="Legajo" data-filter-control="input" data-filter-control-placeholder="Buscar">Legajo</th>
-                                            <th data-field="Nombre" data-filter-control="input" data-filter-control-placeholder="Buscar">Nombre</th>
-                                            <th data-field="Apellido" data-filter-control="input" data-filter-control-placeholder="Buscar">Apellido</th>
-                                            <th data-field="DNI" data-filter-control="input" data-filter-control-placeholder="Buscar">DNI</th>
-                                            <th data-field="Carrera" data-filter-control="input" data-filter-control-placeholder="Buscar">Carrera</th>
-                                            <th data-field="ValorDeDeuda" data-filter-control="input" data-filter-control-placeholder="Buscar">Deuda</th>
-                                            <th data-field="DeudaMonto" data-filter-control="input" data-filter-control-placeholder="Buscar">DeudaMonto</th>
-                                        </tr>
-                                    </thead>
-                                </table>
-
-                            </div>
+                        <div class="col-md-16">
+                            <h4>Gráfico de grilla:</h4>
+                            <div id="gridChartContainer"></div>
+                        </div>
+                        <div class="col-md-16">
+                            <h4>Gráfico de total:</h4>
+                            <div id="totalChartContainer"></div>
                         </div>
                     </div>
                 </div>
-               
             </div>
+
+            <div id="administracionTab" class="tab-pane fade">
+                <h4>Filtrar búsqueda:</h4>
+                <form name="administracionForm">
+                    <div class="row">
+                        <div class="col-md-12 col-centered">
+
+                            <div class="col-md-3 form-group">
+                                <p>
+                                    <label>Sede:</label>
+                                    <select required name="comboSede" class="input-large form-control" ng-options="sede.code as sede.name for sede in vm.sedeList" ng-model="vm.adm_sedeSelected"></select>
+                                </p>
+                            </div>
+                            <div class="col-md-3 form-group">
+                                <label>Carrera:</label>
+                                <select id="comboCarrera" name="comboCarrera" class="input-large form-control" ng-options="carrera for carrera in vm.carreraList" ng-model="vm.adm_carreraSelected"></select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col-centered">
+                            <div class="col-md-3 form-group">
+                                <label>Legajo:</label> <!--Autocomplete-->
+                                <div angucomplete-alt id="legajoInput"
+                                     placeholder="Buscar legajo"
+                                     pause="100"
+                                     selected-object="vm.legajoWasSelected"
+                                     local-data="vm.legajoList"
+                                     local-search="vm.legajoSearch"
+                                     search-fields="legajoDefinitivo.legajoProvisorio"
+                                     title-field="legajoDefinitivo"
+                                     description-field="nombre.apellido"
+                                     input-changed="vm.legajoInputChanged"
+                                     minlength="1"
+                                     tab-prefix="adm"
+                                     input-class="form-control"></div>
+
+                            </div>
+                            <div class="col-md-3 form-group">
+                                <label>Nombre:</label>
+                                <input type="text" class="form-control" ng-model="vm.adm_nombreSelected">
+                            </div>
+                            <div class="col-md-3 form-group">
+                                <label>Apellido:</label>
+                                <input type="text" class="form-control" ng-model="vm.adm_apellidoSelected">
+                            </div>
+                            <div class="col-md-3 form-group">
+                                <label>DNI:</label>
+                                <input type="text" class="form-control" ng-model="vm.adm_dniSelected">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col-centered">
+                            <div class="col-md-3 form-group">
+                                <label>KPI:</label>
+                                <select id="comboCiclo" class="input-large form-control" ng-options="kpi for kpi in vm.kpiList" ng-model="vm.adm_kpiSelected"></select>
+                            </div>
+                            <div class="col-md-3 form-group">
+                                <label>Nivel de riesgo:</label>
+                                <select id="comboCuatrimestre" class="input-large form-control" ng-options="nivelDeRiesgo for nivelDeRiesgo in vm.nivelDeRiesgoList" ng-model="vm.adm_nivelDeRiesgoSelected"></select>
+                            </div>
+                        </div>
+                    </div>
+                    <p><button type="submit" class="btn btn-primary" ng-disabled="administracionForm.comboSede.$invalid" ng-click="vm.loadAdministracionGrid()">Buscar</button></p>
+                </form>
+
+                <h4>Resultados:</h4>
+                <div class="row">
+                    <div class="col-md-12 col-centered">
+                        <div id="administracionGrid">
+
+                            <table id="administracionTable"
+                                   data-toggle="table"
+                                   data-filter-control="true"
+                                   data-pagination="true"
+                                   data-show-export="true"
+                                   data-click-to-select="true"
+                                   data-page-list="[5, 10, 25, 50, 100, ALL]"
+                                   data-page-size="10">
+                                <thead>
+                                    <tr>
+                                        <th data-field="Legajo" data-filter-control="input" data-filter-control-placeholder="Buscar">Legajo</th>
+                                        <th data-field="Nombre" data-filter-control="input" data-filter-control-placeholder="Buscar">Nombre</th>
+                                        <th data-field="Apellido" data-filter-control="input" data-filter-control-placeholder="Buscar">Apellido</th>
+                                        <th data-field="DNI" data-filter-control="input" data-filter-control-placeholder="Buscar">DNI</th>
+                                        <th data-field="Carrera" data-filter-control="input" data-filter-control-placeholder="Buscar">Carrera</th>
+                                        <th data-field="ValorDeDeuda" data-filter-control="input" data-filter-control-placeholder="Buscar">Deuda</th>
+                                        <th data-field="DeudaMonto" data-filter-control="input" data-filter-control-placeholder="Buscar">DeudaMonto</th>
+                                    </tr>
+                                </thead>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
+    </div>
     </div>
 </body>

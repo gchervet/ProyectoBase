@@ -99,7 +99,6 @@
     <Content Include="app\components\user\userProfileController.js" />
     <Content Include="app\main.js" />
     <Content Include="app\shared\directives\permissionDirective.js" />
-    <Content Include="app\shared\libs\angucomplete-alt.min.js" />
     <Content Include="app\shared\libs\angular-animate.min.js" />
     <Content Include="app\shared\libs\angular-aria.min.js" />
     <Content Include="app\shared\libs\angular-block-ui.js" />
@@ -115,6 +114,8 @@
     <Content Include="app\shared\libs\bootstrap-table-filter-control.js" />
     <Content Include="app\shared\libs\bootstrap-table.js" />
     <Content Include="app\shared\libs\bootstrap.min.js" />
+    <Content Include="app\shared\libs\fusioncharts.charts.js" />
+    <Content Include="app\shared\libs\fusioncharts.js" />
     <Content Include="app\shared\libs\jquery.autocomplete.js" />
     <Content Include="app\shared\libs\jquery.min.js" />
     <Content Include="app\shared\libs\ngStorage.min.js" />
@@ -125,7 +126,6 @@
     <Content Include="app\shared\services\httpInterceptor.js" />
     <Content Include="app\shared\services\httpRequestInterceptor.js" />
     <Content Include="app\shared\services\utillityService.js" />
-    <Content Include="assets\css\angucomplete-alt.css" />
     <Content Include="assets\css\angular-block-ui.css" />
     <Content Include="assets\css\angular-material.min.css" />
     <Content Include="assets\css\bootstrap-select.min.css" />
@@ -136,6 +136,7 @@
     <Content Include="assets\css\font-awesome.min.css" />
     <Content Include="assets\css\jquery-ui.css" />
     <Content Include="assets\css\jquery.autocomplete.css" />
+    <Content Include="assets\css\fusioncharts.style.css" />
     <Content Include="assets\css\uk.css" />
     <Content Include="assets\fonts\fontawesome-webfont.svg" />
     <Content Include="assets\img\Logo_keneddy_oficial.png" />

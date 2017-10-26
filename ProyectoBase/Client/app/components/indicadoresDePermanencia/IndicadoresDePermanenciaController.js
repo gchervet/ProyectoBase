@@ -27,6 +27,61 @@
           indicadoresDePermanenciaController.loadLists();
           indicadoresDePermanenciaController.loadPersonMethods();
           indicadoresDePermanenciaController.loadGrids();
+
+          // CHARTS
+          var revenueChart = new FusionCharts({
+              type: 'pie3d',
+              renderAt: 'gridChartContainer',
+              dataFormat: 'json',
+              dataSource: {
+                  "chart": {
+                      "showBorder": "0",
+                      "use3DLighting": "0",
+                      "showShadow": "0",
+                      "enableSmartLabels": "0",
+                      "startingAngle": "0",
+                      "showPercentValues": "1",
+                      "showPercentInTooltip": "0",
+                      "decimals": "1",
+                      "captionFontSize": "14",
+                      "subcaptionFontSize": "14",
+                      "subcaptionFontBold": "0",
+                      "toolTipColor": "#ffffff",
+                      "toolTipBorderThickness": "0",
+                      "toolTipBgColor": "#000000",
+                      "toolTipBgAlpha": "80",
+                      "toolTipBorderRadius": "2",
+                      "toolTipPadding": "5",
+                      "showHoverEffect": "1",
+                      "showLegend": "1",
+                      "legendBgColor": "#ffffff",
+                      "legendBorderAlpha": '0',
+                      "legendShadow": '0',
+                      "legendItemFontSize": '10',
+                      "legendItemFontColor": '#666666'
+                  },
+                  "data": [
+                      {
+                          "label": "Teenage",
+                          "value": "1250400"
+                      },
+                      {
+                          "label": "Adult",
+                          "value": "1463300"
+                      },
+                      {
+                          "label": "Mid-age",
+                          "value": "1050700"
+                      },
+                      {
+                          "label": "Senior",
+                          "value": "491000"
+                      }
+                  ]
+              }
+          });
+
+          revenueChart.render();
       };
 
       indicadoresDePermanenciaController.loadRequestMethods = function () {
@@ -115,9 +170,9 @@
                       actualLegajo = actualKPIInasistencia.Legajo;
 
                       nuevaMateria = {
-                              Inasistencia: actualKPIInasistencia.Inansistencia,
-                              Materia: actualKPIInasistencia.Materia,
-                          };
+                          Inasistencia: actualKPIInasistencia.Inansistencia,
+                          Materia: actualKPIInasistencia.Materia,
+                      };
 
                       if (((previousLegajo && actualLegajo != previousLegajo) || (!nuevaInasistencia)) && !nuevaInasistenciaCreada) {
 
@@ -151,7 +206,7 @@
                           nuevaInasistenciaCreada = true;
                       }
                       nuevaInasistencia.nested.push(nuevaMateria);
-                      
+
                       if (response.data[index + 1] && response.data[index + 1].Legajo != actualLegajo) {
                           indicadoresDePermanenciaController.academicoResultList.push(nuevaInasistencia);
                           previousLegajo = actualLegajo;
@@ -171,29 +226,16 @@
               if (response) {
                   for (i in response.data) {
                       var actualLegajo = response.data[i];
-                      indicadoresDePermanenciaController.legajoList.push(
-                                {
-                                    legajoDefinitivo: actualLegajo.LegajoDefinitivo,
-                                    legajoProvisorio: actualLegajo.LegajoProvisorio,
-                                    nombre: actualLegajo.Nombre,
-                                    apellido: actualLegajo.Apellido,
-                                    dni: actualLegajo.DNI
-                                });
+                      indicadoresDePermanenciaController.legajoList.push(actualLegajo.LegajoDefinitivo);
                   }
+
+                  $("#aca_comboLegajo").autocomplete({ source: indicadoresDePermanenciaController.legajoList });
               }
           };
       }
-
-      indicadoresDePermanenciaController.updateLegajo = function () {
-
-          indicadoresDePermanenciaController.newSource = ['HOLA', 'CHAU'];
-          $(function () {
-              $("#adm_comboLegajo").autocomplete({ source: indicadoresDePermanenciaController.newSource });
-          });
-      };
-
+      
       indicadoresDePermanenciaController.loadLists = function () {
-          indicadoresDePermanenciaController.source = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California'];
+          indicadoresDePermanenciaController.source = [];
           $(function () {
               $("#adm_comboLegajo").autocomplete({
                   source: [indicadoresDePermanenciaController.source]
@@ -201,30 +243,28 @@
           });
 
           // Variables para Tab-Administración
-          indicadoresDePermanenciaController.adm_legajoSelected = null;
-          indicadoresDePermanenciaController.adm_nombreSelected = null;
-          indicadoresDePermanenciaController.adm_apellidoSelected = null;
-          indicadoresDePermanenciaController.adm_dniSelected = null;
+          indicadoresDePermanenciaController.adm_legajoSelected = '';
+          indicadoresDePermanenciaController.adm_nombreSelected = '';
+          indicadoresDePermanenciaController.adm_apellidoSelected = '';
+          indicadoresDePermanenciaController.adm_dniSelected = '';
 
-          indicadoresDePermanenciaController.adm_cicloSelected = null;
-          indicadoresDePermanenciaController.adm_cuatrimestreSelected = null;
-          indicadoresDePermanenciaController.adm_sedeSelected = null;
-          indicadoresDePermanenciaController.adm_carreraSelected = null;
-          indicadoresDePermanenciaController.adm_kpiSelected = null;
-          indicadoresDePermanenciaController.adm_nivelDeRiesgoSelected = null;
+          indicadoresDePermanenciaController.adm_sedeSelected = '';
+          indicadoresDePermanenciaController.adm_carreraSelected = '';
+          indicadoresDePermanenciaController.adm_kpiSelected = '';
+          indicadoresDePermanenciaController.adm_nivelDeRiesgoSelected = '';
 
           // Variables para Tab-Académico
-          indicadoresDePermanenciaController.aca_legajoSelected = null;
-          indicadoresDePermanenciaController.aca_nombreSelected = null;
-          indicadoresDePermanenciaController.aca_apellidoSelected = null;
-          indicadoresDePermanenciaController.aca_dniSelected = null;
+          indicadoresDePermanenciaController.aca_legajoSelected = '';
+          indicadoresDePermanenciaController.aca_nombreSelected = '';
+          indicadoresDePermanenciaController.aca_apellidoSelected = '';
+          indicadoresDePermanenciaController.aca_dniSelected = '';
 
-          indicadoresDePermanenciaController.aca_cicloSelected = null;
-          indicadoresDePermanenciaController.aca_cuatrimestreSelected = null;
-          indicadoresDePermanenciaController.aca_sedeSelected = null;
-          indicadoresDePermanenciaController.aca_planSelected = null;
-          indicadoresDePermanenciaController.aca_kpiSelected = null;
-          indicadoresDePermanenciaController.aca_nivelDeRiesgoSelected = null;
+          indicadoresDePermanenciaController.aca_cicloSelected = '';
+          indicadoresDePermanenciaController.aca_cuatrimestreSelected = '';
+          indicadoresDePermanenciaController.aca_sedeSelected = '';
+          indicadoresDePermanenciaController.aca_planSelected = '';
+          indicadoresDePermanenciaController.aca_kpiSelected = '';
+          indicadoresDePermanenciaController.aca_nivelDeRiesgoSelected = '';
 
           // Variables generales
           indicadoresDePermanenciaController.adm_legajoSearchText = '';
@@ -286,12 +326,11 @@
               return matches;
           };
 
-          indicadoresDePermanenciaController.legajoInputChanged = function (str) {
-              if (str.length >= 4) {
+          indicadoresDePermanenciaController.legajoInputChanged = function () {
+              debugger;
+              if (indicadoresDePermanenciaController.aca_legajoSearchText.length >= 4) {
                   indicadoresDePermanenciaController.legajoList = [];
-
-
-                  utilityService.callHttp({ method: "GET", url: "/api/UniAlumno/GetByLegajoMatch?legajo=" + str, callbackSuccess: indicadoresDePermanenciaController.getLegajoListCallback, callbackError: indicadoresDePermanenciaController.getErrorCallback });
+                  utilityService.callHttp({ method: "GET", url: "/api/UniAlumno/GetByLegajoMatch?legajo=" + indicadoresDePermanenciaController.aca_legajoSearchText, callbackSuccess: indicadoresDePermanenciaController.getLegajoListCallback, callbackError: indicadoresDePermanenciaController.getErrorCallback });
               }
           };
 
@@ -301,25 +340,13 @@
 
           indicadoresDePermanenciaController.administracionResultList = [];
 
-          //utilityService.callHttp({
-          //    method: "GET", url: "/api/UniAlumno/GetKPIMorosos?legajo=" + indicadoresDePermanenciaController.adm_legajoSelected +
-          //                                                      "&sede=" + indicadoresDePermanenciaController.adm_sedeSelected +
-          //                                                      "&carrera=" + indicadoresDePermanenciaController.adm_planSelected +
-          //                                                      "&nombre=" + indicadoresDePermanenciaController.adm_nombreSelected +
-          //                                                      "&apellido=" +indicadoresDePermanenciaController.adm_apellidoSelected +
-          //                                                      "&dni=" + indicadoresDePermanenciaController.adm_dniSelected +
-          //                                                      "&kpi_monto_mayor=" + indicadoresDePermanenciaController.adm_nivelDeRiesgoSelected
-          //                                                      ,callbackSuccess: getLegajoListCallback, callbackError: getErrorCallback
-          //});
-
-
           utilityService.callHttp({
-              method: "GET", url: "/api/UniAlumno/GetKPIMorosos?legajo" +
-                                                                "&sede" +
-                                                                "&carrera=3002" +
-                                                                "&nombre" +
-                                                                "&apellido" +
-                                                                "&dni" +
+              method: "GET", url: "/api/UniAlumno/GetKPIMorosos?legajo" + indicadoresDePermanenciaController.adm_legajoSelected +
+                                                                "&sede" + indicadoresDePermanenciaController.adm_sedeSelected +
+                                                                "&carrera=3002" + indicadoresDePermanenciaController.adm_planSelected +
+                                                                "&nombre" + indicadoresDePermanenciaController.adm_nombreSelected +
+                                                                "&apellido" + indicadoresDePermanenciaController.adm_apellidoSelected +
+                                                                "&dni" + indicadoresDePermanenciaController.adm_dniSelected +
                                                                 "&kpi_monto_mayor=10000" +
                                                                 "&kpi_monto_menor" +
                                                                 "&minimoDiasDeuda=90" +
@@ -334,7 +361,16 @@
           indicadoresDePermanenciaController.academicoResultList = [];
 
           utilityService.callHttp({
-              method: "GET", url: "/api/UniAlumno/GetKPIInasistencias?ciclo=2017&cuatri=1&legajo&sede&carrera=1703&nombre&apellido&dni&kpiInasistenciaMayor&kpiInasistenciaMenor"
+              method: "GET", url: "/api/UniAlumno/GetKPIInasistencias?ciclo=" + indicadoresDePermanenciaController.aca_cicloSelected +
+                                                                "&cuatri=" + indicadoresDePermanenciaController.aca_cuatrimestreSelected +
+                                                                "&legajo=" + indicadoresDePermanenciaController.aca_legajoSelected +
+                                                                "&sede=" + indicadoresDePermanenciaController.aca_sedeSelected +
+                                                                "&carrera=" + indicadoresDePermanenciaController.aca_planSelected +
+                                                                "&nombre=" + indicadoresDePermanenciaController.aca_nombreSelected +
+                                                                "&apellido=" + indicadoresDePermanenciaController.aca_apellidoSelected +
+                                                                "&dni=" + indicadoresDePermanenciaController.aca_dniSelected +
+                                                                "&kpiInasistenciaMayor=" +
+                                                                "&kpiInasistenciaMenor="
                                                                 , callbackSuccess: indicadoresDePermanenciaController.getKPIInasistenciaListCallback, callbackError: indicadoresDePermanenciaController.getErrorCallback
           });
       };
@@ -343,8 +379,10 @@
 
           indicadoresDePermanenciaController.resultList = [];
 
+          // Administración table
           $('#administracionTable').bootstrapTable({ data: indicadoresDePermanenciaController.administracionResultList });
 
+          // Académico table
           $('#academicoTable').bootstrapTable({
               data: indicadoresDePermanenciaController.resultList,
               detailView: true,
