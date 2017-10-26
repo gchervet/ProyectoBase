@@ -114,16 +114,25 @@
 
                       actualLegajo = actualKPIInasistencia.Legajo;
 
-                      nuevaMateria =
-                          {
+                      nuevaMateria = {
                               Inasistencia: actualKPIInasistencia.Inansistencia,
                               Materia: actualKPIInasistencia.Materia,
                           };
 
                       if (((previousLegajo && actualLegajo != previousLegajo) || (!nuevaInasistencia)) && !nuevaInasistenciaCreada) {
 
-                          nuevaInasistencia =
-                          {
+                          var inasistenciaTexto = '';
+                          if (actualKPIInasistencia.Promedio >= $rootScope.KPI_INASISTENCIAS_PORCENTAJE_LIMITE_MAYOR) {
+                              inasistenciaTexto = 'ALTO';
+                          }
+                          if (actualKPIInasistencia.Promedio > $rootScope.KPI_INASISTENCIAS_PORCENTAJE_LIMITE_MENOR && actualKPIInasistencia.Promedio < $rootScope.KPI_INASISTENCIAS_PORCENTAJE_LIMITE_MAYOR) {
+                              inasistenciaTexto = 'MEDIO';
+                          }
+                          if (actualKPIInasistencia.Promedio <= $rootScope.KPI_INASISTENCIAS_PORCENTAJE_LIMITE_MENOR) {
+                              inasistenciaTexto = 'BAJO';
+                          }
+
+                          nuevaInasistencia = {
                               Legajo: actualKPIInasistencia.Legajo,
                               Nombre: actualKPIInasistencia.Nombre,
                               Apellido: actualKPIInasistencia.Apellido,
@@ -135,14 +144,14 @@
                               Telefono: actualKPIInasistencia.Telefono,
                               MaxNroClase: actualKPIInasistencia.MaxNroClase,
                               Promedio: actualKPIInasistencia.Promedio,
+                              Inasistencia: inasistenciaTexto + ' (' + Math.round(actualKPIInasistencia.Promedio) + '%)',
                               TotalDeInasistencias: actualKPIInasistencia.TotalDeInasistencias,
                               nested: []
                           }
                           nuevaInasistenciaCreada = true;
                       }
                       nuevaInasistencia.nested.push(nuevaMateria);
-
-
+                      
                       if (response.data[index + 1] && response.data[index + 1].Legajo != actualLegajo) {
                           indicadoresDePermanenciaController.academicoResultList.push(nuevaInasistencia);
                           previousLegajo = actualLegajo;
