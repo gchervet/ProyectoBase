@@ -136,7 +136,7 @@
                               Legajo: actualKPIInasistencia.Legajo,
                               Nombre: actualKPIInasistencia.Nombre,
                               Apellido: actualKPIInasistencia.Apellido,
-                              Dni: actualKPIInasistencia.Dni,
+                              DNI: actualKPIInasistencia.Dni,
                               Carrera: actualKPIInasistencia.Carrera,
                               Ciclo: actualKPIInasistencia.Ciclo,
                               Cuatrimestre: actualKPIInasistencia.Cuatri,
