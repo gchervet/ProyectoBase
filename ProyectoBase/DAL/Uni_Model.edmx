@@ -244,6 +244,18 @@
           <Parameter Name="cursoEdicionId" Type="bigint" Mode="In" />
           <Parameter Name="convenioId" Type="int" Mode="In" />
         </Function>
+        <Function Name="sp_KPI_Inansistencias" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ciclo" Type="int" Mode="In" />
+          <Parameter Name="cuatri" Type="int" Mode="In" />
+          <Parameter Name="legajo" Type="int" Mode="In" />
+          <Parameter Name="sede" Type="int" Mode="In" />
+          <Parameter Name="carrera" Type="varchar" Mode="In" />
+          <Parameter Name="nombre" Type="varchar" Mode="In" />
+          <Parameter Name="apellido" Type="varchar" Mode="In" />
+          <Parameter Name="dni" Type="numeric" Mode="In" />
+          <Parameter Name="kpi_inasistencia_mayor" Type="int" Mode="In" />
+          <Parameter Name="kpi_inasistencia_menor" Type="int" Mode="In" />
+        </Function>
         <Function Name="sp_KPI_Morosos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="minimoDiasDeuda" Type="int" Mode="In" />
           <Parameter Name="minimoDiasPago" Type="int" Mode="In" />
@@ -418,7 +430,19 @@
           </FunctionImport>
           <EntitySet Name="uniRegionales" EntityType="Uni_Model.uniRegionales" />
           <FunctionImport Name="sp_get_alumno_by_legajo_match" ReturnType="Collection(Uni_Model.sp_get_alumno_by_legajo_match_Result)">
-            <Parameter Name="legajo" Mode="In" Type="String" />
+          <Parameter Name="legajo" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_KPI_Inansistencias" ReturnType="Collection(Uni_Model.sp_KPI_Inansistencias_Result)">
+            <Parameter Name="ciclo" Mode="In" Type="Int32" />
+            <Parameter Name="cuatri" Mode="In" Type="Int32" />
+            <Parameter Name="legajo" Mode="In" Type="Int32" />
+            <Parameter Name="sede" Mode="In" Type="Int32" />
+            <Parameter Name="carrera" Mode="In" Type="String" />
+            <Parameter Name="nombre" Mode="In" Type="String" />
+            <Parameter Name="apellido" Mode="In" Type="String" />
+            <Parameter Name="dni" Mode="In" Type="Decimal" />
+            <Parameter Name="kpi_inasistencia_mayor" Mode="In" Type="Int32" />
+            <Parameter Name="kpi_inasistencia_menor" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_get_UniAlumnos_Result">
@@ -668,6 +692,22 @@
           <Property Type="String" Name="nombre" Nullable="true" MaxLength="30" />
           <Property Type="String" Name="apellido" Nullable="true" MaxLength="30" />
           <Property Type="Decimal" Name="docnac" Nullable="true" Precision="9" Scale="0" />
+        </ComplexType>
+        <ComplexType Name="sp_KPI_Inansistencias_Result">
+          <Property Type="Int32" Name="Legajo" Nullable="false" />
+          <Property Type="String" Name="Nombre" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="Apellido" Nullable="true" MaxLength="30" />
+          <Property Type="Decimal" Name="Dni" Nullable="true" Precision="9" Scale="0" />
+          <Property Type="String" Name="Carrera" Nullable="true" MaxLength="4" />
+          <Property Type="Int32" Name="Ciclo" Nullable="false" />
+          <Property Type="Int32" Name="Cuatri" Nullable="false" />
+          <Property Type="String" Name="Materia" Nullable="true" MaxLength="35" />
+          <Property Type="String" Name="Telefono" Nullable="true" MaxLength="25" />
+          <Property Type="String" Name="Mail" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="Inansistencia" Nullable="true" />
+          <Property Type="Int32" Name="MaxNroClase" Nullable="true" />
+          <Property Type="Int32" Name="TotalDeInasistencias" Nullable="true" />
+          <Property Type="Decimal" Name="Promedio" Nullable="true" Precision="16" Scale="4" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1005,6 +1045,26 @@
                 <ScalarProperty Name="nombre" ColumnName="nombre" />
                 <ScalarProperty Name="apellido" ColumnName="apellido" />
                 <ScalarProperty Name="docnac" ColumnName="docnac" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_KPI_Inansistencias" FunctionName="Uni_Model.Store.sp_KPI_Inansistencias">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Uni_Model.sp_KPI_Inansistencias_Result">
+                <ScalarProperty Name="Legajo" ColumnName="Legajo" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+                <ScalarProperty Name="Dni" ColumnName="Dni" />
+                <ScalarProperty Name="Carrera" ColumnName="Carrera" />
+                <ScalarProperty Name="Ciclo" ColumnName="Ciclo" />
+                <ScalarProperty Name="Cuatri" ColumnName="Cuatri" />
+                <ScalarProperty Name="Materia" ColumnName="Materia" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Mail" ColumnName="Mail" />
+                <ScalarProperty Name="Inansistencia" ColumnName="Inansistencia" />
+                <ScalarProperty Name="MaxNroClase" ColumnName="MaxNroClase" />
+                <ScalarProperty Name="TotalDeInasistencias" ColumnName="TotalDeInasistencias" />
+                <ScalarProperty Name="Promedio" ColumnName="Promedio" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

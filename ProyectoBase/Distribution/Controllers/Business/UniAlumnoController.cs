@@ -73,6 +73,33 @@ namespace Distribution
         /// </summary>
         /// <param name="legajo">Número de legajo.</param>
         /// <returns>Objeto UniAlumnoDTO.</returns>
+        [Route("GetKPIInasistencias")]
+        [HttpGet]
+        [AllowAnonymous]
+        public HttpResponseMessage GetKPIInasistencias(int? ciclo, int? cuatri, int? legajo, int? sede, string carrera, string nombre, string apellido, decimal? dni, int? kpiInasistenciaMayor, int? kpiInasistenciaMenor)
+        {
+            try
+            {
+                string tokenString = this.ActionContext.Request.Headers.GetValues("Authorization").ToList().FirstOrDefault();
+                string userString = this.ActionContext.Request.Headers.GetValues("User").ToList().FirstOrDefault();
+
+                if (SessionTokenService.ValidRequestByUserAndToken(tokenString, userString))
+                {
+                    return HttpResponseController.Return_200_OK(UniAlumnoService.GetKPIInasistencias(ciclo, cuatri, legajo, sede, carrera, nombre, apellido, dni, kpiInasistenciaMayor, kpiInasistenciaMenor));
+                }
+                return HttpResponseController.Return_401_Unauthorized(string.Empty);
+            }
+            catch
+            {
+                return HttpResponseController.Return_401_Unauthorized(string.Empty);
+            }
+        }
+
+        /// <summary>
+        /// Obtiene un objeto de alumno. El legajo puede ser provisorio o definitivo.
+        /// </summary>
+        /// <param name="legajo">Número de legajo.</param>
+        /// <returns>Objeto UniAlumnoDTO.</returns>
         [Route("GetByLegajoMatch")]
         [HttpGet]
         [AllowAnonymous]

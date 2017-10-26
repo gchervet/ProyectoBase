@@ -32,6 +32,18 @@ namespace Service
             return rtn;
         }
 
+        public static List<KPIInasistenciasDTO> GetKPIInasistencias(int? ciclo, int? cuatri, int? legajo, int? sede, string carrera, string nombre, string apellido, decimal? dni, int? kpiInasistenciaMayor, int? kpiInasistenciaMenor)
+        {
+            List<sp_KPI_Inansistencias_Result> kpiInasistenciaModelList = UniAlumnoDAL.GetKPIInasistencias(ciclo, cuatri, legajo, sede, carrera, nombre, apellido, dni, kpiInasistenciaMayor, kpiInasistenciaMenor);
+            List<KPIInasistenciasDTO> rtn = new List<KPIInasistenciasDTO>();
+
+            foreach (sp_KPI_Inansistencias_Result kpiInasistenciaModel in kpiInasistenciaModelList)
+            {
+                rtn.Add(new KPIInasistenciasDTO(kpiInasistenciaModel));
+            }
+            return rtn;
+        }
+
         public static List<UniAlumnoDTO> GetByLegajoMatch(string legajo)
         {
             List<UniAlumnoDTO> rtn = new List<UniAlumnoDTO>();

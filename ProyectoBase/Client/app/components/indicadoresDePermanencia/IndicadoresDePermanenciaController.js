@@ -65,6 +65,7 @@
               }
           };
 
+          // KPI Morosos
           indicadoresDePermanenciaController.getKPIMorosoListCallback = function (response) {
               if (response) {
                   for (i in response.data) {
@@ -97,6 +98,63 @@
                   }
 
                   $('#administracionTable').bootstrapTable('load', indicadoresDePermanenciaController.administracionResultList);
+              }
+          };
+
+          // KPI Inasistencias
+          indicadoresDePermanenciaController.getKPIInasistenciaListCallback = function (response) {
+              if (response) {
+
+                  indicadoresDePermanenciaController.academicoResultList = [];
+                  var actualLegajo, previousLegajo, nuevaInasistencia = null, nuevaInasistenciaCreada = false;
+
+                  for (i in response.data) {
+                      var index = Number(i);
+                      var actualKPIInasistencia = response.data[index];
+
+                      actualLegajo = actualKPIInasistencia.Legajo;
+
+                      nuevaMateria =
+                          {
+                              Inasistencia: actualKPIInasistencia.Inansistencia,
+                              Materia: actualKPIInasistencia.Materia,
+                          };
+
+                      if (((previousLegajo && actualLegajo != previousLegajo) || (!nuevaInasistencia)) && !nuevaInasistenciaCreada) {
+
+                          nuevaInasistencia =
+                          {
+                              Legajo: actualKPIInasistencia.Legajo,
+                              Nombre: actualKPIInasistencia.Nombre,
+                              Apellido: actualKPIInasistencia.Apellido,
+                              Dni: actualKPIInasistencia.Dni,
+                              Carrera: actualKPIInasistencia.Carrera,
+                              Ciclo: actualKPIInasistencia.Ciclo,
+                              Cuatrimestre: actualKPIInasistencia.Cuatri,
+                              CorreoElectronico: actualKPIInasistencia.Mail,
+                              Telefono: actualKPIInasistencia.Telefono,
+                              MaxNroClase: actualKPIInasistencia.MaxNroClase,
+                              Promedio: actualKPIInasistencia.Promedio,
+                              TotalDeInasistencias: actualKPIInasistencia.TotalDeInasistencias,
+                              nested: []
+                          }
+                          nuevaInasistenciaCreada = true;
+                      }
+                      nuevaInasistencia.nested.push(nuevaMateria);
+
+
+                      if (response.data[index + 1] && response.data[index + 1].Legajo != actualLegajo) {
+                          indicadoresDePermanenciaController.academicoResultList.push(nuevaInasistencia);
+                          previousLegajo = actualLegajo;
+                          nuevaInasistencia = null;
+                          nuevaInasistenciaCreada = false;
+
+                      }
+                      if (!response.data[index + 1]) {
+                          indicadoresDePermanenciaController.academicoResultList.push(nuevaInasistencia);
+                      }
+                  }
+                  $('#academicoTable').bootstrapTable('load', indicadoresDePermanenciaController.academicoResultList);
               }
           };
 
@@ -259,52 +317,39 @@
                                                                 "&minimoDiasPago=0"
                                                                 , callbackSuccess: indicadoresDePermanenciaController.getKPIMorosoListCallback, callbackError: indicadoresDePermanenciaController.getErrorCallback
           });
-      }
+      };
+
+
+      indicadoresDePermanenciaController.loadAcademicoGrid = function () {
+
+          indicadoresDePermanenciaController.academicoResultList = [];
+
+          utilityService.callHttp({
+              method: "GET", url: "/api/UniAlumno/GetKPIInasistencias?ciclo=2017&cuatri=1&legajo&sede&carrera=1703&nombre&apellido&dni&kpiInasistenciaMayor&kpiInasistenciaMenor"
+                                                                , callbackSuccess: indicadoresDePermanenciaController.getKPIInasistenciaListCallback, callbackError: indicadoresDePermanenciaController.getErrorCallback
+          });
+      };
 
       indicadoresDePermanenciaController.loadGrids = function () {
 
           indicadoresDePermanenciaController.resultList = [{
-              'col1': '1.1',
-              'col2': '1.2',
+              'Legajo': 'Legajo',
+              'Nombre': 'Nombre',
+              'Apellido': 'Apellido',
+              'DNI': 'DNI',
+              'Carrera': 'Carrera',
+              'Ciclo': 'Ciclo',
+              'Cuatrimestre': 'Cuatrimestre',
+              'Inasistencia': 'Inasistencia',
+              'Examenes': 'Examenes',
+              'FinalesReprobados': 'FinalesReprobados',
+              'Telefono': 'Telefono',
+              'CorreoElectronico': 'CorreoElectronico',
               'nested': [{
-                  'col3': '1.3',
-                  'col4': '1.4',
-                  'col5': '1.5'
-              },
-              {
-                  'col3': '1.3',
-                  'col4': '1.4',
-                  'col5': '1.5'
-              },
-              {
-                  'col3': '1.3',
-                  'col4': '1.4',
-                  'col5': '1.5'
-              },
-              {
-                  'col3': '1.3',
-                  'col4': '1.4',
-                  'col5': '1.5'
-              }]
-          }, {
-              'col1': '2.1',
-              'col2': '2.2',
-              'nested': [{
-                  'col3': '2.3',
-                  'col4': '2.4',
-                  'col5': '2.5'
-              }]
-          }, {
-              'col1': 'lucy',
-              'col2': 'ivan',
-              'nested': [{
-                  'col3': 'garry',
-                  'col4': 'jules',
-                  'col5': 'larry',
-                  'other': [{
-                      'col6': 'garry',
-                      'col7': 'jules',
-                  }]
+                  'Materia': 'Materia',
+                  'Inasistencia': 'Inasistencia',
+                  'Examenes': 'Examenes',
+                  'FinalesReprobados': 'FinalesReprobados'
               }]
           }];
 

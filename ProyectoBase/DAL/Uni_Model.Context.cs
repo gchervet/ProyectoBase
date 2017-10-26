@@ -145,5 +145,50 @@ namespace Data
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_get_alumno_by_legajo_match_Result>("sp_get_alumno_by_legajo_match", legajoParameter);
         }
+    
+        public virtual ObjectResult<sp_KPI_Inansistencias_Result> sp_KPI_Inansistencias(Nullable<int> ciclo, Nullable<int> cuatri, Nullable<int> legajo, Nullable<int> sede, string carrera, string nombre, string apellido, Nullable<decimal> dni, Nullable<int> kpi_inasistencia_mayor, Nullable<int> kpi_inasistencia_menor)
+        {
+            var cicloParameter = ciclo.HasValue ?
+                new ObjectParameter("ciclo", ciclo) :
+                new ObjectParameter("ciclo", typeof(int));
+    
+            var cuatriParameter = cuatri.HasValue ?
+                new ObjectParameter("cuatri", cuatri) :
+                new ObjectParameter("cuatri", typeof(int));
+    
+            var legajoParameter = legajo.HasValue ?
+                new ObjectParameter("legajo", legajo) :
+                new ObjectParameter("legajo", typeof(int));
+    
+            var sedeParameter = sede.HasValue ?
+                new ObjectParameter("sede", sede) :
+                new ObjectParameter("sede", typeof(int));
+    
+            var carreraParameter = carrera != null ?
+                new ObjectParameter("carrera", carrera) :
+                new ObjectParameter("carrera", typeof(string));
+    
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("nombre", nombre) :
+                new ObjectParameter("nombre", typeof(string));
+    
+            var apellidoParameter = apellido != null ?
+                new ObjectParameter("apellido", apellido) :
+                new ObjectParameter("apellido", typeof(string));
+    
+            var dniParameter = dni.HasValue ?
+                new ObjectParameter("dni", dni) :
+                new ObjectParameter("dni", typeof(decimal));
+    
+            var kpi_inasistencia_mayorParameter = kpi_inasistencia_mayor.HasValue ?
+                new ObjectParameter("kpi_inasistencia_mayor", kpi_inasistencia_mayor) :
+                new ObjectParameter("kpi_inasistencia_mayor", typeof(int));
+    
+            var kpi_inasistencia_menorParameter = kpi_inasistencia_menor.HasValue ?
+                new ObjectParameter("kpi_inasistencia_menor", kpi_inasistencia_menor) :
+                new ObjectParameter("kpi_inasistencia_menor", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_KPI_Inansistencias_Result>("sp_KPI_Inansistencias", cicloParameter, cuatriParameter, legajoParameter, sedeParameter, carreraParameter, nombreParameter, apellidoParameter, dniParameter, kpi_inasistencia_mayorParameter, kpi_inasistencia_menorParameter);
+        }
     }
 }

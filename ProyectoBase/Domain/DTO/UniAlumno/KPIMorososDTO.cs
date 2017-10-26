@@ -36,6 +36,5 @@ namespace Domain
         public Nullable<System.DateTime> UltimaActAca { get; set; }
         public string Telefono { get; set; }
         public string Mail { get; set; }
-
     }
 }

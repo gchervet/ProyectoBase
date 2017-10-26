@@ -40,6 +40,14 @@ namespace Data
             }
         }
 
+        public static List<sp_KPI_Inansistencias_Result> GetKPIInasistencias(int? ciclo, int? cuatri, int? legajo, int? sede, string carrera, string nombre, string apellido, decimal? dni, int? kpiInasistenciaMayor, int? kpiInasistenciaMenor)
+        {
+            using (var context = new Uni_Entities())
+            {
+                return context.sp_KPI_Inansistencias(ciclo, cuatri, legajo, sede, carrera, nombre, apellido, dni, kpiInasistenciaMayor, kpiInasistenciaMenor).ToList();
+            }
+        }
+
         public static List<sp_get_alumno_by_legajo_match_Result> GetByLegajoMatch(string legajo)
         {
             using (var context = new Uni_Entities())
