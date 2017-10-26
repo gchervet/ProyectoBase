@@ -107,7 +107,34 @@
                         <div class="col-md-12 col-centered">
                             <div id="administracionGrid">
 
-                                <table id="academicoTable"></table>
+                                <!--<table id="academicoTable"></table>-->
+                                <table id="academicoTable" 
+                                       data-detail-view="true"
+                                       data-toggle="table"
+                                       data-search="true"
+                                       data-filter-control="true"
+                                       data-pagination="true"
+                                       data-show-export="true"
+                                       data-click-to-select="true"
+                                       data-page-list="[5, 10, 25, 50, 100, ALL]"
+                                       data-page-size="5">
+                                    <thead>
+                                        <tr>
+                                            <th data-field="Legajo" data-filter-control="input" data-filter-control-placeholder="Buscar">Legajo</th>
+                                            <th data-field="Nombre" data-filter-control="input" data-filter-control-placeholder="Buscar">Nombre</th>
+                                            <th data-field="Apellido" data-filter-control="input" data-filter-control-placeholder="Buscar">Apellido</th>
+                                            <th data-field="DNI" data-filter-control="input" data-filter-control-placeholder="Buscar">DNI</th>
+                                            <th data-field="Carrera" data-filter-control="input" data-filter-control-placeholder="Buscar">Carrera</th>
+                                            <th data-field="Ciclo" data-filter-control="input" data-filter-control-placeholder="Buscar">Ciclo</th>
+                                            <th data-field="Cuatrimestre" data-filter-control="input" data-filter-control-placeholder="Buscar">Cuatrimestre</th>
+                                            <th data-field="Inasistencia" data-filter-control="input" data-filter-control-placeholder="Buscar">Inasistencia</th>
+                                            <th data-field="Examenes" data-filter-control="input" data-filter-control-placeholder="Buscar">Exámenes</th>
+                                            <th data-field="FinalesReprobados" data-filter-control="input" data-filter-control-placeholder="Buscar">Finales reprobados</th>
+                                            <th data-field="Telefono" data-filter-control="input" data-filter-control-placeholder="Buscar">Teléfono</th>
+                                            <th data-field="CorreoElectronico" data-filter-control="input" data-filter-control-placeholder="Buscar">Correo electrónico</th>
+                                        </tr>
+                                    </thead>
+                                </table>
 
                             </div>
                         </div>

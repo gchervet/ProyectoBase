@@ -341,68 +341,11 @@
 
       indicadoresDePermanenciaController.loadGrids = function () {
 
-          indicadoresDePermanenciaController.resultList = [{
-              'Legajo': 'Legajo',
-              'Nombre': 'Nombre',
-              'Apellido': 'Apellido',
-              'DNI': 'DNI',
-              'Carrera': 'Carrera',
-              'Ciclo': 'Ciclo',
-              'Cuatrimestre': 'Cuatrimestre',
-              'Inasistencia': 'Inasistencia',
-              'Examenes': 'Examenes',
-              'FinalesReprobados': 'FinalesReprobados',
-              'Telefono': 'Telefono',
-              'CorreoElectronico': 'CorreoElectronico',
-              'nested': [{
-                  'Materia': 'Materia',
-                  'Inasistencia': 'Inasistencia',
-                  'Examenes': 'Examenes',
-                  'FinalesReprobados': 'FinalesReprobados'
-              }]
-          }];
+          indicadoresDePermanenciaController.resultList = [];
 
           $('#administracionTable').bootstrapTable({ data: indicadoresDePermanenciaController.administracionResultList });
 
           $('#academicoTable').bootstrapTable({
-
-              columns: [{
-                  field: 'Legajo',
-                  title: 'Legajo'
-              }, {
-                  field: 'Nombre',
-                  title: 'Nombre'
-              }, {
-                  field: 'Apellido',
-                  title: 'Apellido'
-              }, {
-                  field: 'DNI',
-                  title: 'DNI'
-              }, {
-                  field: 'Carrera',
-                  title: 'Carrera'
-              }, {
-                  field: 'Ciclo',
-                  title: 'Ciclo'
-              }, {
-                  field: 'Cuatrimestre',
-                  title: 'Cuatrimestre'
-              }, {
-                  field: 'Inasistencia',
-                  title: 'Inasistencia'
-              }, {
-                  field: 'Examenes',
-                  title: 'Exámenes'
-              }, {
-                  field: 'FinalesReprobados',
-                  title: 'Finales reprobados'
-              }, {
-                  field: 'Telefono',
-                  title: 'Teléfono'
-              }, {
-                  field: 'CorreoElectronico',
-                  title: 'Correo electrónico'
-              }],
               data: indicadoresDePermanenciaController.resultList,
               detailView: true,
               onExpandRow: function (index, row, $detail) {
@@ -421,23 +364,7 @@
                           field: 'FinalesReprobados',
                           title: 'Finales reprobados'
                       }],
-                      data: row.nested,
-                      // Simple contextual, assumes all entries have further nesting
-                      // Just shows example of how you might differentiate some rows, though also remember row class and similar possible flags
-                      detailView: row.nested[0]['other'] !== undefined
-                      //Para agregar otra más (BORRAR)
-                      /*,onExpandRow: function (indexb, rowb, $detailb) {
-                          $detailb.html('<table></table>').find('table').bootstrapTable({
-                              columns: [{
-                                  field: 'col6',
-                                  title: 'Col6'
-                              }, {
-                                  field: 'col7',
-                                  title: 'Col7'
-                              }],
-                              data: rowb.other
-                          });
-                      }*/
+                      data: row.nested
                   });
 
               }
