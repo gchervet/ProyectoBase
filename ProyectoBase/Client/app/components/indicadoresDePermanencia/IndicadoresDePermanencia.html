@@ -95,11 +95,11 @@
                             <div class="col-md-12 col-centered">
                                 <div class="col-md-3 form-group">
                                     <label>KPI:</label>
-                                    <select id="comboCiclo" class="input-large form-control" ng-options="kpi for kpi in vm.kpiList" ng-model="vm.aca_kpiSelected"></select>
+                                    <select class="input-large form-control" ng-options="kpi for kpi in vm.kpiList" ng-model="vm.aca_kpiSelected"></select>
                                 </div>
                                 <div class="col-md-3 form-group">
                                     <label>Nivel de riesgo:</label>
-                                    <select id="comboCuatrimestre" class="input-large form-control" ng-options="nivelDeRiesgo for nivelDeRiesgo in vm.nivelDeRiesgoList" ng-model="vm.aca_nivelDeRiesgoSelected"></select>
+                                    <select class="input-large form-control" ng-options="nivelDeRiesgo for nivelDeRiesgo in vm.nivelDeRiesgoList" ng-model="vm.aca_nivelDeRiesgoSelected"></select>
                                 </div>
                             </div>
                         </div>
@@ -144,11 +144,11 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-16">
+                        <div class="col-md-6">
                             <h4>Gráfico de grilla:</h4>
                             <div id="gridChartContainer"></div>
                         </div>
-                        <div class="col-md-16">
+                        <div class="col-md-6">
                             <h4>Gráfico de total:</h4>
                             <div id="totalChartContainer"></div>
                         </div>

@@ -27,61 +27,6 @@
           indicadoresDePermanenciaController.loadLists();
           indicadoresDePermanenciaController.loadPersonMethods();
           indicadoresDePermanenciaController.loadGrids();
-
-          // CHARTS
-          var revenueChart = new FusionCharts({
-              type: 'pie3d',
-              renderAt: 'gridChartContainer',
-              dataFormat: 'json',
-              dataSource: {
-                  "chart": {
-                      "showBorder": "0",
-                      "use3DLighting": "0",
-                      "showShadow": "0",
-                      "enableSmartLabels": "0",
-                      "startingAngle": "0",
-                      "showPercentValues": "1",
-                      "showPercentInTooltip": "0",
-                      "decimals": "1",
-                      "captionFontSize": "14",
-                      "subcaptionFontSize": "14",
-                      "subcaptionFontBold": "0",
-                      "toolTipColor": "#ffffff",
-                      "toolTipBorderThickness": "0",
-                      "toolTipBgColor": "#000000",
-                      "toolTipBgAlpha": "80",
-                      "toolTipBorderRadius": "2",
-                      "toolTipPadding": "5",
-                      "showHoverEffect": "1",
-                      "showLegend": "1",
-                      "legendBgColor": "#ffffff",
-                      "legendBorderAlpha": '0',
-                      "legendShadow": '0',
-                      "legendItemFontSize": '10',
-                      "legendItemFontColor": '#666666'
-                  },
-                  "data": [
-                      {
-                          "label": "Teenage",
-                          "value": "1250400"
-                      },
-                      {
-                          "label": "Adult",
-                          "value": "1463300"
-                      },
-                      {
-                          "label": "Mid-age",
-                          "value": "1050700"
-                      },
-                      {
-                          "label": "Senior",
-                          "value": "491000"
-                      }
-                  ]
-              }
-          });
-
-          revenueChart.render();
       };
 
       indicadoresDePermanenciaController.loadRequestMethods = function () {
@@ -161,7 +106,8 @@
               if (response) {
 
                   indicadoresDePermanenciaController.academicoResultList = [];
-                  var actualLegajo, previousLegajo, nuevaInasistencia = null, nuevaInasistenciaCreada = false;
+
+                  var actualLegajo, previousLegajo, nuevaInasistencia = null, nuevaInasistenciaCreada = false, cantALTO = 0, cantMEDIO = 0, cantBAJO = 0;
 
                   for (i in response.data) {
                       var index = Number(i);
@@ -179,12 +125,15 @@
                           var inasistenciaTexto = '';
                           if (actualKPIInasistencia.Promedio >= $rootScope.KPI_INASISTENCIAS_PORCENTAJE_LIMITE_MAYOR) {
                               inasistenciaTexto = 'ALTO';
+                              cantALTO++;
                           }
                           if (actualKPIInasistencia.Promedio > $rootScope.KPI_INASISTENCIAS_PORCENTAJE_LIMITE_MENOR && actualKPIInasistencia.Promedio < $rootScope.KPI_INASISTENCIAS_PORCENTAJE_LIMITE_MAYOR) {
                               inasistenciaTexto = 'MEDIO';
+                              cantMEDIO++;
                           }
                           if (actualKPIInasistencia.Promedio <= $rootScope.KPI_INASISTENCIAS_PORCENTAJE_LIMITE_MENOR) {
                               inasistenciaTexto = 'BAJO';
+                              cantBAJO++;
                           }
 
                           nuevaInasistencia = {
@@ -207,18 +156,42 @@
                       }
                       nuevaInasistencia.nested.push(nuevaMateria);
 
-                      if (response.data[index + 1] && response.data[index + 1].Legajo != actualLegajo) {
-                          indicadoresDePermanenciaController.academicoResultList.push(nuevaInasistencia);
+                      if ((response.data[index + 1] && response.data[index + 1].Legajo != actualLegajo) || !response.data[index + 1]) {
+
+                          // Si no hay filtro KPI
+                          if (indicadoresDePermanenciaController.aca_kpiSelected == '') {
+                              indicadoresDePermanenciaController.academicoResultList.push(nuevaInasistencia);
+                          }
+                              // Si hay filtro KPI - Inasistencias
+                          else if (indicadoresDePermanenciaController.aca_kpiSelected == 'Inasistencias') {
+                              if (indicadoresDePermanenciaController.aca_nivelDeRiesgoSelected == '' ||
+                                  indicadoresDePermanenciaController.aca_nivelDeRiesgoSelected.toLowerCase() == inasistenciaTexto.toLowerCase()) {
+                                  indicadoresDePermanenciaController.academicoResultList.push(nuevaInasistencia);
+                              }
+                          }
+                              // Si hay filtro KPI - Exámenes reprobados
+                          else if (indicadoresDePermanenciaController.aca_kpiSelected == 'Exámenes reprobados') {
+                              if (indicadoresDePermanenciaController.aca_nivelDeRiesgoSelected == '' ||
+                                  indicadoresDePermanenciaController.aca_nivelDeRiesgoSelected.toLowerCase() == inasistenciaTexto.toLowerCase()) {
+                                  indicadoresDePermanenciaController.academicoResultList.push(nuevaInasistencia);
+                              }
+                          }
+                              // Si hay filtro KPI - Inasistencias
+                          else if (indicadoresDePermanenciaController.aca_kpiSelected == 'Finales reprobó') {
+                              if (indicadoresDePermanenciaController.aca_nivelDeRiesgoSelected == '' ||
+                                  indicadoresDePermanenciaController.aca_nivelDeRiesgoSelected.toLowerCase() == inasistenciaTexto.toLowerCase()) {
+                                  indicadoresDePermanenciaController.academicoResultList.push(nuevaInasistencia);
+                              }
+                          }
+
                           previousLegajo = actualLegajo;
                           nuevaInasistencia = null;
                           nuevaInasistenciaCreada = false;
 
                       }
-                      if (!response.data[index + 1]) {
-                          indicadoresDePermanenciaController.academicoResultList.push(nuevaInasistencia);
-                      }
                   }
                   $('#academicoTable').bootstrapTable('load', indicadoresDePermanenciaController.academicoResultList);
+                  indicadoresDePermanenciaController.loadCharts([{ 'label': 'ALTO', 'value': cantALTO.toString() }, { 'label': 'MEDIO', 'value': cantMEDIO.toString() }, { 'label': 'BAJO', 'value': cantBAJO.toString() }]);
               }
           };
 
@@ -233,7 +206,7 @@
               }
           };
       }
-      
+
       indicadoresDePermanenciaController.loadLists = function () {
           indicadoresDePermanenciaController.source = [];
           $(function () {
@@ -243,6 +216,7 @@
           });
 
           // Variables para Tab-Administración
+          indicadoresDePermanenciaController.adm_legajoSearchText = '';
           indicadoresDePermanenciaController.adm_legajoSelected = '';
           indicadoresDePermanenciaController.adm_nombreSelected = '';
           indicadoresDePermanenciaController.adm_apellidoSelected = '';
@@ -253,7 +227,10 @@
           indicadoresDePermanenciaController.adm_kpiSelected = '';
           indicadoresDePermanenciaController.adm_nivelDeRiesgoSelected = '';
 
+          indicadoresDePermanenciaController.adm_chartGridData = [];
+
           // Variables para Tab-Académico
+          indicadoresDePermanenciaController.aca_legajoSearchText = '';
           indicadoresDePermanenciaController.aca_legajoSelected = '';
           indicadoresDePermanenciaController.aca_nombreSelected = '';
           indicadoresDePermanenciaController.aca_apellidoSelected = '';
@@ -266,16 +243,18 @@
           indicadoresDePermanenciaController.aca_kpiSelected = '';
           indicadoresDePermanenciaController.aca_nivelDeRiesgoSelected = '';
 
+          indicadoresDePermanenciaController.aca_chartGridData = [];
+
           // Variables generales
-          indicadoresDePermanenciaController.adm_legajoSearchText = '';
-          indicadoresDePermanenciaController.aca_legajoSearchText = '';
           indicadoresDePermanenciaController.legajoList = [];
           indicadoresDePermanenciaController.cicloList = [];
           indicadoresDePermanenciaController.cuatrimestreList = [1, 2];
           indicadoresDePermanenciaController.sedeList = [];
           indicadoresDePermanenciaController.planList = [];
-          indicadoresDePermanenciaController.kpiList = [];
-          indicadoresDePermanenciaController.nivelDeRiesgoList = [];
+          indicadoresDePermanenciaController.kpiList = ['', 'Inasistencias', 'Exámenes reprobados', 'Finales reprobó'];
+          indicadoresDePermanenciaController.nivelDeRiesgoList = ['', 'Alto', 'Medio', 'Bajo'];
+
+          indicadoresDePermanenciaController.chartTotalData = [];
 
           utilityService.callHttp({ method: "GET", url: "/api/UniPlan/GetAll", callbackSuccess: indicadoresDePermanenciaController.getPlanListCallback, callbackError: indicadoresDePermanenciaController.getErrorCallback });
           utilityService.callHttp({ method: "GET", url: "/api/UniRegional/GetAll", callbackSuccess: indicadoresDePermanenciaController.getRegionalListCallback, callbackError: indicadoresDePermanenciaController.getErrorCallback });
@@ -408,4 +387,49 @@
               }
           });
       };
+
+      indicadoresDePermanenciaController.loadCharts = function (charData) {
+
+          // Grid data chart
+          indicadoresDePermanenciaController.gridDataChart = new FusionCharts({
+              type: 'pie3d',
+              renderAt: 'gridChartContainer',
+              dataFormat: 'json',
+              height: '500',
+              width: '750',
+              dataSource: {
+                  "chart": {
+                      "showBorder": "0",
+                      "use3DLighting": "0",
+                      "showShadow": "0",
+                      "enableSmartLabels": "0",
+                      "startingAngle": "0",
+                      "showPercentValues": "1",
+                      "showPercentInTooltip": "0",
+                      "decimals": "1",
+                      "captionFontSize": "14",
+                      "subcaptionFontSize": "14",
+                      "subcaptionFontBold": "0",
+                      "toolTipColor": "#ffffff",
+                      "toolTipBorderThickness": "0",
+                      "toolTipBgColor": "#000000",
+                      "toolTipBgAlpha": "80",
+                      "toolTipBorderRadius": "2",
+                      "toolTipPadding": "5",
+                      "showHoverEffect": "1",
+                      "showLegend": "1",
+                      "legendBgColor": "#ffffff",
+                      "legendBorderAlpha": '0',
+                      "legendShadow": '0',
+                      "legendItemFontSize": '10',
+                      "legendItemFontColor": '#666666'
+                  },
+                  "data": charData
+              }
+          });
+
+          indicadoresDePermanenciaController.gridDataChart.render();
+
+      };
+
   });
