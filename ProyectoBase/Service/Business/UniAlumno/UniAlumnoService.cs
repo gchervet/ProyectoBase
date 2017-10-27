@@ -55,5 +55,22 @@ namespace Service
             }
             return rtn;
         }
+
+        public static List<decimal> GetKPIInasistenciasTotalPromedios(int? ciclo, int? cuatri)
+        {
+            List<sp_KPI_Inansistencias_Result> kpiInasistenciaModelList = UniAlumnoDAL.GetKPIInasistencias(ciclo, cuatri, null, null, null, null, null, null, null, null);
+            List<decimal> rtn = new List<decimal>();
+            List<int> usedLegajos = new List<int>();
+
+            foreach (sp_KPI_Inansistencias_Result kpiInasistenciaModel in kpiInasistenciaModelList)
+            {
+                if (!usedLegajos.Any(x => x == kpiInasistenciaModel.Legajo) && kpiInasistenciaModel.Promedio.HasValue)
+                {
+                    rtn.Add(kpiInasistenciaModel.Promedio.Value);
+                    usedLegajos.Add(kpiInasistenciaModel.Legajo);
+                }
+            }
+            return rtn;
+        }
     }
 }

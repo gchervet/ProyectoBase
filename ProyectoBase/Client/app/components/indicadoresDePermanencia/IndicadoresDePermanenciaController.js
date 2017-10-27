@@ -35,6 +35,33 @@
               alert(response);
           }
 
+          indicadoresDePermanenciaController.getFullGridInfoListCallback = function (response) {
+
+              var cantALTO = 0, cantMEDIO = 0, cantBAJO = 0;
+              debugger;
+              indicadoresDePermanenciaController.aca_totalInfoData = [];
+              if (response) {
+                  for (i in response.data) {
+
+                      var inasistenciaTexto = '';
+                      if (response.data[i] >= $rootScope.KPI_INASISTENCIAS_PORCENTAJE_LIMITE_MAYOR) {
+                          inasistenciaTexto = 'ALTO';
+                          cantALTO++;
+                      }
+                      if (response.data[i] > $rootScope.KPI_INASISTENCIAS_PORCENTAJE_LIMITE_MENOR && response.data[i] < $rootScope.KPI_INASISTENCIAS_PORCENTAJE_LIMITE_MAYOR) {
+                          inasistenciaTexto = 'MEDIO';
+                          cantMEDIO++;
+                      }
+                      if (response.data[i] <= $rootScope.KPI_INASISTENCIAS_PORCENTAJE_LIMITE_MENOR) {
+                          inasistenciaTexto = 'BAJO';
+                          cantBAJO++;
+                      }
+                  }
+                  indicadoresDePermanenciaController.aca_lastCicloCuatriSelected = { ciclo: indicadoresDePermanenciaController.aca_cicloSelected, cuatrimestre: indicadoresDePermanenciaController.aca_cuatrimestreSelected };
+                  indicadoresDePermanenciaController.loadCharts('fullChartContainer', [{ 'label': 'ALTO', 'value': cantALTO.toString() }, { 'label': 'MEDIO', 'value': cantMEDIO.toString() }, { 'label': 'BAJO', 'value': cantBAJO.toString() }], 'Total de inasistencias');
+              }
+          };
+
           indicadoresDePermanenciaController.getRegionalListCallback = function (response) {
               if (response) {
                   for (i in response.data) {
@@ -191,7 +218,18 @@
                       }
                   }
                   $('#academicoTable').bootstrapTable('load', indicadoresDePermanenciaController.academicoResultList);
-                  indicadoresDePermanenciaController.loadCharts([{ 'label': 'ALTO', 'value': cantALTO.toString() }, { 'label': 'MEDIO', 'value': cantMEDIO.toString() }, { 'label': 'BAJO', 'value': cantBAJO.toString() }]);
+                  indicadoresDePermanenciaController.loadCharts('gridChartContainer', [{ 'label': 'ALTO', 'value': cantALTO.toString() }, { 'label': 'MEDIO', 'value': cantMEDIO.toString() }, { 'label': 'BAJO', 'value': cantBAJO.toString() }], 'Inasistencias encontradas');
+
+
+                  if (!indicadoresDePermanenciaController.aca_lastCicloCuatriSelected ||
+                      indicadoresDePermanenciaController.aca_lastCicloCuatriSelected.ciclo != indicadoresDePermanenciaController.aca_cicloSelected ||
+                      indicadoresDePermanenciaController.aca_lastCicloCuatriSelected.cuatrimestre != indicadoresDePermanenciaController.aca_cuatrimestreSelected) {
+                      
+                      utilityService.callHttp({
+                          method: "GET", url: "/api/UniAlumno/GetKPIInasistenciasTotalPromedios?ciclo=" + indicadoresDePermanenciaController.aca_cicloSelected + "&cuatri=" + indicadoresDePermanenciaController.aca_cuatrimestreSelected
+                                                               , callbackSuccess: indicadoresDePermanenciaController.getFullGridInfoListCallback, callbackError: indicadoresDePermanenciaController.getErrorCallback
+                      });
+                  }
               }
           };
 
@@ -228,6 +266,7 @@
           indicadoresDePermanenciaController.adm_nivelDeRiesgoSelected = '';
 
           indicadoresDePermanenciaController.adm_chartGridData = [];
+          indicadoresDePermanenciaController.adm_lastCicloCuatriSelected = {};
 
           // Variables para Tab-Académico
           indicadoresDePermanenciaController.aca_legajoSearchText = '';
@@ -244,6 +283,7 @@
           indicadoresDePermanenciaController.aca_nivelDeRiesgoSelected = '';
 
           indicadoresDePermanenciaController.aca_chartGridData = [];
+          indicadoresDePermanenciaController.aca_lastCicloCuatriSelected = {};
 
           // Variables generales
           indicadoresDePermanenciaController.legajoList = [];
@@ -251,8 +291,8 @@
           indicadoresDePermanenciaController.cuatrimestreList = [1, 2];
           indicadoresDePermanenciaController.sedeList = [];
           indicadoresDePermanenciaController.planList = [];
-          indicadoresDePermanenciaController.kpiList = ['', 'Inasistencias', 'Exámenes reprobados', 'Finales reprobó'];
-          indicadoresDePermanenciaController.nivelDeRiesgoList = ['', 'Alto', 'Medio', 'Bajo'];
+          indicadoresDePermanenciaController.kpiList = ['Inasistencias', 'Exámenes reprobados', 'Finales reprobó'];
+          indicadoresDePermanenciaController.nivelDeRiesgoList = ['Alto', 'Medio', 'Bajo'];
 
           indicadoresDePermanenciaController.chartTotalData = [];
 
@@ -352,6 +392,7 @@
                                                                 "&kpiInasistenciaMenor="
                                                                 , callbackSuccess: indicadoresDePermanenciaController.getKPIInasistenciaListCallback, callbackError: indicadoresDePermanenciaController.getErrorCallback
           });
+
       };
 
       indicadoresDePermanenciaController.loadGrids = function () {
@@ -388,18 +429,20 @@
           });
       };
 
-      indicadoresDePermanenciaController.loadCharts = function (charData) {
+      indicadoresDePermanenciaController.loadCharts = function (charId, charData, title) {
 
           // Grid data chart
           indicadoresDePermanenciaController.gridDataChart = new FusionCharts({
               type: 'pie3d',
-              renderAt: 'gridChartContainer',
+              renderAt: charId,
               dataFormat: 'json',
               height: '500',
               width: '750',
               dataSource: {
                   "chart": {
                       "showBorder": "0",
+                      "caption": title,
+                      "subCaption": "",
                       "use3DLighting": "0",
                       "showShadow": "0",
                       "enableSmartLabels": "0",
@@ -429,7 +472,6 @@
           });
 
           indicadoresDePermanenciaController.gridDataChart.render();
-
       };
 
   });
