@@ -32,14 +32,26 @@ namespace Service
             return rtn;
         }
 
-        public static List<KPIInasistenciasDTO> GetKPIInasistencias(int? ciclo, int? cuatri, int? legajo, int? sede, string carrera, string nombre, string apellido, decimal? dni, int? kpiInasistenciaMayor, int? kpiInasistenciaMenor)
+        public static List<KPIInasistenciasDTO> GetKPIInasistencias(int? ciclo, int? cuatri, int? legajo, int? sede, string carrera, string nombre, string apellido, decimal? dni, int? kpiInasistenciaMayor, int? kpiInasistenciaMenor, int? kpi_reprobados_mayor, int? kpi_reprobados_menor)
         {
             List<sp_KPI_Inansistencias_Result> kpiInasistenciaModelList = UniAlumnoDAL.GetKPIInasistencias(ciclo, cuatri, legajo, sede, carrera, nombre, apellido, dni, kpiInasistenciaMayor, kpiInasistenciaMenor);
+            List<ExamenReprobadoDTO> examenReprobadoList = GetExamenesReprobados(ciclo, cuatri, legajo, sede, carrera, nombre, apellido, dni, kpi_reprobados_mayor, kpi_reprobados_menor);
             List<KPIInasistenciasDTO> rtn = new List<KPIInasistenciasDTO>();
 
             foreach (sp_KPI_Inansistencias_Result kpiInasistenciaModel in kpiInasistenciaModelList)
             {
-                rtn.Add(new KPIInasistenciasDTO(kpiInasistenciaModel));
+                KPIInasistenciasDTO newKPIInasistencia = new KPIInasistenciasDTO(kpiInasistenciaModel);
+                ExamenReprobadoDTO examenPorLegajoYMateria = examenReprobadoList.Where(x => x.Legajo == kpiInasistenciaModel.Legajo && x.Materia == kpiInasistenciaModel.Materia && x.Ciclo == kpiInasistenciaModel.Ciclo && x.Cuatri == kpiInasistenciaModel.Cuatri).FirstOrDefault();
+
+                if (examenPorLegajoYMateria != null)
+                {
+                    newKPIInasistencia.ExamenesDesaprobados = examenPorLegajoYMateria.ExamenesDesaprobados;
+                    newKPIInasistencia.TotalExamenesDesaprobados = examenPorLegajoYMateria.TotalExamenesDesaprobados;
+                    newKPIInasistencia.PromedioExamenesReprobados = examenPorLegajoYMateria.Promedio;
+                    //newKPIInasistencia.PromedioFinalesReprobados = examenPorLegajoYMateria.Promedio;
+                }
+
+                rtn.Add(newKPIInasistencia);
             }
             return rtn;
         }
@@ -69,6 +81,18 @@ namespace Service
                     rtn.Add(kpiInasistenciaModel.Promedio.Value);
                     usedLegajos.Add(kpiInasistenciaModel.Legajo);
                 }
+            }
+            return rtn;
+        }
+
+        public static List<ExamenReprobadoDTO> GetExamenesReprobados(int? ciclo, int? cuatri, int? legajo, int? sede, string carrera, string nombre, string apellido, decimal? dni, int? kpi_reprobados_mayor, int? kpi_reprobados_menor)
+        {
+            List<sp_KPI_Examenes_Reprobados_Result> examenReprobadoModelList = UniAlumnoDAL.GetExamenesReprobados(ciclo, cuatri, legajo, sede, carrera, nombre, apellido, dni, kpi_reprobados_mayor, kpi_reprobados_menor);
+            List<ExamenReprobadoDTO> rtn = new List<ExamenReprobadoDTO>();
+
+            foreach (sp_KPI_Examenes_Reprobados_Result examenReprobadoModel in examenReprobadoModelList)
+            {
+                rtn.Add(new ExamenReprobadoDTO(examenReprobadoModel));
             }
             return rtn;
         }

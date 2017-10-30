@@ -244,6 +244,30 @@
           <Parameter Name="cursoEdicionId" Type="bigint" Mode="In" />
           <Parameter Name="convenioId" Type="int" Mode="In" />
         </Function>
+        <Function Name="sp_KPI_Examenes_Reprobados" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ciclo" Type="int" Mode="In" />
+          <Parameter Name="cuatri" Type="int" Mode="In" />
+          <Parameter Name="legajo" Type="int" Mode="In" />
+          <Parameter Name="sede" Type="int" Mode="In" />
+          <Parameter Name="carrera" Type="varchar" Mode="In" />
+          <Parameter Name="nombre" Type="varchar" Mode="In" />
+          <Parameter Name="apellido" Type="varchar" Mode="In" />
+          <Parameter Name="dni" Type="numeric" Mode="In" />
+          <Parameter Name="kpi_reprobados_mayor" Type="int" Mode="In" />
+          <Parameter Name="kpi_reprobados_menor" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_KPI_Finales_Reprobados" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ciclo" Type="int" Mode="In" />
+          <Parameter Name="cuatri" Type="int" Mode="In" />
+          <Parameter Name="legajo" Type="int" Mode="In" />
+          <Parameter Name="sede" Type="int" Mode="In" />
+          <Parameter Name="carrera" Type="varchar" Mode="In" />
+          <Parameter Name="nombre" Type="varchar" Mode="In" />
+          <Parameter Name="apellido" Type="varchar" Mode="In" />
+          <Parameter Name="dni" Type="numeric" Mode="In" />
+          <Parameter Name="kpi_reprobados_mayor" Type="int" Mode="In" />
+          <Parameter Name="kpi_reprobados_menor" Type="int" Mode="In" />
+        </Function>
         <Function Name="sp_KPI_Inansistencias" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ciclo" Type="int" Mode="In" />
           <Parameter Name="cuatri" Type="int" Mode="In" />
@@ -443,6 +467,30 @@
             <Parameter Name="dni" Mode="In" Type="Decimal" />
             <Parameter Name="kpi_inasistencia_mayor" Mode="In" Type="Int32" />
             <Parameter Name="kpi_inasistencia_menor" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_KPI_Examenes_Reprobados" ReturnType="Collection(Uni_Model.sp_KPI_Examenes_Reprobados_Result)">
+            <Parameter Name="ciclo" Mode="In" Type="Int32" />
+            <Parameter Name="cuatri" Mode="In" Type="Int32" />
+            <Parameter Name="legajo" Mode="In" Type="Int32" />
+            <Parameter Name="sede" Mode="In" Type="Int32" />
+            <Parameter Name="carrera" Mode="In" Type="String" />
+            <Parameter Name="nombre" Mode="In" Type="String" />
+            <Parameter Name="apellido" Mode="In" Type="String" />
+            <Parameter Name="dni" Mode="In" Type="Decimal" />
+            <Parameter Name="kpi_reprobados_mayor" Mode="In" Type="Int32" />
+            <Parameter Name="kpi_reprobados_menor" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_KPI_Finales_Reprobados" ReturnType="Collection(Uni_Model.sp_KPI_Finales_Reprobados_Result)">
+            <Parameter Name="ciclo" Mode="In" Type="Int32" />
+            <Parameter Name="cuatri" Mode="In" Type="Int32" />
+            <Parameter Name="legajo" Mode="In" Type="Int32" />
+            <Parameter Name="sede" Mode="In" Type="Int32" />
+            <Parameter Name="carrera" Mode="In" Type="String" />
+            <Parameter Name="nombre" Mode="In" Type="String" />
+            <Parameter Name="apellido" Mode="In" Type="String" />
+            <Parameter Name="dni" Mode="In" Type="Decimal" />
+            <Parameter Name="kpi_reprobados_mayor" Mode="In" Type="Int32" />
+            <Parameter Name="kpi_reprobados_menor" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_get_UniAlumnos_Result">
@@ -707,6 +755,36 @@
           <Property Type="Int32" Name="Inansistencia" Nullable="true" />
           <Property Type="Int32" Name="MaxNroClase" Nullable="true" />
           <Property Type="Int32" Name="TotalDeInasistencias" Nullable="true" />
+          <Property Type="Decimal" Name="Promedio" Nullable="true" Precision="16" Scale="4" />
+        </ComplexType>
+        <ComplexType Name="sp_KPI_Examenes_Reprobados_Result">
+          <Property Type="Int32" Name="Legajo" Nullable="false" />
+          <Property Type="String" Name="Nombre" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="Apellido" Nullable="true" MaxLength="30" />
+          <Property Type="Decimal" Name="Dni" Nullable="true" Precision="9" Scale="0" />
+          <Property Type="String" Name="Carrera" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="Ciclo" Nullable="false" />
+          <Property Type="Int32" Name="Cuatri" Nullable="false" />
+          <Property Type="String" Name="Materia" Nullable="true" MaxLength="35" />
+          <Property Type="String" Name="Telefono" Nullable="true" MaxLength="25" />
+          <Property Type="String" Name="Mail" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="ExamenesDesaprobados" Nullable="true" />
+          <Property Type="Int32" Name="TotalExamenesDesaprobados" Nullable="true" />
+          <Property Type="Decimal" Name="Promedio" Nullable="true" Precision="16" Scale="4" />
+        </ComplexType>
+        <ComplexType Name="sp_KPI_Finales_Reprobados_Result">
+          <Property Type="Int32" Name="Legajo" Nullable="false" />
+          <Property Type="String" Name="Nombre" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="Apellido" Nullable="true" MaxLength="30" />
+          <Property Type="Decimal" Name="Dni" Nullable="true" Precision="9" Scale="0" />
+          <Property Type="String" Name="Carrera" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="Ciclo" Nullable="false" />
+          <Property Type="Int32" Name="Cuatri" Nullable="false" />
+          <Property Type="String" Name="Materia" Nullable="true" MaxLength="35" />
+          <Property Type="String" Name="Telefono" Nullable="true" MaxLength="25" />
+          <Property Type="String" Name="Mail" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="ExamenesDesaprobados" Nullable="true" />
+          <Property Type="Int32" Name="TotalExamenesDesaprobados" Nullable="true" />
           <Property Type="Decimal" Name="Promedio" Nullable="true" Precision="16" Scale="4" />
         </ComplexType>
       </Schema>
@@ -1064,6 +1142,44 @@
                 <ScalarProperty Name="Inansistencia" ColumnName="Inansistencia" />
                 <ScalarProperty Name="MaxNroClase" ColumnName="MaxNroClase" />
                 <ScalarProperty Name="TotalDeInasistencias" ColumnName="TotalDeInasistencias" />
+                <ScalarProperty Name="Promedio" ColumnName="Promedio" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_KPI_Examenes_Reprobados" FunctionName="Uni_Model.Store.sp_KPI_Examenes_Reprobados">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Uni_Model.sp_KPI_Examenes_Reprobados_Result">
+                <ScalarProperty Name="Legajo" ColumnName="Legajo" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+                <ScalarProperty Name="Dni" ColumnName="Dni" />
+                <ScalarProperty Name="Carrera" ColumnName="Carrera" />
+                <ScalarProperty Name="Ciclo" ColumnName="Ciclo" />
+                <ScalarProperty Name="Cuatri" ColumnName="Cuatri" />
+                <ScalarProperty Name="Materia" ColumnName="Materia" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Mail" ColumnName="Mail" />
+                <ScalarProperty Name="ExamenesDesaprobados" ColumnName="ExamenesDesaprobados" />
+                <ScalarProperty Name="TotalExamenesDesaprobados" ColumnName="TotalExamenesDesaprobados" />
+                <ScalarProperty Name="Promedio" ColumnName="Promedio" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_KPI_Finales_Reprobados" FunctionName="Uni_Model.Store.sp_KPI_Finales_Reprobados">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Uni_Model.sp_KPI_Finales_Reprobados_Result">
+                <ScalarProperty Name="Legajo" ColumnName="Legajo" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+                <ScalarProperty Name="Dni" ColumnName="Dni" />
+                <ScalarProperty Name="Carrera" ColumnName="Carrera" />
+                <ScalarProperty Name="Ciclo" ColumnName="Ciclo" />
+                <ScalarProperty Name="Cuatri" ColumnName="Cuatri" />
+                <ScalarProperty Name="Materia" ColumnName="Materia" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Mail" ColumnName="Mail" />
+                <ScalarProperty Name="ExamenesDesaprobados" ColumnName="ExamenesDesaprobados" />
+                <ScalarProperty Name="TotalExamenesDesaprobados" ColumnName="TotalExamenesDesaprobados" />
                 <ScalarProperty Name="Promedio" ColumnName="Promedio" />
               </ComplexTypeMapping>
             </ResultMapping>

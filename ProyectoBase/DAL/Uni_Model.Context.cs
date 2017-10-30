@@ -190,5 +190,95 @@ namespace Data
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_KPI_Inansistencias_Result>("sp_KPI_Inansistencias", cicloParameter, cuatriParameter, legajoParameter, sedeParameter, carreraParameter, nombreParameter, apellidoParameter, dniParameter, kpi_inasistencia_mayorParameter, kpi_inasistencia_menorParameter);
         }
+    
+        public virtual ObjectResult<sp_KPI_Examenes_Reprobados_Result> sp_KPI_Examenes_Reprobados(Nullable<int> ciclo, Nullable<int> cuatri, Nullable<int> legajo, Nullable<int> sede, string carrera, string nombre, string apellido, Nullable<decimal> dni, Nullable<int> kpi_reprobados_mayor, Nullable<int> kpi_reprobados_menor)
+        {
+            var cicloParameter = ciclo.HasValue ?
+                new ObjectParameter("ciclo", ciclo) :
+                new ObjectParameter("ciclo", typeof(int));
+    
+            var cuatriParameter = cuatri.HasValue ?
+                new ObjectParameter("cuatri", cuatri) :
+                new ObjectParameter("cuatri", typeof(int));
+    
+            var legajoParameter = legajo.HasValue ?
+                new ObjectParameter("legajo", legajo) :
+                new ObjectParameter("legajo", typeof(int));
+    
+            var sedeParameter = sede.HasValue ?
+                new ObjectParameter("sede", sede) :
+                new ObjectParameter("sede", typeof(int));
+    
+            var carreraParameter = carrera != null ?
+                new ObjectParameter("carrera", carrera) :
+                new ObjectParameter("carrera", typeof(string));
+    
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("nombre", nombre) :
+                new ObjectParameter("nombre", typeof(string));
+    
+            var apellidoParameter = apellido != null ?
+                new ObjectParameter("apellido", apellido) :
+                new ObjectParameter("apellido", typeof(string));
+    
+            var dniParameter = dni.HasValue ?
+                new ObjectParameter("dni", dni) :
+                new ObjectParameter("dni", typeof(decimal));
+    
+            var kpi_reprobados_mayorParameter = kpi_reprobados_mayor.HasValue ?
+                new ObjectParameter("kpi_reprobados_mayor", kpi_reprobados_mayor) :
+                new ObjectParameter("kpi_reprobados_mayor", typeof(int));
+    
+            var kpi_reprobados_menorParameter = kpi_reprobados_menor.HasValue ?
+                new ObjectParameter("kpi_reprobados_menor", kpi_reprobados_menor) :
+                new ObjectParameter("kpi_reprobados_menor", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_KPI_Examenes_Reprobados_Result>("sp_KPI_Examenes_Reprobados", cicloParameter, cuatriParameter, legajoParameter, sedeParameter, carreraParameter, nombreParameter, apellidoParameter, dniParameter, kpi_reprobados_mayorParameter, kpi_reprobados_menorParameter);
+        }
+    
+        public virtual ObjectResult<sp_KPI_Finales_Reprobados_Result> sp_KPI_Finales_Reprobados(Nullable<int> ciclo, Nullable<int> cuatri, Nullable<int> legajo, Nullable<int> sede, string carrera, string nombre, string apellido, Nullable<decimal> dni, Nullable<int> kpi_reprobados_mayor, Nullable<int> kpi_reprobados_menor)
+        {
+            var cicloParameter = ciclo.HasValue ?
+                new ObjectParameter("ciclo", ciclo) :
+                new ObjectParameter("ciclo", typeof(int));
+    
+            var cuatriParameter = cuatri.HasValue ?
+                new ObjectParameter("cuatri", cuatri) :
+                new ObjectParameter("cuatri", typeof(int));
+    
+            var legajoParameter = legajo.HasValue ?
+                new ObjectParameter("legajo", legajo) :
+                new ObjectParameter("legajo", typeof(int));
+    
+            var sedeParameter = sede.HasValue ?
+                new ObjectParameter("sede", sede) :
+                new ObjectParameter("sede", typeof(int));
+    
+            var carreraParameter = carrera != null ?
+                new ObjectParameter("carrera", carrera) :
+                new ObjectParameter("carrera", typeof(string));
+    
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("nombre", nombre) :
+                new ObjectParameter("nombre", typeof(string));
+    
+            var apellidoParameter = apellido != null ?
+                new ObjectParameter("apellido", apellido) :
+                new ObjectParameter("apellido", typeof(string));
+    
+            var dniParameter = dni.HasValue ?
+                new ObjectParameter("dni", dni) :
+                new ObjectParameter("dni", typeof(decimal));
+    
+            var kpi_reprobados_mayorParameter = kpi_reprobados_mayor.HasValue ?
+                new ObjectParameter("kpi_reprobados_mayor", kpi_reprobados_mayor) :
+                new ObjectParameter("kpi_reprobados_mayor", typeof(int));
+    
+            var kpi_reprobados_menorParameter = kpi_reprobados_menor.HasValue ?
+                new ObjectParameter("kpi_reprobados_menor", kpi_reprobados_menor) :
+                new ObjectParameter("kpi_reprobados_menor", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_KPI_Finales_Reprobados_Result>("sp_KPI_Finales_Reprobados", cicloParameter, cuatriParameter, legajoParameter, sedeParameter, carreraParameter, nombreParameter, apellidoParameter, dniParameter, kpi_reprobados_mayorParameter, kpi_reprobados_menorParameter);
+        }
     }
 }

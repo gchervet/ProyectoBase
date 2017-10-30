@@ -110,6 +110,10 @@ app.run(['myUrl', '$rootScope', '$location', 'Auth', 'blockUIConfig',
         $rootScope.KPI_DEUDA_LIMITE_MENOR = 15000;
         $rootScope.KPI_INASISTENCIAS_PORCENTAJE_LIMITE_MAYOR = 80;
         $rootScope.KPI_INASISTENCIAS_PORCENTAJE_LIMITE_MENOR = 30;
+        $rootScope.KPI_EXAMENES_REPROBADOS_PORCENTAJE_LIMITE_MAYOR = 80;
+        $rootScope.KPI_EXAMENES_REPROBADOS_PORCENTAJE_LIMITE_MENOR = 30;
+        $rootScope.KPI_FINALES_REPROBADOS_PORCENTAJE_LIMITE_MAYOR = 80;
+        $rootScope.KPI_FINALES_REPROBADOS_PORCENTAJE_LIMITE_MENOR = 30;
 
         blockUIConfig.message = "Cargando ...";
         blockUIConfig.requestFilter = function (request) { return (request.noBlock) ? false : blockUIConfig.message; };

@@ -40,5 +40,9 @@ namespace Domain
         public Nullable<int> MaxNroClase { get; set; }
         public Nullable<int> TotalDeInasistencias { get; set; }
         public Nullable<decimal> Promedio { get; set; }
+        public Nullable<decimal> PromedioExamenesReprobados { get; set; }
+        public Nullable<decimal> PromedioFinalesReprobados { get; set; }
+        public int? TotalExamenesDesaprobados { get; set; }
+        public int? ExamenesDesaprobados { get; set; }
     }
 }

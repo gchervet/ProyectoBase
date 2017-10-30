@@ -69,6 +69,12 @@
     <Compile Include="sp_get_UniAlumnos_Result.cs">
       <DependentUpon>Uni_Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="sp_KPI_Examenes_Reprobados_Result.cs">
+      <DependentUpon>Uni_Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_KPI_Finales_Reprobados_Result.cs">
+      <DependentUpon>Uni_Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="sp_KPI_Inansistencias_Result.cs">
       <DependentUpon>Uni_Model.tt</DependentUpon>
     </Compile>

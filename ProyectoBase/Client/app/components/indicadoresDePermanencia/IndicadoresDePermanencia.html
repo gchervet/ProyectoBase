@@ -44,7 +44,6 @@
                                                 class="input-large form-control"
                                                 ng-options="cuatrimestre for cuatrimestre in vm.cuatrimestreList"
                                                 ng-model="vm.aca_cuatrimestreSelected">
-                                            <option></option>
                                         </select>
                                     </p>
                                 </div>
@@ -162,12 +161,12 @@
                                 <div class="col-md-3 form-group">
                                     <p>
                                         <label>Sede:</label>
-                                        <select required name="comboSede" class="input-large form-control" ng-options="sede.code as sede.name for sede in vm.sedeList" ng-model="vm.adm_sedeSelected"></select>
+                                        <select required name="comboSede" class="input-large form-control" ng-options="sede.code as sede.name for sede in vm.sedeList" ng-model="vm.adm_sedeSelected"><option></option></select>
                                     </p>
                                 </div>
                                 <div class="col-md-3 form-group">
                                     <label>Carrera:</label>
-                                    <select id="comboCarrera" name="comboCarrera" class="input-large form-control" ng-options="carrera for carrera in vm.carreraList" ng-model="vm.adm_carreraSelected"></select>
+                                    <select name="adm_comboPlan" class="input-large form-control" ng-options="plan.code as plan.name for plan in vm.planList" ng-model="vm.adm_planSelected"><option></option></select>
                                 </div>
                             </div>
                         </div>
@@ -175,20 +174,10 @@
                             <div class="col-md-12 col-centered">
                                 <div class="col-md-3 form-group">
                                     <label>Legajo:</label> <!--Autocomplete-->
-                                    <div angucomplete-alt id="legajoInput"
-                                         placeholder="Buscar legajo"
-                                         pause="100"
-                                         selected-object="vm.legajoWasSelected"
-                                         local-data="vm.legajoList"
-                                         local-search="vm.legajoSearch"
-                                         search-fields="legajoDefinitivo.legajoProvisorio"
-                                         title-field="legajoDefinitivo"
-                                         description-field="nombre.apellido"
-                                         input-changed="vm.legajoInputChanged"
-                                         minlength="1"
-                                         tab-prefix="adm"
-                                         input-class="form-control"></div>
-
+                                    <input class="form-control"
+                                           id="aca_comboLegajo"
+                                           ng-change="vm.legajoInputChanged()"
+                                           ng-model="vm.aca_legajoSearchText" />
                                 </div>
                                 <div class="col-md-3 form-group">
                                     <label>Nombre:</label>
@@ -208,15 +197,15 @@
                             <div class="col-md-12 col-centered">
                                 <div class="col-md-3 form-group">
                                     <label>KPI:</label>
-                                    <select id="comboCiclo" class="input-large form-control" ng-options="kpi for kpi in vm.kpiList" ng-model="vm.adm_kpiSelected"></select>
+                                    <select id="comboCiclo" class="input-large form-control" ng-options="kpi for kpi in vm.kpiList" ng-model="vm.adm_kpiSelected"><option></option></select>
                                 </div>
                                 <div class="col-md-3 form-group">
                                     <label>Nivel de riesgo:</label>
-                                    <select id="comboCuatrimestre" class="input-large form-control" ng-options="nivelDeRiesgo for nivelDeRiesgo in vm.nivelDeRiesgoList" ng-model="vm.adm_nivelDeRiesgoSelected"></select>
+                                    <select id="comboCuatrimestre" class="input-large form-control" ng-options="nivelDeRiesgo for nivelDeRiesgo in vm.nivelDeRiesgoList" ng-model="vm.adm_nivelDeRiesgoSelected"><option></option></select>
                                 </div>
                             </div>
                         </div>
-                        <p><button type="submit" class="btn btn-primary" ng-disabled="administracionForm.comboSede.$invalid" ng-click="vm.loadAdministracionGrid()">Buscar</button></p>
+                        <p><button type="submit" class="btn btn-primary" ng-click="vm.loadAdministracionGrid()">Buscar</button></p>
                     </form>
 
                     <h4>Resultados:</h4>

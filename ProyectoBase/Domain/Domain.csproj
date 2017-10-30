@@ -52,6 +52,7 @@
     <Compile Include="DTO\Menu\MenuGroupDTO.cs" />
     <Compile Include="DTO\Permission\PermissionDTO.cs" />
     <Compile Include="DTO\SessionToken\SessionTokenDTO.cs" />
+    <Compile Include="DTO\UniAlumno\ExamenReprobadoDTO.cs" />
     <Compile Include="DTO\UniAlumno\KPIInasistenciasDTO.cs" />
     <Compile Include="DTO\UniAlumno\KPIMorososDTO.cs" />
     <Compile Include="DTO\UniAlumno\UniAlumnoDatosPersonalesDTO.cs" />

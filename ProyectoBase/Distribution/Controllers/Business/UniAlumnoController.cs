@@ -76,7 +76,7 @@ namespace Distribution
         [Route("GetKPIInasistencias")]
         [HttpGet]
         [AllowAnonymous]
-        public HttpResponseMessage GetKPIInasistencias(int? ciclo, int? cuatri, int? legajo, int? sede, string carrera, string nombre, string apellido, decimal? dni, int? kpiInasistenciaMayor, int? kpiInasistenciaMenor)
+        public HttpResponseMessage GetKPIInasistencias(int? ciclo, int? cuatri, int? legajo, int? sede, string carrera, string nombre, string apellido, decimal? dni, int? kpiInasistenciaMayor, int? kpiInasistenciaMenor, int? kpi_reprobados_mayor, int? kpi_reprobados_menor)
         {
             try
             {
@@ -85,7 +85,7 @@ namespace Distribution
 
                 if (SessionTokenService.ValidRequestByUserAndToken(tokenString, userString))
                 {
-                    return HttpResponseController.Return_200_OK(UniAlumnoService.GetKPIInasistencias(ciclo, cuatri, legajo, sede, carrera, nombre, apellido, dni, kpiInasistenciaMayor, kpiInasistenciaMenor));
+                    return HttpResponseController.Return_200_OK(UniAlumnoService.GetKPIInasistencias(ciclo, cuatri, legajo, sede, carrera, nombre, apellido, dni, kpiInasistenciaMayor, kpiInasistenciaMenor, kpi_reprobados_mayor, kpi_reprobados_menor));
                 }
                 return HttpResponseController.Return_401_Unauthorized(string.Empty);
             }
@@ -140,6 +140,33 @@ namespace Distribution
                 if (SessionTokenService.ValidRequestByUserAndToken(tokenString, userString))
                 {
                     return HttpResponseController.Return_200_OK(UniAlumnoService.GetByLegajoMatch(legajo));
+                }
+                return HttpResponseController.Return_401_Unauthorized(string.Empty);
+            }
+            catch
+            {
+                return HttpResponseController.Return_401_Unauthorized(string.Empty);
+            }
+        }
+
+        /// <summary>
+        /// Obtiene un objeto de alumno. El legajo puede ser provisorio o definitivo.
+        /// </summary>
+        /// <param name="legajo">Número de legajo.</param>
+        /// <returns>Objeto UniAlumnoDTO.</returns>
+        [Route("GetExamenesReprobados")]
+        [HttpGet]
+        [AllowAnonymous]
+        public HttpResponseMessage GetExamenesReprobados(int? ciclo, int? cuatri, int? legajo, int? sede, string carrera, string nombre, string apellido, decimal? dni, int? kpi_reprobados_mayor, int? kpi_reprobados_menor)
+        {
+            try
+            {
+                string tokenString = this.ActionContext.Request.Headers.GetValues("Authorization").ToList().FirstOrDefault();
+                string userString = this.ActionContext.Request.Headers.GetValues("User").ToList().FirstOrDefault();
+
+                if (SessionTokenService.ValidRequestByUserAndToken(tokenString, userString))
+                {
+                    return HttpResponseController.Return_200_OK(UniAlumnoService.GetExamenesReprobados(ciclo, cuatri, legajo, sede, carrera, nombre, apellido, dni, kpi_reprobados_mayor, kpi_reprobados_menor));
                 }
                 return HttpResponseController.Return_401_Unauthorized(string.Empty);
             }
