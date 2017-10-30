@@ -266,6 +266,8 @@
                   }
                   $('#academicoTable').bootstrapTable('load', indicadoresDePermanenciaController.academicoResultList);
                   indicadoresDePermanenciaController.loadCharts('gridChartContainer', [{ 'label': 'ALTO', 'value': cantALTO.toString() }, { 'label': 'MEDIO', 'value': cantMEDIO.toString() }, { 'label': 'BAJO', 'value': cantBAJO.toString() }], 'Inasistencias encontradas');
+                  indicadoresDePermanenciaController.loadCharts('examenesReprobadosChartContainer', [{ 'label': 'ALTO', 'value': cantExamenesReprobadosALTO.toString() }, { 'label': 'MEDIO', 'value': cantExamenesReprobadosMEDIO.toString() }, { 'label': 'BAJO', 'value': cantExamenesReprobadosBAJO.toString() }], 'Exámenes reprobados');
+                  indicadoresDePermanenciaController.loadCharts('finalesReprobadosChartContainer', [{ 'label': 'ALTO', 'value': cantFinalesReprobadosALTO.toString() }, { 'label': 'MEDIO', 'value': cantFinalesReprobadosMEDIO.toString() }, { 'label': 'BAJO', 'value': cantFinalesReprobadosBAJO.toString() }], 'Finales reprobados');
 
 
                   if (!indicadoresDePermanenciaController.aca_lastCicloCuatriSelected ||
