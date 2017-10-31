@@ -778,13 +778,13 @@
           <Property Type="String" Name="Apellido" Nullable="true" MaxLength="30" />
           <Property Type="Decimal" Name="Dni" Nullable="true" Precision="9" Scale="0" />
           <Property Type="String" Name="Carrera" Nullable="true" MaxLength="50" />
-          <Property Type="Int32" Name="Ciclo" Nullable="false" />
-          <Property Type="Int32" Name="Cuatri" Nullable="false" />
+          <Property Type="Int32" Name="Ciclo" Nullable="true" />
+          <Property Type="Int32" Name="Cuatri" Nullable="true" />
           <Property Type="String" Name="Materia" Nullable="true" MaxLength="35" />
           <Property Type="String" Name="Telefono" Nullable="true" MaxLength="25" />
           <Property Type="String" Name="Mail" Nullable="true" MaxLength="100" />
-          <Property Type="Int32" Name="ExamenesDesaprobados" Nullable="true" />
-          <Property Type="Int32" Name="TotalExamenesDesaprobados" Nullable="true" />
+          <Property Type="Int32" Name="FinalesDesaprobados" Nullable="true" />
+          <Property Type="Int32" Name="TotalFinalesDesaprobados" Nullable="true" />
           <Property Type="Decimal" Name="Promedio" Nullable="true" Precision="16" Scale="4" />
         </ComplexType>
       </Schema>
@@ -1178,8 +1178,8 @@
                 <ScalarProperty Name="Materia" ColumnName="Materia" />
                 <ScalarProperty Name="Telefono" ColumnName="Telefono" />
                 <ScalarProperty Name="Mail" ColumnName="Mail" />
-                <ScalarProperty Name="ExamenesDesaprobados" ColumnName="ExamenesDesaprobados" />
-                <ScalarProperty Name="TotalExamenesDesaprobados" ColumnName="TotalExamenesDesaprobados" />
+                <ScalarProperty Name="FinalesDesaprobados" ColumnName="FinalesDesaprobados" />
+                <ScalarProperty Name="TotalFinalesDesaprobados" ColumnName="TotalFinalesDesaprobados" />
                 <ScalarProperty Name="Promedio" ColumnName="Promedio" />
               </ComplexTypeMapping>
             </ResultMapping>

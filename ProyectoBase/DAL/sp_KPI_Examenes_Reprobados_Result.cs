@@ -10,7 +10,7 @@
 namespace Data
 {
     using System;
-
+    
     public partial class sp_KPI_Examenes_Reprobados_Result
     {
         public int Legajo { get; set; }

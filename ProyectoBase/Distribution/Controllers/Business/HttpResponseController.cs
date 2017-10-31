@@ -22,9 +22,11 @@ namespace Distribution
         /// <returns>Objeto HttpResponseMessage que representa la devolución 200.</returns>
         public static HttpResponseMessage Return_200_OK(object contentObject)
         {
+            JavaScriptSerializer serializer = new JavaScriptSerializer();
+            serializer.MaxJsonLength = int.MaxValue;
             return new HttpResponseMessage()
             {
-                Content = new StringContent(new JavaScriptSerializer().Serialize(contentObject), Encoding.UTF8, "application/json")
+                Content = new StringContent(serializer.Serialize(contentObject), Encoding.UTF8, "application/json")
             };
         }
 

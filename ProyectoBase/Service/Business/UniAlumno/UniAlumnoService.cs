@@ -36,19 +36,27 @@ namespace Service
         {
             List<sp_KPI_Inansistencias_Result> kpiInasistenciaModelList = UniAlumnoDAL.GetKPIInasistencias(ciclo, cuatri, legajo, sede, carrera, nombre, apellido, dni, kpiInasistenciaMayor, kpiInasistenciaMenor);
             List<ExamenReprobadoDTO> examenReprobadoList = GetExamenesReprobados(ciclo, cuatri, legajo, sede, carrera, nombre, apellido, dni, kpi_reprobados_mayor, kpi_reprobados_menor);
+            List<FinalReprobadoDTO> finalReprobadoList = GetFinalesReprobados(ciclo, cuatri, legajo, sede, carrera, nombre, apellido, dni, kpi_reprobados_mayor, kpi_reprobados_menor);
             List<KPIInasistenciasDTO> rtn = new List<KPIInasistenciasDTO>();
 
             foreach (sp_KPI_Inansistencias_Result kpiInasistenciaModel in kpiInasistenciaModelList)
             {
                 KPIInasistenciasDTO newKPIInasistencia = new KPIInasistenciasDTO(kpiInasistenciaModel);
                 ExamenReprobadoDTO examenPorLegajoYMateria = examenReprobadoList.Where(x => x.Legajo == kpiInasistenciaModel.Legajo && x.Materia == kpiInasistenciaModel.Materia && x.Ciclo == kpiInasistenciaModel.Ciclo && x.Cuatri == kpiInasistenciaModel.Cuatri).FirstOrDefault();
+                FinalReprobadoDTO finalPorLegajoYMateria = finalReprobadoList.Where(x => x.Legajo == kpiInasistenciaModel.Legajo && x.Materia == kpiInasistenciaModel.Materia && x.Ciclo == kpiInasistenciaModel.Ciclo && x.Cuatri == kpiInasistenciaModel.Cuatri).FirstOrDefault();
 
                 if (examenPorLegajoYMateria != null)
                 {
                     newKPIInasistencia.ExamenesDesaprobados = examenPorLegajoYMateria.ExamenesDesaprobados;
                     newKPIInasistencia.TotalExamenesDesaprobados = examenPorLegajoYMateria.TotalExamenesDesaprobados;
                     newKPIInasistencia.PromedioExamenesReprobados = examenPorLegajoYMateria.Promedio;
-                    //newKPIInasistencia.PromedioFinalesReprobados = examenPorLegajoYMateria.Promedio;
+                }
+
+                if (finalPorLegajoYMateria != null)
+                {
+                    newKPIInasistencia.FinalesDesaprobados = finalPorLegajoYMateria.FinalesDesaprobados;
+                    newKPIInasistencia.TotalFinalesDesaprobados = finalPorLegajoYMateria.TotalFinalesDesaprobados;
+                    newKPIInasistencia.PromedioFinalesReprobados = finalPorLegajoYMateria.Promedio;
                 }
 
                 rtn.Add(newKPIInasistencia);
@@ -93,6 +101,52 @@ namespace Service
             foreach (sp_KPI_Examenes_Reprobados_Result examenReprobadoModel in examenReprobadoModelList)
             {
                 rtn.Add(new ExamenReprobadoDTO(examenReprobadoModel));
+            }
+            return rtn;
+        }
+
+        public static List<decimal> GetExamenesReprobadosTotal(int? ciclo, int? cuatri)
+        {
+            List<sp_KPI_Examenes_Reprobados_Result> examenReprobadoModelList = UniAlumnoDAL.GetExamenesReprobados(ciclo, cuatri, null, null, null, null, null, null, null, null);
+            List<decimal> rtn = new List<decimal>();
+            List<int> usedLegajos = new List<int>();
+
+            foreach (sp_KPI_Examenes_Reprobados_Result examenReprobadoModel in examenReprobadoModelList)
+            {
+                if (!usedLegajos.Any(x => x == examenReprobadoModel.Legajo) && examenReprobadoModel.Promedio.HasValue)
+                {
+                    rtn.Add(examenReprobadoModel.Promedio.Value);
+                    usedLegajos.Add(examenReprobadoModel.Legajo);
+                }
+            }
+            return rtn;
+        }
+
+        public static List<FinalReprobadoDTO> GetFinalesReprobados(int? ciclo, int? cuatri, int? legajo, int? sede, string carrera, string nombre, string apellido, decimal? dni, int? kpi_reprobados_mayor, int? kpi_reprobados_menor)
+        {
+            List<sp_KPI_Finales_Reprobados_Result> finalReprobadoModelList = UniAlumnoDAL.GetFinalesReprobados(ciclo, cuatri, legajo, sede, carrera, nombre, apellido, dni, kpi_reprobados_mayor, kpi_reprobados_menor);
+            List<FinalReprobadoDTO> rtn = new List<FinalReprobadoDTO>();
+
+            foreach (sp_KPI_Finales_Reprobados_Result finalReprobadoModel in finalReprobadoModelList)
+            {
+                rtn.Add(new FinalReprobadoDTO(finalReprobadoModel));
+            }
+            return rtn;
+        }
+
+        public static List<decimal> GetFinalesReprobadosTotal(int? ciclo, int? cuatri)
+        {
+            List<sp_KPI_Examenes_Reprobados_Result> examenReprobadoModelList = UniAlumnoDAL.GetExamenesReprobados(ciclo, cuatri, null, null, null, null, null, null, null, null);
+            List<decimal> rtn = new List<decimal>();
+            List<int> usedLegajos = new List<int>();
+
+            foreach (sp_KPI_Examenes_Reprobados_Result examenReprobadoModel in examenReprobadoModelList)
+            {
+                if (!usedLegajos.Any(x => x == examenReprobadoModel.Legajo) && examenReprobadoModel.Promedio.HasValue)
+                {
+                    rtn.Add(examenReprobadoModel.Promedio.Value);
+                    usedLegajos.Add(examenReprobadoModel.Legajo);
+                }
             }
             return rtn;
         }

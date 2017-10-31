@@ -1,4 +1,5 @@
 ﻿using Domain;
+using Newtonsoft.Json;
 using Service;
 using System;
 using System.Collections.Generic;
@@ -167,6 +168,87 @@ namespace Distribution
                 if (SessionTokenService.ValidRequestByUserAndToken(tokenString, userString))
                 {
                     return HttpResponseController.Return_200_OK(UniAlumnoService.GetExamenesReprobados(ciclo, cuatri, legajo, sede, carrera, nombre, apellido, dni, kpi_reprobados_mayor, kpi_reprobados_menor));
+                }
+                return HttpResponseController.Return_401_Unauthorized(string.Empty);
+            }
+            catch
+            {
+                return HttpResponseController.Return_401_Unauthorized(string.Empty);
+            }
+        }
+
+        /// <summary>
+        /// Obtiene un objeto de alumno. El legajo puede ser provisorio o definitivo.
+        /// </summary>
+        /// <param name="legajo">Número de legajo.</param>
+        /// <returns>Objeto UniAlumnoDTO.</returns>
+        [Route("GetExamenesReprobadosTotal")]
+        [HttpGet]
+        [AllowAnonymous]
+        public HttpResponseMessage GetExamenesReprobadosTotal(int? ciclo, int? cuatri)
+        {
+            try
+            {
+                string tokenString = this.ActionContext.Request.Headers.GetValues("Authorization").ToList().FirstOrDefault();
+                string userString = this.ActionContext.Request.Headers.GetValues("User").ToList().FirstOrDefault();
+
+                if (SessionTokenService.ValidRequestByUserAndToken(tokenString, userString))
+                {
+                    return HttpResponseController.Return_200_OK(UniAlumnoService.GetExamenesReprobadosTotal(ciclo, cuatri));
+                }
+                return HttpResponseController.Return_401_Unauthorized(string.Empty);
+            }
+            catch
+            {
+                return HttpResponseController.Return_401_Unauthorized(string.Empty);
+            }
+        }
+
+        /// <summary>
+        /// Obtiene un objeto de alumno. El legajo puede ser provisorio o definitivo.
+        /// </summary>
+        /// <param name="legajo">Número de legajo.</param>
+        /// <returns>Objeto UniAlumnoDTO.</returns>
+        [Route("GetFinalesReprobados")]
+        [HttpGet]
+        [AllowAnonymous]
+        public HttpResponseMessage GetFinalesReprobados(int? ciclo, int? cuatri, int? legajo, int? sede, string carrera, string nombre, string apellido, decimal? dni, int? kpi_reprobados_mayor, int? kpi_reprobados_menor)
+        {
+            try
+            {
+                string tokenString = this.ActionContext.Request.Headers.GetValues("Authorization").ToList().FirstOrDefault();
+                string userString = this.ActionContext.Request.Headers.GetValues("User").ToList().FirstOrDefault();
+
+                if (SessionTokenService.ValidRequestByUserAndToken(tokenString, userString))
+                {
+                    return HttpResponseController.Return_200_OK(UniAlumnoService.GetFinalesReprobados(ciclo, cuatri, legajo, sede, carrera, nombre, apellido, dni, kpi_reprobados_mayor, kpi_reprobados_menor));
+                }
+                return HttpResponseController.Return_401_Unauthorized(string.Empty);
+            }
+            catch
+            {
+                return HttpResponseController.Return_401_Unauthorized(string.Empty);
+            }
+        }
+
+        /// <summary>
+        /// Obtiene un objeto de alumno. El legajo puede ser provisorio o definitivo.
+        /// </summary>
+        /// <param name="legajo">Número de legajo.</param>
+        /// <returns>Objeto UniAlumnoDTO.</returns>
+        [Route("GetFinalesReprobadosTotal")]
+        [HttpGet]
+        [AllowAnonymous]
+        public HttpResponseMessage GetFinalesReprobadosTotal(int? ciclo, int? cuatri)
+        {
+            try
+            {
+                string tokenString = this.ActionContext.Request.Headers.GetValues("Authorization").ToList().FirstOrDefault();
+                string userString = this.ActionContext.Request.Headers.GetValues("User").ToList().FirstOrDefault();
+
+                if (SessionTokenService.ValidRequestByUserAndToken(tokenString, userString))
+                {
+                    return HttpResponseController.Return_200_OK(UniAlumnoService.GetFinalesReprobadosTotal(ciclo, cuatri));
                 }
                 return HttpResponseController.Return_401_Unauthorized(string.Empty);
             }

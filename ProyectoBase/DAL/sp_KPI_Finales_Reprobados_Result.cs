@@ -18,13 +18,13 @@ namespace Data
         public string Apellido { get; set; }
         public Nullable<decimal> Dni { get; set; }
         public string Carrera { get; set; }
-        public int Ciclo { get; set; }
-        public int Cuatri { get; set; }
+        public Nullable<int> Ciclo { get; set; }
+        public Nullable<int> Cuatri { get; set; }
         public string Materia { get; set; }
         public string Telefono { get; set; }
         public string Mail { get; set; }
-        public Nullable<int> ExamenesDesaprobados { get; set; }
-        public Nullable<int> TotalExamenesDesaprobados { get; set; }
+        public Nullable<int> FinalesDesaprobados { get; set; }
+        public Nullable<int> TotalFinalesDesaprobados { get; set; }
         public Nullable<decimal> Promedio { get; set; }
     }
 }

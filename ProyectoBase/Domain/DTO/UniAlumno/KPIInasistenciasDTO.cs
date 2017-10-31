@@ -26,6 +26,7 @@ namespace Domain
             this.TotalDeInasistencias = kpiInasistenciasResult.TotalDeInasistencias;
             this.Promedio = kpiInasistenciasResult.Promedio;
         }
+
         public int Legajo { get; set; }
         public string Nombre { get; set; }
         public string Apellido { get; set; }
@@ -36,13 +37,19 @@ namespace Domain
         public string Materia { get; set; }
         public string Telefono { get; set; }
         public string Mail { get; set; }
+
         public Nullable<int> Inansistencia { get; set; }
         public Nullable<int> MaxNroClase { get; set; }
         public Nullable<int> TotalDeInasistencias { get; set; }
+
         public Nullable<decimal> Promedio { get; set; }
         public Nullable<decimal> PromedioExamenesReprobados { get; set; }
         public Nullable<decimal> PromedioFinalesReprobados { get; set; }
+
         public int? TotalExamenesDesaprobados { get; set; }
         public int? ExamenesDesaprobados { get; set; }
+
+        public int? FinalesDesaprobados { get; set; }
+        public int? TotalFinalesDesaprobados { get; set; }
     }
 }

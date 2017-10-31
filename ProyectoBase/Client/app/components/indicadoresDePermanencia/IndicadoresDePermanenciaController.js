@@ -37,28 +37,50 @@
 
           indicadoresDePermanenciaController.getFullGridInfoListCallback = function (response) {
 
-              var cantALTO = 0, cantMEDIO = 0, cantBAJO = 0;
-              debugger;
-              indicadoresDePermanenciaController.aca_totalInfoData = [];
               if (response) {
-                  for (i in response.data) {
-
-                      var inasistenciaTexto = '';
-                      if (response.data[i] >= $rootScope.KPI_INASISTENCIAS_PORCENTAJE_LIMITE_MAYOR) {
-                          inasistenciaTexto = 'ALTO';
-                          cantALTO++;
-                      }
-                      if (response.data[i] > $rootScope.KPI_INASISTENCIAS_PORCENTAJE_LIMITE_MENOR && response.data[i] < $rootScope.KPI_INASISTENCIAS_PORCENTAJE_LIMITE_MAYOR) {
-                          inasistenciaTexto = 'MEDIO';
-                          cantMEDIO++;
-                      }
-                      if (response.data[i] <= $rootScope.KPI_INASISTENCIAS_PORCENTAJE_LIMITE_MENOR) {
-                          inasistenciaTexto = 'BAJO';
-                          cantBAJO++;
-                      }
-                  }
                   indicadoresDePermanenciaController.aca_lastCicloCuatriSelected = { ciclo: indicadoresDePermanenciaController.aca_cicloSelected, cuatrimestre: indicadoresDePermanenciaController.aca_cuatrimestreSelected };
-                  indicadoresDePermanenciaController.loadCharts('fullChartContainer', [{ 'label': 'ALTO', 'value': cantALTO.toString() }, { 'label': 'MEDIO', 'value': cantMEDIO.toString() }, { 'label': 'BAJO', 'value': cantBAJO.toString() }], 'Total de inasistencias');
+                  indicadoresDePermanenciaController.loadChartInfo(response.data, 'fullChartContainer', 'Total de inasistencias', $rootScope.KPI_INASISTENCIAS_PORCENTAJE_LIMITE_MAYOR, $rootScope.KPI_INASISTENCIAS_PORCENTAJE_LIMITE_MENOR, '#008ee4,#e6e600,#00e600');
+
+                  utilityService.callHttp({
+                      method: "GET", url: "/api/UniAlumno/GetExamenesReprobadosTotal?ciclo=" + indicadoresDePermanenciaController.aca_cicloSelected + "&cuatri=" + indicadoresDePermanenciaController.aca_cuatrimestreSelected
+                                                           , callbackSuccess: indicadoresDePermanenciaController.getExamenesReprobadosTotalInfoListCallback, callbackError: indicadoresDePermanenciaController.getErrorCallback
+                  });
+              }
+          };
+
+          indicadoresDePermanenciaController.getExamenesReprobadosTotalInfoListCallback = function (response) {
+
+              if (response) {
+                  indicadoresDePermanenciaController.aca_lastCicloCuatriSelected = { ciclo: indicadoresDePermanenciaController.aca_cicloSelected, cuatrimestre: indicadoresDePermanenciaController.aca_cuatrimestreSelected };
+                  indicadoresDePermanenciaController.loadChartInfo(response.data, 'fullExamenesReprobadosChartContainer', 'Total de exámenes reprobados', $rootScope.KPI_EXAMENES_REPROBADOS_PORCENTAJE_LIMITE_MENOR, $rootScope.KPI_EXAMENES_REPROBADOS_PORCENTAJE_LIMITE_MAYOR, '#008ee4,#e6e600,#00e600');
+                  
+                  utilityService.callHttp({
+                      method: "GET", url: "/api/UniAlumno/GetFinalesReprobadosTotal?ciclo=" + indicadoresDePermanenciaController.aca_cicloSelected + "&cuatri=" + indicadoresDePermanenciaController.aca_cuatrimestreSelected
+                                                           , callbackSuccess: indicadoresDePermanenciaController.getFinalesReprobadosTotalInfoListCallback, callbackError: indicadoresDePermanenciaController.getErrorCallback
+                  });
+              }
+          };
+
+          indicadoresDePermanenciaController.getFinalesReprobadosTotalInfoListCallback = function (response) {
+
+              if (response) {
+                  indicadoresDePermanenciaController.aca_lastCicloCuatriSelected = { ciclo: indicadoresDePermanenciaController.aca_cicloSelected, cuatrimestre: indicadoresDePermanenciaController.aca_cuatrimestreSelected };
+                  indicadoresDePermanenciaController.loadChartInfo(response.data, 'fullFinalesReprobadosChartContainer', 'Total de finales reprobados', $rootScope.KPI_FINALES_REPROBADOS_PORCENTAJE_LIMITE_MENOR, $rootScope.KPI_FINALES_REPROBADOS_PORCENTAJE_LIMITE_MAYOR, '#008ee4,#e6e600,#00e600');
+              }
+          };
+
+          // Método de Chart genérico
+          indicadoresDePermanenciaController.loadChartInfo = function (data, gridName, charTitle, lowerLimit, higherLimit, charColour) {
+
+              var cantALTO = 0, cantMEDIO = 0, cantBAJO = 0;
+              if (data) {
+                  for (i in data) {
+
+                      if (data[i] >= higherLimit) { cantALTO++; }
+                      if (data[i] > lowerLimit && data[i] < higherLimit) { cantMEDIO++; }
+                      if (data[i] <= lowerLimit) { cantBAJO++; }
+                  }
+                  indicadoresDePermanenciaController.loadCharts(gridName, [{ 'label': 'ALTO', 'value': cantALTO.toString() }, { 'label': 'MEDIO', 'value': cantMEDIO.toString() }, { 'label': 'BAJO', 'value': cantBAJO.toString() }], charTitle, charColour);
               }
           };
 
@@ -130,6 +152,7 @@
 
           // KPI Inasistencias
           indicadoresDePermanenciaController.getKPIInasistenciaListCallback = function (response) {
+              debugger;
               if (response) {
 
                   indicadoresDePermanenciaController.academicoResultList = [];
@@ -158,7 +181,7 @@
                           Inasistencia: actualKPIInasistencia.Inansistencia,
                           Materia: actualKPIInasistencia.Materia,
                           Examenes: actualKPIInasistencia.ExamenesDesaprobados,
-                          FinalesReprobados: actualKPIInasistencia.TotalExamenesDesaprobados
+                          FinalesReprobados: actualKPIInasistencia.FinalesDesaprobados
                       };
 
                       if (((previousLegajo && actualLegajo != previousLegajo) || (!nuevaInasistencia)) && !nuevaInasistenciaCreada) {
@@ -224,6 +247,8 @@
                               TotalDeInasistencias: actualKPIInasistencia.TotalDeInasistencias,
                               Examenes: examenesReprobadosTexto,
                               FinalesReprobados: finalesReprobadosTexto,
+
+
                               nested: []
                           }
                           nuevaInasistenciaCreada = true;
@@ -264,7 +289,11 @@
 
                       }
                   }
+
+                  // Load grid values
                   $('#academicoTable').bootstrapTable('load', indicadoresDePermanenciaController.academicoResultList);
+
+                  // Load charts values
                   indicadoresDePermanenciaController.loadCharts('gridChartContainer', [{ 'label': 'ALTO', 'value': cantALTO.toString() }, { 'label': 'MEDIO', 'value': cantMEDIO.toString() }, { 'label': 'BAJO', 'value': cantBAJO.toString() }], 'Inasistencias encontradas');
                   indicadoresDePermanenciaController.loadCharts('examenesReprobadosChartContainer', [{ 'label': 'ALTO', 'value': cantExamenesReprobadosALTO.toString() }, { 'label': 'MEDIO', 'value': cantExamenesReprobadosMEDIO.toString() }, { 'label': 'BAJO', 'value': cantExamenesReprobadosBAJO.toString() }], 'Exámenes reprobados');
                   indicadoresDePermanenciaController.loadCharts('finalesReprobadosChartContainer', [{ 'label': 'ALTO', 'value': cantFinalesReprobadosALTO.toString() }, { 'label': 'MEDIO', 'value': cantFinalesReprobadosMEDIO.toString() }, { 'label': 'BAJO', 'value': cantFinalesReprobadosBAJO.toString() }], 'Finales reprobados');
@@ -480,7 +509,10 @@
           });
       };
 
-      indicadoresDePermanenciaController.loadCharts = function (charId, charData, title) {
+      indicadoresDePermanenciaController.loadCharts = function (charId, charData, title, colours) {
+
+          // Previous validations
+          if (!colours) { colours = '#008ee4,#e6e600,#00e600'; }
 
           // Grid data chart
           indicadoresDePermanenciaController.gridDataChart = new FusionCharts({
@@ -501,6 +533,7 @@
                       "showPercentValues": "1",
                       "showPercentInTooltip": "0",
                       "decimals": "1",
+                      "palettecolors": colours,
                       "captionFontSize": "14",
                       "subcaptionFontSize": "14",
                       "subcaptionFontBold": "0",

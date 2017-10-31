@@ -63,5 +63,13 @@ namespace Data
                 return context.sp_KPI_Examenes_Reprobados(ciclo, cuatri, legajo, sede, carrera, nombre, apellido, dni, kpi_reprobados_mayor, kpi_reprobados_menor).ToList();
             }
         }
+
+        public static List<sp_KPI_Finales_Reprobados_Result> GetFinalesReprobados(int? ciclo, int? cuatri, int? legajo, int? sede, string carrera, string nombre, string apellido, decimal? dni, int? kpi_reprobados_mayor, int? kpi_reprobados_menor)
+        {
+            using (var context = new Uni_Entities())
+            {
+                return context.sp_KPI_Finales_Reprobados(ciclo, cuatri, legajo, sede, carrera, nombre, apellido, dni, kpi_reprobados_mayor, kpi_reprobados_menor).ToList();
+            }
+        }
     }
 }
