@@ -20,9 +20,9 @@ namespace Service
             return null;
         }
 
-        public static List<KPIMorososDTO> GetKPIMorosos(int? minimoDiasDeuda, int? minimoDiasPago, int? legajo, int? sede, string carrera, string nombre, string apellido, decimal? dni, int? kpi_monto_mayor, int? kpi_monto_menor)
+        public static List<KPIMorososDTO> GetKPIMorosos(int? ciclo, int? cuatri, int? minimoDiasDeuda, int? minimoDiasPago, int? legajo, int? sede, string carrera, string nombre, string apellido, decimal? dni, int? kpi_monto_mayor, int? kpi_monto_menor)
         {
-            List<sp_KPI_Morosos_Result> kpiMorososModelList = UniAlumnoDAL.GetKPIMorosos(minimoDiasDeuda, minimoDiasPago, legajo, sede, carrera, nombre, apellido, dni, kpi_monto_mayor, kpi_monto_menor);
+            List<sp_KPI_Morosos_Result> kpiMorososModelList = UniAlumnoDAL.GetKPIMorosos(ciclo, cuatri, minimoDiasDeuda, minimoDiasPago, legajo, sede, carrera, nombre, apellido, dni, kpi_monto_mayor, kpi_monto_menor);
             List<KPIMorososDTO> rtn = new List<KPIMorososDTO>();
 
             foreach (sp_KPI_Morosos_Result kpiMorososModel in kpiMorososModelList)
@@ -136,16 +136,33 @@ namespace Service
 
         public static List<decimal> GetFinalesReprobadosTotal(int? ciclo, int? cuatri)
         {
-            List<sp_KPI_Examenes_Reprobados_Result> examenReprobadoModelList = UniAlumnoDAL.GetExamenesReprobados(ciclo, cuatri, null, null, null, null, null, null, null, null);
+            List<sp_KPI_Finales_Reprobados_Result> finalReprobadoModelList = UniAlumnoDAL.GetFinalesReprobados(ciclo, cuatri, null, null, null, null, null, null, null, null);
             List<decimal> rtn = new List<decimal>();
             List<int> usedLegajos = new List<int>();
 
-            foreach (sp_KPI_Examenes_Reprobados_Result examenReprobadoModel in examenReprobadoModelList)
+            foreach (sp_KPI_Finales_Reprobados_Result finalReprobadoModel in finalReprobadoModelList)
             {
-                if (!usedLegajos.Any(x => x == examenReprobadoModel.Legajo) && examenReprobadoModel.Promedio.HasValue)
+                if (!usedLegajos.Any(x => x == finalReprobadoModel.Legajo) && finalReprobadoModel.Promedio.HasValue)
                 {
-                    rtn.Add(examenReprobadoModel.Promedio.Value);
-                    usedLegajos.Add(examenReprobadoModel.Legajo);
+                    rtn.Add(finalReprobadoModel.Promedio.Value);
+                    usedLegajos.Add(finalReprobadoModel.Legajo);
+                }
+            }
+            return rtn;
+        }
+
+        public static List<decimal> GetMorososTotal(int? ciclo, int? cuatri)
+        {
+            List<sp_KPI_Morosos_Result> kpiMorososModelList = UniAlumnoDAL.GetKPIMorosos(ciclo, cuatri, null, null, null, null, null, null, null, null, null, null);
+            List<decimal> rtn = new List<decimal>();
+            List<int> usedLegajos = new List<int>();
+
+            foreach (sp_KPI_Morosos_Result kpiMorososModel in kpiMorososModelList)
+            {
+                if (!usedLegajos.Any(x => x == kpiMorososModel.Legajo) && kpiMorososModel.DeudaToal..HasValue)
+                {
+                    rtn.Add(kpiMorososModel.DeudaToal.Value);
+                    usedLegajos.Add(kpiMorososModel.Legajo);
                 }
             }
             return rtn;

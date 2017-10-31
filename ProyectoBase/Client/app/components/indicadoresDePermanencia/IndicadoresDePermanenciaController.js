@@ -39,7 +39,7 @@
 
               if (response) {
                   indicadoresDePermanenciaController.aca_lastCicloCuatriSelected = { ciclo: indicadoresDePermanenciaController.aca_cicloSelected, cuatrimestre: indicadoresDePermanenciaController.aca_cuatrimestreSelected };
-                  indicadoresDePermanenciaController.loadChartInfo(response.data, 'fullChartContainer', 'Total de inasistencias', $rootScope.KPI_INASISTENCIAS_PORCENTAJE_LIMITE_MAYOR, $rootScope.KPI_INASISTENCIAS_PORCENTAJE_LIMITE_MENOR, '#008ee4,#e6e600,#00e600');
+                  indicadoresDePermanenciaController.loadChartInfo(response.data, 'fullChartContainer', 'Total de inasistencias', $rootScope.KPI_INASISTENCIAS_PORCENTAJE_LIMITE_MAYOR, $rootScope.KPI_INASISTENCIAS_PORCENTAJE_LIMITE_MENOR, '#F9670C,#FFB089,#F9CCB6');
 
                   utilityService.callHttp({
                       method: "GET", url: "/api/UniAlumno/GetExamenesReprobadosTotal?ciclo=" + indicadoresDePermanenciaController.aca_cicloSelected + "&cuatri=" + indicadoresDePermanenciaController.aca_cuatrimestreSelected
@@ -52,8 +52,8 @@
 
               if (response) {
                   indicadoresDePermanenciaController.aca_lastCicloCuatriSelected = { ciclo: indicadoresDePermanenciaController.aca_cicloSelected, cuatrimestre: indicadoresDePermanenciaController.aca_cuatrimestreSelected };
-                  indicadoresDePermanenciaController.loadChartInfo(response.data, 'fullExamenesReprobadosChartContainer', 'Total de exámenes reprobados', $rootScope.KPI_EXAMENES_REPROBADOS_PORCENTAJE_LIMITE_MENOR, $rootScope.KPI_EXAMENES_REPROBADOS_PORCENTAJE_LIMITE_MAYOR, '#008ee4,#e6e600,#00e600');
-                  
+                  indicadoresDePermanenciaController.loadChartInfo(response.data, 'fullExamenesReprobadosChartContainer', 'Total de exámenes reprobados', $rootScope.KPI_EXAMENES_REPROBADOS_PORCENTAJE_LIMITE_MENOR, $rootScope.KPI_EXAMENES_REPROBADOS_PORCENTAJE_LIMITE_MAYOR, '#3288D3,#639FD3,#A3CAED');
+
                   utilityService.callHttp({
                       method: "GET", url: "/api/UniAlumno/GetFinalesReprobadosTotal?ciclo=" + indicadoresDePermanenciaController.aca_cicloSelected + "&cuatri=" + indicadoresDePermanenciaController.aca_cuatrimestreSelected
                                                            , callbackSuccess: indicadoresDePermanenciaController.getFinalesReprobadosTotalInfoListCallback, callbackError: indicadoresDePermanenciaController.getErrorCallback
@@ -65,7 +65,7 @@
 
               if (response) {
                   indicadoresDePermanenciaController.aca_lastCicloCuatriSelected = { ciclo: indicadoresDePermanenciaController.aca_cicloSelected, cuatrimestre: indicadoresDePermanenciaController.aca_cuatrimestreSelected };
-                  indicadoresDePermanenciaController.loadChartInfo(response.data, 'fullFinalesReprobadosChartContainer', 'Total de finales reprobados', $rootScope.KPI_FINALES_REPROBADOS_PORCENTAJE_LIMITE_MENOR, $rootScope.KPI_FINALES_REPROBADOS_PORCENTAJE_LIMITE_MAYOR, '#008ee4,#e6e600,#00e600');
+                  indicadoresDePermanenciaController.loadChartInfo(response.data, 'fullFinalesReprobadosChartContainer', 'Total de finales reprobados', $rootScope.KPI_FINALES_REPROBADOS_PORCENTAJE_LIMITE_MENOR, $rootScope.KPI_FINALES_REPROBADOS_PORCENTAJE_LIMITE_MAYOR, '#42A540,#25E222,#A4FFA3');
               }
           };
 
@@ -294,9 +294,9 @@
                   $('#academicoTable').bootstrapTable('load', indicadoresDePermanenciaController.academicoResultList);
 
                   // Load charts values
-                  indicadoresDePermanenciaController.loadCharts('gridChartContainer', [{ 'label': 'ALTO', 'value': cantALTO.toString() }, { 'label': 'MEDIO', 'value': cantMEDIO.toString() }, { 'label': 'BAJO', 'value': cantBAJO.toString() }], 'Inasistencias encontradas');
-                  indicadoresDePermanenciaController.loadCharts('examenesReprobadosChartContainer', [{ 'label': 'ALTO', 'value': cantExamenesReprobadosALTO.toString() }, { 'label': 'MEDIO', 'value': cantExamenesReprobadosMEDIO.toString() }, { 'label': 'BAJO', 'value': cantExamenesReprobadosBAJO.toString() }], 'Exámenes reprobados');
-                  indicadoresDePermanenciaController.loadCharts('finalesReprobadosChartContainer', [{ 'label': 'ALTO', 'value': cantFinalesReprobadosALTO.toString() }, { 'label': 'MEDIO', 'value': cantFinalesReprobadosMEDIO.toString() }, { 'label': 'BAJO', 'value': cantFinalesReprobadosBAJO.toString() }], 'Finales reprobados');
+                  indicadoresDePermanenciaController.loadCharts('gridChartContainer', [{ 'label': 'ALTO', 'value': cantALTO.toString() }, { 'label': 'MEDIO', 'value': cantMEDIO.toString() }, { 'label': 'BAJO', 'value': cantBAJO.toString() }], 'Inasistencias encontradas', '#F9670C,#FFB089,#F9CCB6');
+                  indicadoresDePermanenciaController.loadCharts('examenesReprobadosChartContainer', [{ 'label': 'ALTO', 'value': cantExamenesReprobadosALTO.toString() }, { 'label': 'MEDIO', 'value': cantExamenesReprobadosMEDIO.toString() }, { 'label': 'BAJO', 'value': cantExamenesReprobadosBAJO.toString() }], 'Exámenes reprobados', '#3288D3,#639FD3,#A3CAED');
+                  indicadoresDePermanenciaController.loadCharts('finalesReprobadosChartContainer', [{ 'label': 'ALTO', 'value': cantFinalesReprobadosALTO.toString() }, { 'label': 'MEDIO', 'value': cantFinalesReprobadosMEDIO.toString() }, { 'label': 'BAJO', 'value': cantFinalesReprobadosBAJO.toString() }], 'Finales reprobados', '#42A540,#25E222,#A4FFA3');
 
 
                   if (!indicadoresDePermanenciaController.aca_lastCicloCuatriSelected ||
@@ -424,11 +424,13 @@
           };
 
           indicadoresDePermanenciaController.legajoInputChanged = function () {
+              /*
               debugger;
               if (indicadoresDePermanenciaController.aca_legajoSearchText.length >= 4) {
                   indicadoresDePermanenciaController.legajoList = [];
                   utilityService.callHttp({ method: "GET", url: "/api/UniAlumno/GetByLegajoMatch?legajo=" + indicadoresDePermanenciaController.aca_legajoSearchText, callbackSuccess: indicadoresDePermanenciaController.getLegajoListCallback, callbackError: indicadoresDePermanenciaController.getErrorCallback });
               }
+              */
           };
 
       };
@@ -438,7 +440,7 @@
           indicadoresDePermanenciaController.administracionResultList = [];
 
           utilityService.callHttp({
-              method: "GET", url: "/api/UniAlumno/GetKPIMorosos?legajo=" + (indicadoresDePermanenciaController.adm_legajoSelected ? indicadoresDePermanenciaController.adm_legajoSelected : '') +
+              method: "GET", url: "/api/UniAlumno/GetKPIMorosos?legajo=" + (indicadoresDePermanenciaController.adm_legajoSearchText ? indicadoresDePermanenciaController.adm_legajoSearchText : '') +
                                                                 "&sede=" + (indicadoresDePermanenciaController.adm_sedeSelected ? indicadoresDePermanenciaController.adm_sedeSelected : '') +
                                                                 "&carrera=" + (indicadoresDePermanenciaController.adm_planSelected ? indicadoresDePermanenciaController.adm_planSelected : '') +
                                                                 "&nombre=" + (indicadoresDePermanenciaController.adm_nombreSelected ? indicadoresDePermanenciaController.adm_nombreSelected : '') +
@@ -460,7 +462,7 @@
           utilityService.callHttp({
               method: "GET", url: "/api/UniAlumno/GetKPIInasistencias?ciclo=" + indicadoresDePermanenciaController.aca_cicloSelected +
                                                                 "&cuatri=" + indicadoresDePermanenciaController.aca_cuatrimestreSelected +
-                                                                "&legajo=" + (indicadoresDePermanenciaController.aca_legajoSelected ? indicadoresDePermanenciaController.aca_legajoSelected : '') +
+                                                                "&legajo=" + (indicadoresDePermanenciaController.aca_legajoSearchText ? indicadoresDePermanenciaController.aca_legajoSearchText : '') +
                                                                 "&sede=" + (indicadoresDePermanenciaController.aca_sedeSelected ? indicadoresDePermanenciaController.aca_sedeSelected : '') +
                                                                 "&carrera=" + (indicadoresDePermanenciaController.aca_planSelected ? indicadoresDePermanenciaController.aca_planSelected : '') +
                                                                 "&nombre=" + (indicadoresDePermanenciaController.aca_nombreSelected ? indicadoresDePermanenciaController.aca_nombreSelected : '') +

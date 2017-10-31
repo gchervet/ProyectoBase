@@ -173,7 +173,31 @@
                     <form name="administracionForm">
                         <div class="row">
                             <div class="col-md-12 col-centered">
-
+                                <div class="col-md-3 form-group">
+                                    <p>
+                                        <label>Ciclo:<span style="color: red; font-weight:400;" title="Campo requerido" ng-show="administracionForm.comboCiclo.$invalid"> (Campo requerido)</span></label><!--obligatorio-->
+                                        <input required
+                                               type="number"
+                                               oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                               maxlength="4"
+                                               max="9999" min="1"
+                                               id="inputCiclo"
+                                               name="comboCiclo"
+                                               class="input-large form-control"
+                                               placeholder="Ingresar ciclo"
+                                               ng-model="vm.adm_cicloSelected" />
+                                    </p>
+                                </div>
+                                <div class="col-md-3 form-group">
+                                    <p>
+                                        <label>Cuatrimestre:<span style="color: red; font-weight:400;" title="Campo requerido" ng-show="administracionForm.comboCuatrimestre.$invalid"> (Campo requerido)</span></label><!--obligatorio-->
+                                        <select required
+                                                name="comboCuatrimestre"
+                                                class="input-large form-control"
+                                                ng-options="cuatrimestre for cuatrimestre in vm.cuatrimestreList"
+                                                ng-model="vm.adm_cuatrimestreSelected"></select>
+                                    </p>
+                                </div>
                                 <div class="col-md-3 form-group">
                                     <p>
                                         <label>Sede:</label>
@@ -191,9 +215,9 @@
                                 <div class="col-md-3 form-group">
                                     <label>Legajo:</label> <!--Autocomplete-->
                                     <input class="form-control"
-                                           id="aca_comboLegajo"
+                                           id="adm_comboLegajo"
                                            ng-change="vm.legajoInputChanged()"
-                                           ng-model="vm.aca_legajoSearchText" />
+                                           ng-model="vm.adm_legajoSearchText" />
                                 </div>
                                 <div class="col-md-3 form-group">
                                     <label>Nombre:</label>
@@ -251,6 +275,17 @@
                                 </table>
 
                             </div>
+                        </div>
+                    </div>
+
+                    <br />
+                    <br />
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div id="adm_morososGridChartContainer"></div>
+                        </div>
+                        <div class="col-md-6">
+                            <div id="adm_morososFullChartContainer"></div>
                         </div>
                     </div>
                 </div>
