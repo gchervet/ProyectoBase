@@ -92,15 +92,15 @@ namespace Data
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_get_PlanesMateriasDetalladasByCodigoPlan_Result>("sp_get_PlanesMateriasDetalladasByCodigoPlan", codigoParameter);
         }
     
-        public virtual ObjectResult<sp_KPI_Morosos_Result> sp_KPI_Morosos(Nullable<int> minimoDiasDeuda, Nullable<int> minimoDiasPago, Nullable<int> legajo, Nullable<int> sede, string carrera, string nombre, string apellido, Nullable<decimal> dni, Nullable<int> kpi_monto_mayor, Nullable<int> kpi_monto_menor)
+        public virtual ObjectResult<sp_KPI_Morosos_Result> sp_KPI_Morosos(Nullable<int> ciclo, Nullable<int> cuatri, Nullable<int> legajo, Nullable<int> sede, string carrera, string nombre, string apellido, Nullable<decimal> dni, Nullable<int> kpi_monto_mayor, Nullable<int> kpi_monto_menor)
         {
-            var minimoDiasDeudaParameter = minimoDiasDeuda.HasValue ?
-                new ObjectParameter("minimoDiasDeuda", minimoDiasDeuda) :
-                new ObjectParameter("minimoDiasDeuda", typeof(int));
+            var cicloParameter = ciclo.HasValue ?
+                new ObjectParameter("ciclo", ciclo) :
+                new ObjectParameter("ciclo", typeof(int));
     
-            var minimoDiasPagoParameter = minimoDiasPago.HasValue ?
-                new ObjectParameter("minimoDiasPago", minimoDiasPago) :
-                new ObjectParameter("minimoDiasPago", typeof(int));
+            var cuatriParameter = cuatri.HasValue ?
+                new ObjectParameter("cuatri", cuatri) :
+                new ObjectParameter("cuatri", typeof(int));
     
             var legajoParameter = legajo.HasValue ?
                 new ObjectParameter("legajo", legajo) :
@@ -134,7 +134,7 @@ namespace Data
                 new ObjectParameter("kpi_monto_menor", kpi_monto_menor) :
                 new ObjectParameter("kpi_monto_menor", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_KPI_Morosos_Result>("sp_KPI_Morosos", minimoDiasDeudaParameter, minimoDiasPagoParameter, legajoParameter, sedeParameter, carreraParameter, nombreParameter, apellidoParameter, dniParameter, kpi_monto_mayorParameter, kpi_monto_menorParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_KPI_Morosos_Result>("sp_KPI_Morosos", cicloParameter, cuatriParameter, legajoParameter, sedeParameter, carreraParameter, nombreParameter, apellidoParameter, dniParameter, kpi_monto_mayorParameter, kpi_monto_menorParameter);
         }
     
         public virtual ObjectResult<sp_get_alumno_by_legajo_match_Result> sp_get_alumno_by_legajo_match(string legajo)

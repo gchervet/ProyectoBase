@@ -201,7 +201,7 @@
                                 <div class="col-md-3 form-group">
                                     <p>
                                         <label>Sede:</label>
-                                        <select required name="comboSede" class="input-large form-control" ng-options="sede.code as sede.name for sede in vm.sedeList" ng-model="vm.adm_sedeSelected"><option></option></select>
+                                        <select name="comboSede" class="input-large form-control" ng-options="sede.code as sede.name for sede in vm.sedeList" ng-model="vm.adm_sedeSelected"><option></option></select>
                                     </p>
                                 </div>
                                 <div class="col-md-3 form-group">
@@ -245,7 +245,7 @@
                                 </div>
                             </div>
                         </div>
-                        <p><button type="submit" class="btn btn-primary" ng-click="vm.loadAdministracionGrid()">Buscar</button></p>
+                        <p><button type="submit" class="btn btn-primary" ng-disabled="administracionForm.comboCiclo.$invalid || administracionForm.comboCuatrimestre.$invalid" ng-click="vm.loadAdministracionGrid()">Buscar</button></p>
                     </form>
 
                     <h4>Resultados:</h4>

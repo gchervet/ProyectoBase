@@ -20,9 +20,9 @@ namespace Service
             return null;
         }
 
-        public static List<KPIMorososDTO> GetKPIMorosos(int? ciclo, int? cuatri, int? minimoDiasDeuda, int? minimoDiasPago, int? legajo, int? sede, string carrera, string nombre, string apellido, decimal? dni, int? kpi_monto_mayor, int? kpi_monto_menor)
+        public static List<KPIMorososDTO> GetKPIMorosos(int? ciclo, int? cuatri, int? legajo, int? sede, string carrera, string nombre, string apellido, decimal? dni, int? kpi_monto_mayor, int? kpi_monto_menor)
         {
-            List<sp_KPI_Morosos_Result> kpiMorososModelList = UniAlumnoDAL.GetKPIMorosos(ciclo, cuatri, minimoDiasDeuda, minimoDiasPago, legajo, sede, carrera, nombre, apellido, dni, kpi_monto_mayor, kpi_monto_menor);
+            List<sp_KPI_Morosos_Result> kpiMorososModelList = UniAlumnoDAL.GetKPIMorosos(ciclo, cuatri, legajo, sede, carrera, nombre, apellido, dni, kpi_monto_mayor, kpi_monto_menor);
             List<KPIMorososDTO> rtn = new List<KPIMorososDTO>();
 
             foreach (sp_KPI_Morosos_Result kpiMorososModel in kpiMorososModelList)
@@ -153,16 +153,16 @@ namespace Service
 
         public static List<decimal> GetMorososTotal(int? ciclo, int? cuatri)
         {
-            List<sp_KPI_Morosos_Result> kpiMorososModelList = UniAlumnoDAL.GetKPIMorosos(ciclo, cuatri, null, null, null, null, null, null, null, null, null, null);
+            List<KPIMorososDTO> kpiMorosoList = GetKPIMorosos(ciclo, cuatri, null, null, null, null, null, null, null, null);
             List<decimal> rtn = new List<decimal>();
             List<int> usedLegajos = new List<int>();
 
-            foreach (sp_KPI_Morosos_Result kpiMorososModel in kpiMorososModelList)
+            foreach (KPIMorososDTO kpiMoroso in kpiMorosoList)
             {
-                if (!usedLegajos.Any(x => x == kpiMorososModel.Legajo) && kpiMorososModel.DeudaToal..HasValue)
+                if (!usedLegajos.Any(x => x == kpiMoroso.Legajo) && kpiMoroso.DeudaToal.HasValue)
                 {
-                    rtn.Add(kpiMorososModel.DeudaToal.Value);
-                    usedLegajos.Add(kpiMorososModel.Legajo);
+                    rtn.Add(kpiMoroso.DeudaToal.Value);
+                    usedLegajos.Add(kpiMoroso.Legajo);
                 }
             }
             return rtn;

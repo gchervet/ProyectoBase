@@ -281,8 +281,8 @@
           <Parameter Name="kpi_inasistencia_menor" Type="int" Mode="In" />
         </Function>
         <Function Name="sp_KPI_Morosos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="minimoDiasDeuda" Type="int" Mode="In" />
-          <Parameter Name="minimoDiasPago" Type="int" Mode="In" />
+          <Parameter Name="ciclo" Type="int" Mode="In" />
+          <Parameter Name="cuatri" Type="int" Mode="In" />
           <Parameter Name="legajo" Type="int" Mode="In" />
           <Parameter Name="sede" Type="int" Mode="In" />
           <Parameter Name="carrera" Type="varchar" Mode="In" />
@@ -441,8 +441,8 @@
           <Parameter Name="codigo" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_KPI_Morosos" ReturnType="Collection(Uni_Model.sp_KPI_Morosos_Result)">
-            <Parameter Name="minimoDiasDeuda" Mode="In" Type="Int32" />
-            <Parameter Name="minimoDiasPago" Mode="In" Type="Int32" />
+            <Parameter Name="ciclo" Mode="In" Type="Int32" />
+            <Parameter Name="cuatri" Mode="In" Type="Int32" />
             <Parameter Name="legajo" Mode="In" Type="Int32" />
             <Parameter Name="sede" Mode="In" Type="Int32" />
             <Parameter Name="carrera" Mode="In" Type="String" />
@@ -712,20 +712,6 @@
           <Property Type="String" Name="NombreMateria" Nullable="true" MaxLength="35" />
           <Property Type="String" Name="ConceptoId" Nullable="true" MaxLength="10" />
         </ComplexType>
-        <ComplexType Name="sp_KPI_Morosos_Result">
-          <Property Type="Int32" Name="Legajo" Nullable="false" />
-          <Property Type="String" Name="Carrera" Nullable="true" MaxLength="4" />
-          <Property Type="String" Name="Apellido" Nullable="true" MaxLength="30" />
-          <Property Type="String" Name="Nombre" Nullable="true" MaxLength="30" />
-          <Property Type="Decimal" Name="Dni" Nullable="true" Precision="9" Scale="0" />
-          <Property Type="Decimal" Name="DeudaToal" Nullable="true" Precision="38" Scale="4" />
-          <Property Type="Int32" Name="DiasDeuda" Nullable="true" />
-          <Property Type="DateTime" Name="FechaUltimoPago" Nullable="true" />
-          <Property Type="Decimal" Name="ImporteUltimoPago" Nullable="true" Precision="18" Scale="4" />
-          <Property Type="DateTime" Name="UltimaActAca" Nullable="true" />
-          <Property Type="String" Name="Telefono" Nullable="true" MaxLength="25" />
-          <Property Type="String" Name="Mail" Nullable="true" MaxLength="100" />
-        </ComplexType>
         <EntityType Name="uniRegionales">
           <Key>
             <PropertyRef Name="codigo" />
@@ -786,6 +772,20 @@
           <Property Type="Int32" Name="FinalesDesaprobados" Nullable="true" />
           <Property Type="Int32" Name="TotalFinalesDesaprobados" Nullable="true" />
           <Property Type="Decimal" Name="Promedio" Nullable="true" Precision="16" Scale="4" />
+        </ComplexType>
+        <ComplexType Name="sp_KPI_Morosos_Result">
+          <Property Type="Int32" Name="Legajo" Nullable="false" />
+          <Property Type="String" Name="Carrera" Nullable="true" MaxLength="4" />
+          <Property Type="String" Name="Apellido" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="Nombre" Nullable="true" MaxLength="30" />
+          <Property Type="Decimal" Name="Dni" Nullable="true" Precision="9" Scale="0" />
+          <Property Type="Decimal" Name="DeudaToal" Nullable="true" Precision="38" Scale="4" />
+          <Property Type="Int32" Name="DiasDeuda" Nullable="true" />
+          <Property Type="DateTime" Name="FechaUltimoPago" Nullable="true" />
+          <Property Type="Decimal" Name="ImporteUltimoPago" Nullable="true" Precision="18" Scale="4" />
+          <Property Type="DateTime" Name="UltimaActAca" Nullable="true" />
+          <Property Type="String" Name="Telefono" Nullable="true" MaxLength="25" />
+          <Property Type="String" Name="Mail" Nullable="true" MaxLength="100" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>

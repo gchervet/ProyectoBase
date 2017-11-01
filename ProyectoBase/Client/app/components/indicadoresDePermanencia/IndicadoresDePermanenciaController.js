@@ -118,9 +118,12 @@
           indicadoresDePermanenciaController.getKPIMorosoListCallback = function (response) {
               if (response) {
                   for (i in response.data) {
-
+                        
                       var actualKPIMoroso = response.data[i],
-                          valorDeDeuda = '';
+                          valorDeDeuda = '',
+                          cantALTO = 0,
+                          cantMEDIO = 0,
+                          cantBAJO = 0;
 
                       if (actualKPIMoroso.DeudaToal >= $rootScope.KPI_DEUDA_LIMITE_MAYOR) {
                           valorDeDeuda = 'ALTO';
@@ -147,6 +150,28 @@
                   }
 
                   $('#administracionTable').bootstrapTable('load', indicadoresDePermanenciaController.administracionResultList);
+
+                  // Load charts values
+                  indicadoresDePermanenciaController.loadCharts('adm_morososGridChartContainer', [{ 'label': 'ALTO', 'value': cantALTO.toString() }, { 'label': 'MEDIO', 'value': cantMEDIO.toString() }, { 'label': 'BAJO', 'value': cantBAJO.toString() }], 'Morosos encontradas', '#F9670C,#FFB089,#F9CCB6');
+
+                  if (!indicadoresDePermanenciaController.adm_lastCicloCuatriSelected ||
+                      indicadoresDePermanenciaController.adm_lastCicloCuatriSelected.ciclo != indicadoresDePermanenciaController.adm_cicloSelected ||
+                      indicadoresDePermanenciaController.adm_lastCicloCuatriSelected.cuatrimestre != indicadoresDePermanenciaController.adm_cuatrimestreSelected) {
+
+                      utilityService.callHttp({
+                          method: "GET", url: "/api/UniAlumno/GetMorososTotal?ciclo=" + indicadoresDePermanenciaController.adm_cicloSelected + "&cuatri=" + indicadoresDePermanenciaController.adm_cuatrimestreSelected
+                                                               , callbackSuccess: indicadoresDePermanenciaController.getMorososTotalGridInfoListCallback, callbackError: indicadoresDePermanenciaController.getErrorCallback
+                      });
+                  }
+
+              }
+          };
+
+          indicadoresDePermanenciaController.getMorososTotalGridInfoListCallback = function (response) {
+
+              if (response) {
+                  indicadoresDePermanenciaController.adm_lastCicloCuatriSelected = { ciclo: indicadoresDePermanenciaController.adm_cicloSelected, cuatrimestre: indicadoresDePermanenciaController.adm_cuatrimestreSelected };
+                  indicadoresDePermanenciaController.loadChartInfo(response.data, 'adm_morososFullChartContainer', 'Total de morosos', $rootScope.KPI_DEUDA_LIMITE_MAYOR, $rootScope.KPI_DEUDA_LIMITE_MENOR, '#F9670C,#FFB089,#F9CCB6');
               }
           };
 
@@ -439,17 +464,33 @@
 
           indicadoresDePermanenciaController.administracionResultList = [];
 
+          var kpi_monto_url_query = '&kpi_monto_menor=&kpi_monto_mayor=';
+
+          if (indicadoresDePermanenciaController.adm_kpiSelected) {
+              if (indicadoresDePermanenciaController.adm_nivelDeRiesgoSelected == 'Alto') {
+                  kpi_monto_url_query = '&kpi_monto_menor&kpi_monto_mayor=' + $rootScope.KPI_MONTO_DE_DEUDA_LIMITE_MAYOR;
+              }
+              if (indicadoresDePermanenciaController.adm_nivelDeRiesgoSelected == 'Medio') {
+                  kpi_monto_url_query = '&kpi_monto_menor=' + $rootScope.KPI_MONTO_DE_DEUDA_LIMITE_MAYOR + '&kpi_monto_mayor=' + $rootScope.KPI_MONTO_DE_DEUDA_LIMITE_MENOR;
+              }
+              if (indicadoresDePermanenciaController.adm_nivelDeRiesgoSelected == 'Bajo') {
+                  kpi_monto_url_query = '&kpi_monto_mayor=&kpi_monto_menor=' + $rootScope.KPI_MONTO_DE_DEUDA_LIMITE_MENOR;
+              }
+          }
+          else {
+              kpi_monto_url_query = '&kpi_monto_menor=' + $rootScope.KPI_MONTO_DE_DEUDA_LIMITE_MAYOR + '&kpi_monto_mayor=' + $rootScope.KPI_MONTO_DE_DEUDA_LIMITE_MENOR;
+          }
+
           utilityService.callHttp({
-              method: "GET", url: "/api/UniAlumno/GetKPIMorosos?legajo=" + (indicadoresDePermanenciaController.adm_legajoSearchText ? indicadoresDePermanenciaController.adm_legajoSearchText : '') +
+              method: "GET", url: "/api/UniAlumno/GetKPIMorosos?ciclo=" + indicadoresDePermanenciaController.adm_cicloSelected +
+                                                                "&cuatri=" + indicadoresDePermanenciaController.adm_cuatrimestreSelected +
+                                                                "&legajo=" + (indicadoresDePermanenciaController.adm_legajoSearchText ? indicadoresDePermanenciaController.adm_legajoSearchText : '') +
                                                                 "&sede=" + (indicadoresDePermanenciaController.adm_sedeSelected ? indicadoresDePermanenciaController.adm_sedeSelected : '') +
                                                                 "&carrera=" + (indicadoresDePermanenciaController.adm_planSelected ? indicadoresDePermanenciaController.adm_planSelected : '') +
                                                                 "&nombre=" + (indicadoresDePermanenciaController.adm_nombreSelected ? indicadoresDePermanenciaController.adm_nombreSelected : '') +
                                                                 "&apellido=" + (indicadoresDePermanenciaController.adm_apellidoSelected ? indicadoresDePermanenciaController.adm_apellidoSelected : '') +
                                                                 "&dni=" + indicadoresDePermanenciaController.adm_dniSelected +
-                                                                "&kpi_monto_mayor=10000" +
-                                                                "&kpi_monto_menor" +
-                                                                "&minimoDiasDeuda=90" +
-                                                                "&minimoDiasPago=0"
+                                                                kpi_monto_url_query 
                                                                 , callbackSuccess: indicadoresDePermanenciaController.getKPIMorosoListCallback, callbackError: indicadoresDePermanenciaController.getErrorCallback
           });
       };

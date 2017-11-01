@@ -50,7 +50,7 @@ namespace Distribution
         [Route("GetKPIMorosos")]
         [HttpGet]
         [AllowAnonymous]
-        public HttpResponseMessage GetKPIMorosos(int? ciclo, int? cuatri, int? minimoDiasDeuda, int? minimoDiasPago, int? legajo, int? sede, string carrera, string nombre, string apellido, decimal? dni, int? kpi_monto_mayor, int? kpi_monto_menor)
+        public HttpResponseMessage GetKPIMorosos(int? ciclo, int? cuatri, int? legajo, int? sede, string carrera, string nombre, string apellido, decimal? dni, int? kpi_monto_mayor, int? kpi_monto_menor)
         {
             try
             {
@@ -59,7 +59,7 @@ namespace Distribution
 
                 if (SessionTokenService.ValidRequestByUserAndToken(tokenString, userString))
                 {
-                    return HttpResponseController.Return_200_OK(UniAlumnoService.GetKPIMorosos(ciclo, cuatri, minimoDiasDeuda, minimoDiasPago, legajo, sede, carrera, nombre, apellido, dni, kpi_monto_mayor, kpi_monto_menor));
+                    return HttpResponseController.Return_200_OK(UniAlumnoService.GetKPIMorosos(ciclo, cuatri, legajo, sede, carrera, nombre, apellido, dni, kpi_monto_mayor, kpi_monto_menor));
                 }
                 return HttpResponseController.Return_401_Unauthorized(string.Empty);
             }
