@@ -727,22 +727,6 @@
           <Property Type="String" Name="apellido" Nullable="true" MaxLength="30" />
           <Property Type="Decimal" Name="docnac" Nullable="true" Precision="9" Scale="0" />
         </ComplexType>
-        <ComplexType Name="sp_KPI_Inansistencias_Result">
-          <Property Type="Int32" Name="Legajo" Nullable="false" />
-          <Property Type="String" Name="Nombre" Nullable="true" MaxLength="30" />
-          <Property Type="String" Name="Apellido" Nullable="true" MaxLength="30" />
-          <Property Type="Decimal" Name="Dni" Nullable="true" Precision="9" Scale="0" />
-          <Property Type="String" Name="Carrera" Nullable="true" MaxLength="4" />
-          <Property Type="Int32" Name="Ciclo" Nullable="false" />
-          <Property Type="Int32" Name="Cuatri" Nullable="false" />
-          <Property Type="String" Name="Materia" Nullable="true" MaxLength="35" />
-          <Property Type="String" Name="Telefono" Nullable="true" MaxLength="25" />
-          <Property Type="String" Name="Mail" Nullable="true" MaxLength="100" />
-          <Property Type="Int32" Name="Inansistencia" Nullable="true" />
-          <Property Type="Int32" Name="MaxNroClase" Nullable="true" />
-          <Property Type="Int32" Name="TotalDeInasistencias" Nullable="true" />
-          <Property Type="Decimal" Name="Promedio" Nullable="true" Precision="16" Scale="4" />
-        </ComplexType>
         <ComplexType Name="sp_KPI_Examenes_Reprobados_Result">
           <Property Type="Int32" Name="Legajo" Nullable="false" />
           <Property Type="String" Name="Nombre" Nullable="true" MaxLength="30" />
@@ -786,6 +770,22 @@
           <Property Type="DateTime" Name="UltimaActAca" Nullable="true" />
           <Property Type="String" Name="Telefono" Nullable="true" MaxLength="25" />
           <Property Type="String" Name="Mail" Nullable="true" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="sp_KPI_Inansistencias_Result">
+          <Property Type="Int32" Name="Legajo" Nullable="false" />
+          <Property Type="String" Name="Nombre" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="Apellido" Nullable="true" MaxLength="30" />
+          <Property Type="Decimal" Name="Dni" Nullable="true" Precision="9" Scale="0" />
+          <Property Type="String" Name="Carrera" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="Ciclo" Nullable="false" />
+          <Property Type="Int32" Name="Cuatri" Nullable="false" />
+          <Property Type="String" Name="Materia" Nullable="true" MaxLength="35" />
+          <Property Type="String" Name="Telefono" Nullable="true" MaxLength="25" />
+          <Property Type="String" Name="Mail" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="Inansistencia" Nullable="true" />
+          <Property Type="Int32" Name="MaxNroClase" Nullable="true" />
+          <Property Type="Int32" Name="TotalDeInasistencias" Nullable="true" />
+          <Property Type="Decimal" Name="Promedio" Nullable="true" Precision="16" Scale="4" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>

@@ -32,11 +32,11 @@ namespace Service
             return rtn;
         }
 
-        public static List<KPIInasistenciasDTO> GetKPIInasistencias(int? ciclo, int? cuatri, int? legajo, int? sede, string carrera, string nombre, string apellido, decimal? dni, int? kpiInasistenciaMayor, int? kpiInasistenciaMenor, int? kpi_reprobados_mayor, int? kpi_reprobados_menor)
+        public static List<KPIInasistenciasDTO> GetKPIInasistencias(int? ciclo, int? cuatri, int? legajo, int? sede, string carrera, string nombre, string apellido, decimal? dni, int? kpi_inasistencia_mayor, int? kpi_inasistencia_menor, int? kpi_reprobados_mayor, int? kpi_reprobados_menor, int? kpi_finales_mayor, int? kpi_finales_menor)
         {
-            List<sp_KPI_Inansistencias_Result> kpiInasistenciaModelList = UniAlumnoDAL.GetKPIInasistencias(ciclo, cuatri, legajo, sede, carrera, nombre, apellido, dni, kpiInasistenciaMayor, kpiInasistenciaMenor);
+            List<sp_KPI_Inansistencias_Result> kpiInasistenciaModelList = UniAlumnoDAL.GetKPIInasistencias(ciclo, cuatri, legajo, sede, carrera, nombre, apellido, dni, kpi_inasistencia_mayor, kpi_inasistencia_menor);
             List<ExamenReprobadoDTO> examenReprobadoList = GetExamenesReprobados(ciclo, cuatri, legajo, sede, carrera, nombre, apellido, dni, kpi_reprobados_mayor, kpi_reprobados_menor);
-            List<FinalReprobadoDTO> finalReprobadoList = GetFinalesReprobados(ciclo, cuatri, legajo, sede, carrera, nombre, apellido, dni, kpi_reprobados_mayor, kpi_reprobados_menor);
+            List<FinalReprobadoDTO> finalReprobadoList = GetFinalesReprobados(ciclo, cuatri, legajo, sede, carrera, nombre, apellido, dni, kpi_finales_mayor, kpi_finales_menor);
             List<KPIInasistenciasDTO> rtn = new List<KPIInasistenciasDTO>();
 
             foreach (sp_KPI_Inansistencias_Result kpiInasistenciaModel in kpiInasistenciaModelList)

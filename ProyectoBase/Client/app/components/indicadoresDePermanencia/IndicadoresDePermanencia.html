@@ -86,11 +86,11 @@
                             <div class="col-md-12 col-centered">
                                 <div class="col-md-3 form-group">
                                     <label>KPI:</label>
-                                    <select class="input-large form-control" ng-options="kpi for kpi in vm.kpiList" ng-model="vm.aca_kpiSelected"></select>
+                                    <select class="input-large form-control" ng-options="kpi for kpi in vm.kpiList" ng-model="vm.aca_kpiSelected"><option></option></select>
                                 </div>
                                 <div class="col-md-3 form-group">
                                     <label>Nivel de riesgo:</label>
-                                    <select class="input-large form-control" ng-options="nivelDeRiesgo for nivelDeRiesgo in vm.nivelDeRiesgoList" ng-model="vm.aca_nivelDeRiesgoSelected"><option></option></select>
+                                    <select class="input-large form-control" ng-disabled="!vm.aca_kpiSelected" ng-options="nivelDeRiesgo for nivelDeRiesgo in vm.nivelDeRiesgoList" ng-model="vm.aca_nivelDeRiesgoSelected"></select>
                                 </div>
                             </div>
                         </div>
@@ -237,11 +237,11 @@
                             <div class="col-md-12 col-centered">
                                 <div class="col-md-3 form-group">
                                     <label>KPI:</label>
-                                    <select id="comboCiclo" class="input-large form-control" ng-options="kpi for kpi in vm.kpiList" ng-model="vm.adm_kpiSelected"><option></option></select>
+                                    <select id="comboCiclo" class="input-large form-control" ng-options="kpi for kpi in vm.adm_kpiList" ng-model="vm.adm_kpiSelected"><option></option></select>
                                 </div>
                                 <div class="col-md-3 form-group">
                                     <label>Nivel de riesgo:</label>
-                                    <select id="comboCuatrimestre" class="input-large form-control" ng-options="nivelDeRiesgo for nivelDeRiesgo in vm.nivelDeRiesgoList" ng-model="vm.adm_nivelDeRiesgoSelected"><option></option></select>
+                                    <select id="comboCuatrimestre" ng-disabled="!vm.adm_kpiSelected" class="input-large form-control" ng-options="nivelDeRiesgo for nivelDeRiesgo in vm.nivelDeRiesgoList" ng-model="vm.adm_nivelDeRiesgoSelected"></select>
                                 </div>
                             </div>
                         </div>
