@@ -43,5 +43,14 @@ namespace Distribution
                 Content = new StringContent(responseMessage)
             };
         }
+
+        internal static HttpResponseMessage Return_500_InternalServerError(string responseMessage)
+        {
+            return new HttpResponseMessage()
+            {
+                StatusCode = System.Net.HttpStatusCode.InternalServerError,
+                Content = new StringContent(responseMessage)
+            };
+        }
     }
 }

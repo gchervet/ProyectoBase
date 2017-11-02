@@ -65,7 +65,7 @@ namespace Distribution
             }
             catch
             {
-                return HttpResponseController.Return_401_Unauthorized(string.Empty);
+                return HttpResponseController.Return_500_InternalServerError(string.Empty);
             }
         }
 
@@ -92,7 +92,7 @@ namespace Distribution
             }
             catch
             {
-                return HttpResponseController.Return_401_Unauthorized(string.Empty);
+                return HttpResponseController.Return_500_InternalServerError(string.Empty);
             }
         }
 
@@ -119,7 +119,7 @@ namespace Distribution
             }
             catch
             {
-                return HttpResponseController.Return_401_Unauthorized(string.Empty);
+                return HttpResponseController.Return_500_InternalServerError(string.Empty);
             }
         }
 
@@ -146,7 +146,7 @@ namespace Distribution
             }
             catch
             {
-                return HttpResponseController.Return_401_Unauthorized(string.Empty);
+                return HttpResponseController.Return_500_InternalServerError(string.Empty);
             }
         }
 
@@ -173,7 +173,7 @@ namespace Distribution
             }
             catch
             {
-                return HttpResponseController.Return_401_Unauthorized(string.Empty);
+                return HttpResponseController.Return_500_InternalServerError(string.Empty);
             }
         }
 
@@ -200,7 +200,7 @@ namespace Distribution
             }
             catch
             {
-                return HttpResponseController.Return_401_Unauthorized(string.Empty);
+                return HttpResponseController.Return_500_InternalServerError(string.Empty);
             }
         }
 
@@ -227,7 +227,7 @@ namespace Distribution
             }
             catch
             {
-                return HttpResponseController.Return_401_Unauthorized(string.Empty);
+                return HttpResponseController.Return_500_InternalServerError(string.Empty);
             }
         }
 
@@ -254,7 +254,7 @@ namespace Distribution
             }
             catch
             {
-                return HttpResponseController.Return_401_Unauthorized(string.Empty);
+                return HttpResponseController.Return_500_InternalServerError(string.Empty);
             }
         }
 
@@ -281,7 +281,7 @@ namespace Distribution
             }
             catch
             {
-                return HttpResponseController.Return_401_Unauthorized(string.Empty);
+                return HttpResponseController.Return_500_InternalServerError(string.Empty);
             }
         }
     }

@@ -36,6 +36,7 @@ namespace Data
         {
             using (var context = new Uni_Entities())
             {
+                context.Database.CommandTimeout = 3000;
                 return context.sp_KPI_Morosos(ciclo, cuatri, legajo, sede, carrera, nombre, apellido, dni, kpi_monto_mayor, kpi_monto_menor).ToList();
             }
         }

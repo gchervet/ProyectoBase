@@ -286,7 +286,7 @@
                     url: "/api/entity/action",
                     callbackSuccess: function (response) { },
                     callbackError: function (response, status, headers, config) { },
-                    runDefaultErrorHandler: true,
+                    runDefaultErrorHandler: false,
                     noblock: false,
                     data: null
                 };
