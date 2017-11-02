@@ -121,6 +121,7 @@
 			if(tabPrefix == 'adm'){
 				 indicadoresDePermanenciaController.loadCharts('adm_morososGridChartContainer', [], 'Morosos encontradas', '#F9670C,#FFB089,#F9CCB6');
 
+			}
 			if(tabPrefix == 'aca'){
 				
 				indicadoresDePermanenciaController.loadCharts('aca_gridChartContainer', [], 'Inasistencias encontradas', 'Según los filtros ingresados', '#F9670C,#FFB089,#F9CCB6');
