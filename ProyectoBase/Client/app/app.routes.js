@@ -5,81 +5,83 @@ app.config(['$qProvider', '$routeProvider', '$stateProvider', '$urlRouterProvide
 
         $qProvider.errorOnUnhandledRejections(false);
 
+        var server_prefix = '';
+
         $routeProvider
           .when('/login', {
-              templateUrl: '/app/components/login/login.html',
+              templateUrl: server_prefix + '/app/components/login/login.html',
               controller: 'loginController as vm'
           })
           .when('/home', {
-              templateUrl: '/app/components/home/home.html',
+              templateUrl: server_prefix + '/app/components/home/home.html',
               controller: 'homeController as home',
               requiresAuthentication: true
           })
           .when('/main', {
-              templateUrl: '/app/components/main/main.html',
+              templateUrl: server_prefix + '/app/components/main/main.html',
               controller: 'mainController as main',
               requiresAuthentication: true
           })
           .when('/user', {
-              templateUrl: '/app/components/user/userProfile.html',
+              templateUrl: server_prefix + '/app/components/user/userProfile.html',
               controller: 'userProfileController as vm',
               requiresAuthentication: true
           })
           /* INGRESOS */
           .when('/MatriculacionYArancelamiento', {
-              templateUrl: '/app/components/inscripciones/matriculacionYArancelamiento.html',
+              templateUrl: server_prefix + '/app/components/inscripciones/matriculacionYArancelamiento.html',
               controller: 'matriculacionYArancelamientoController as vm',
               requiresAuthentication: true
           })
           .when('/ConsultaDeMatriculaciones', {
-              templateUrl: '/app/components/inscripciones/consultaDeMatriculaciones.html',
+              templateUrl: server_prefix + '/app/components/inscripciones/consultaDeMatriculaciones.html',
               controller: 'consultaDeMatriculacionesController as vm',
               requiresAuthentication: true
           })
           .when('/InscripcionAMaterias', {
-              templateUrl: '/app/components/inscripciones/inscripcionAMaterias.html',
+              templateUrl: server_prefix + '/app/components/inscripciones/inscripcionAMaterias.html',
               controller: 'inscripcionAMateriasController as vm',
               requiresAuthentication: true
           })
           .when('/ConsultaDeInscripcionAMaterias', {
-              templateUrl: '/app/components/inscripciones/consultaDeInscripcionAMaterias.html',
+              templateUrl: server_prefix + '/app/components/inscripciones/consultaDeInscripcionAMaterias.html',
               controller: 'consultaDeInscripcionAMateriasController as vm',
               requiresAuthentication: true
           })
           .when('/ConsultaDeDerechosDeExamen', {
-              templateUrl: '/app/components/inscripciones/consultaDeDerechosDeExamen.html',
+              templateUrl: server_prefix + '/app/components/inscripciones/consultaDeDerechosDeExamen.html',
               controller: 'consultaDeDerechosDeExamenController as vm',
               requiresAuthentication: true
           })
           .when('/InscripcionAExamenes', {
-              templateUrl: '/app/components/inscripciones/inscripcionAExamenes.html',
+              templateUrl: server_prefix + '/app/components/inscripciones/inscripcionAExamenes.html',
               controller: 'inscripcionAExamenesController as vm',
               requiresAuthentication: true
           })
           .when('/ConsultaDeInscripcionAExamenes', {
-              templateUrl: '/app/components/inscripciones/consultaDeInscripcionAExamenes.html',
+              templateUrl: server_prefix + '/app/components/inscripciones/consultaDeInscripcionAExamenes.html',
               controller: 'consultaDeInscripcionAExamenesController as vm',
               requiresAuthentication: true
           })
           /* PROGRAMACIÓN ACADÉMICA */
           .when('/CrearCursoAislado', {
-              templateUrl: '/app/components/programacionAcademica/crearCursoAislado.html',
+              templateUrl: server_prefix + '/app/components/programacionAcademica/crearCursoAislado.html',
               controller: 'crearCursoAisladoController as vm',
               requiresAuthentication: true
           })
           .when('/CrearCursoDesdeCarrera', {
-              templateUrl: '/app/components/programacionAcademica/crearCursoDesdeCarrera.html',
+              templateUrl: server_prefix + '/app/components/programacionAcademica/crearCursoDesdeCarrera.html',
               controller: 'crearCursoDesdeCarreraController as vm',
               requiresAuthentication: true
           })
           .when('/CrearCursoDesdeCurso', {
-              templateUrl: '/app/components/programacionAcademica/crearCursoDesdeCurso.html',
+              templateUrl: server_prefix + '/app/components/programacionAcademica/crearCursoDesdeCurso.html',
               controller: 'crearCursoDesdeCursoController as vm',
               requiresAuthentication: true
           })
           /* INDICADORES DE PERMANENCIA */
           .when('/IndicadoresDePermanencia', {
-              templateUrl: '/app/components/indicadoresDePermanencia/indicadoresDePermanencia.html',
+              templateUrl: server_prefix + '/app/components/indicadoresDePermanencia/indicadoresDePermanencia.html',
               controller: 'indicadoresDePermanenciaController as vm',
               requiresAuthentication: true
           })
