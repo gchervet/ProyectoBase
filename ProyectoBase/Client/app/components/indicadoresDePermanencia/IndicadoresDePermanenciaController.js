@@ -36,10 +36,10 @@
           }
 
           indicadoresDePermanenciaController.getFullGridInfoListCallback = function (response) {
-
+              debugger;
               if (response) {
                   indicadoresDePermanenciaController.aca_lastCicloCuatriSelected = { ciclo: indicadoresDePermanenciaController.aca_cicloSelected, cuatrimestre: indicadoresDePermanenciaController.aca_cuatrimestreSelected };
-                  indicadoresDePermanenciaController.loadChartInfo(response.data, 'aca_fullChartContainer', 'Total de inasistencias', 'En el ciclo ' + indicadoresDePermanenciaController.aca_lastCicloCuatriSelected.ciclo + ', cuatrimestre ' + indicadoresDePermanenciaController.aca_lastCicloCuatriSelected.cuatrimestre, $rootScope.KPI_INASISTENCIAS_PORCENTAJE_LIMITE_MAYOR, $rootScope.KPI_INASISTENCIAS_PORCENTAJE_LIMITE_MENOR, '#F9670C,#FFB089,#F9CCB6');
+                  indicadoresDePermanenciaController.loadChartInfo(response.data, 'aca_fullChartContainer', 'Total de inasistencias', 'En el ciclo ' + indicadoresDePermanenciaController.aca_lastCicloCuatriSelected.ciclo + ', cuatrimestre ' + indicadoresDePermanenciaController.aca_lastCicloCuatriSelected.cuatrimestre, $rootScope.KPI_INASISTENCIAS_PORCENTAJE_LIMITE_MENOR, $rootScope.KPI_INASISTENCIAS_PORCENTAJE_LIMITE_MAYOR, '#F9670C,#FFB089,#F9CCB6');
 
                   utilityService.callHttp({
                       method: "GET", url: "/api/UniAlumno/GetExamenesReprobadosTotal?ciclo=" + indicadoresDePermanenciaController.aca_cicloSelected + "&cuatri=" + indicadoresDePermanenciaController.aca_cuatrimestreSelected
@@ -49,7 +49,7 @@
           };
 
           indicadoresDePermanenciaController.getExamenesReprobadosTotalInfoListCallback = function (response) {
-
+              debugger;
               if (response) {
                   indicadoresDePermanenciaController.aca_lastCicloCuatriSelected = { ciclo: indicadoresDePermanenciaController.aca_cicloSelected, cuatrimestre: indicadoresDePermanenciaController.aca_cuatrimestreSelected };
                   indicadoresDePermanenciaController.loadChartInfo(response.data, 'aca_fullExamenesReprobadosChartContainer', 'Total de exámenes reprobados', 'En el ciclo ' + indicadoresDePermanenciaController.aca_lastCicloCuatriSelected.ciclo + ', cuatrimestre ' + indicadoresDePermanenciaController.aca_lastCicloCuatriSelected.cuatrimestre, $rootScope.KPI_EXAMENES_REPROBADOS_PORCENTAJE_LIMITE_MENOR, $rootScope.KPI_EXAMENES_REPROBADOS_PORCENTAJE_LIMITE_MAYOR, '#3288D3,#639FD3,#A3CAED');
@@ -62,7 +62,7 @@
           };
 
           indicadoresDePermanenciaController.getFinalesReprobadosTotalInfoListCallback = function (response) {
-
+              debugger;
               if (response) {
                   indicadoresDePermanenciaController.aca_lastCicloCuatriSelected = { ciclo: indicadoresDePermanenciaController.aca_cicloSelected, cuatrimestre: indicadoresDePermanenciaController.aca_cuatrimestreSelected };
                   indicadoresDePermanenciaController.loadChartInfo(response.data, 'aca_fullFinalesReprobadosChartContainer', 'Total de finales reprobados', 'En el ciclo ' + indicadoresDePermanenciaController.aca_lastCicloCuatriSelected.ciclo + ', cuatrimestre ' + indicadoresDePermanenciaController.aca_lastCicloCuatriSelected.cuatrimestre, $rootScope.KPI_FINALES_REPROBADOS_PORCENTAJE_LIMITE_MENOR, $rootScope.KPI_FINALES_REPROBADOS_PORCENTAJE_LIMITE_MAYOR, '#42A540,#25E222,#A4FFA3');
@@ -145,15 +145,15 @@
                           cantMEDIO = 0,
                           cantBAJO = 0;
 
-                      if (actualKPIMoroso.DeudaToal >= $rootScope.KPI_DEUDA_LIMITE_MAYOR) {
+                      if (actualKPIMoroso.DeudaToal >= $rootScope.KPI_MONTO_DE_DEUDA_LIMITE_MAYOR) {
                           valorDeDeuda = 'ALTO';
                           cantALTO++;
                       }
-                      if ($rootScope.KPI_DEUDA_LIMITE_MENOR < actualKPIMoroso.DeudaToal && actualKPIMoroso.DeudaToal < $rootScope.KPI_DEUDA_LIMITE_MAYOR) {
+                      if ($rootScope.KPI_MONTO_DE_DEUDA_LIMITE_MENOR < actualKPIMoroso.DeudaToal && actualKPIMoroso.DeudaToal < $rootScope.KPI_MONTO_DE_DEUDA_LIMITE_MAYOR) {
                           valorDeDeuda = 'MEDIO';
                           cantMEDIO++;
                       }
-                      if (actualKPIMoroso.DeudaToal <= $rootScope.KPI_DEUDA_LIMITE_MENOR) {
+                      if (actualKPIMoroso.DeudaToal <= $rootScope.KPI_MONTO_DE_DEUDA_LIMITE_MENOR) {
                           valorDeDeuda = 'BAJO';
                           cantBAJO++;
                       }
@@ -195,17 +195,17 @@
 
               if (response) {
                   indicadoresDePermanenciaController.adm_lastCicloCuatriSelected = { ciclo: indicadoresDePermanenciaController.adm_cicloSelected, cuatrimestre: indicadoresDePermanenciaController.adm_cuatrimestreSelected };
-                  indicadoresDePermanenciaController.loadChartInfo(response.data, 'adm_morososFullChartContainer', 'Total de morosos', 'En el ciclo ' + indicadoresDePermanenciaController.adm_lastCicloCuatriSelected.ciclo + ', cuatrimestre ' + indicadoresDePermanenciaController.adm_lastCicloCuatriSelected.cuatrimestre,$rootScope.KPI_DEUDA_LIMITE_MAYOR, $rootScope.KPI_DEUDA_LIMITE_MENOR, '#F9670C,#FFB089,#F9CCB6');
+                  indicadoresDePermanenciaController.loadChartInfo(response.data, 'adm_morososFullChartContainer', 'Total de morosos', 'En el ciclo ' + indicadoresDePermanenciaController.adm_lastCicloCuatriSelected.ciclo + ', cuatrimestre ' + indicadoresDePermanenciaController.adm_lastCicloCuatriSelected.cuatrimestre, $rootScope.KPI_MONTO_DE_DEUDA_LIMITE_MAYOR, $rootScope.KPI_MONTO_DE_DEUDA_LIMITE_MENOR, '#F9670C,#FFB089,#F9CCB6');
               }
           };
 
           // KPI Inasistencias
           indicadoresDePermanenciaController.getKPIInasistenciaListCallback = function (response) {
-              debugger;
+              
 			  if(indicadoresDePermanenciaController.aca_resetCharts) {indicadoresDePermanenciaController.clearCharts('aca');}
               if (response) {
 				  
-
+                  debugger;
 
                   indicadoresDePermanenciaController.academicoResultList = [];
 
@@ -237,7 +237,7 @@
                       };
 
                       if (((previousLegajo && actualLegajo != previousLegajo) || (!nuevaInasistencia)) && !nuevaInasistenciaCreada) {
-
+                          
                           // Inasistencia - Resumen
                           var inasistenciaTexto = '';
                           if (actualKPIInasistencia.Promedio >= $rootScope.KPI_INASISTENCIAS_PORCENTAJE_LIMITE_MAYOR) {
@@ -310,7 +310,7 @@
                       if ((response.data[index + 1] && response.data[index + 1].Legajo != actualLegajo) || !response.data[index + 1]) {
 
                           // Si no hay filtro KPI
-                          if (indicadoresDePermanenciaController.aca_kpiSelected == '') {
+                          if (!indicadoresDePermanenciaController.aca_kpiSelected) {
                               indicadoresDePermanenciaController.academicoResultList.push(nuevaInasistencia);
                           }
                               // Si hay filtro KPI - Inasistencias
@@ -483,7 +483,7 @@
 
           indicadoresDePermanenciaController.legajoInputChanged = function () {
               /*
-              debugger;
+              
               if (indicadoresDePermanenciaController.aca_legajoSearchText.length >= 4) {
                   indicadoresDePermanenciaController.legajoList = [];
                   utilityService.callHttp({ method: "GET", url: "/api/UniAlumno/GetByLegajoMatch?legajo=" + indicadoresDePermanenciaController.aca_legajoSearchText, callbackSuccess: indicadoresDePermanenciaController.getLegajoListCallback, callbackError: indicadoresDePermanenciaController.getErrorCallback });
