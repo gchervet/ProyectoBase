@@ -36,7 +36,6 @@
           }
 
           indicadoresDePermanenciaController.getFullGridInfoListCallback = function (response) {
-              debugger;
               if (response) {
                   indicadoresDePermanenciaController.aca_lastCicloCuatriSelected = { ciclo: indicadoresDePermanenciaController.aca_cicloSelected, cuatrimestre: indicadoresDePermanenciaController.aca_cuatrimestreSelected };
                   indicadoresDePermanenciaController.loadChartInfo(response.data, 'aca_fullChartContainer', 'Total de inasistencias', 'En el ciclo ' + indicadoresDePermanenciaController.aca_lastCicloCuatriSelected.ciclo + ', cuatrimestre ' + indicadoresDePermanenciaController.aca_lastCicloCuatriSelected.cuatrimestre, $rootScope.KPI_INASISTENCIAS_PORCENTAJE_LIMITE_MENOR, $rootScope.KPI_INASISTENCIAS_PORCENTAJE_LIMITE_MAYOR, '#F9670C,#FFB089,#F9CCB6');
@@ -49,7 +48,6 @@
           };
 
           indicadoresDePermanenciaController.getExamenesReprobadosTotalInfoListCallback = function (response) {
-              debugger;
               if (response) {
                   indicadoresDePermanenciaController.aca_lastCicloCuatriSelected = { ciclo: indicadoresDePermanenciaController.aca_cicloSelected, cuatrimestre: indicadoresDePermanenciaController.aca_cuatrimestreSelected };
                   indicadoresDePermanenciaController.loadChartInfo(response.data, 'aca_fullExamenesReprobadosChartContainer', 'Total de exámenes reprobados', 'En el ciclo ' + indicadoresDePermanenciaController.aca_lastCicloCuatriSelected.ciclo + ', cuatrimestre ' + indicadoresDePermanenciaController.aca_lastCicloCuatriSelected.cuatrimestre, $rootScope.KPI_EXAMENES_REPROBADOS_PORCENTAJE_LIMITE_MENOR, $rootScope.KPI_EXAMENES_REPROBADOS_PORCENTAJE_LIMITE_MAYOR, '#3288D3,#639FD3,#A3CAED');
@@ -62,7 +60,6 @@
           };
 
           indicadoresDePermanenciaController.getFinalesReprobadosTotalInfoListCallback = function (response) {
-              debugger;
               if (response) {
                   indicadoresDePermanenciaController.aca_lastCicloCuatriSelected = { ciclo: indicadoresDePermanenciaController.aca_cicloSelected, cuatrimestre: indicadoresDePermanenciaController.aca_cuatrimestreSelected };
                   indicadoresDePermanenciaController.loadChartInfo(response.data, 'aca_fullFinalesReprobadosChartContainer', 'Total de finales reprobados', 'En el ciclo ' + indicadoresDePermanenciaController.aca_lastCicloCuatriSelected.ciclo + ', cuatrimestre ' + indicadoresDePermanenciaController.aca_lastCicloCuatriSelected.cuatrimestre, $rootScope.KPI_FINALES_REPROBADOS_PORCENTAJE_LIMITE_MENOR, $rootScope.KPI_FINALES_REPROBADOS_PORCENTAJE_LIMITE_MAYOR, '#42A540,#25E222,#A4FFA3');
@@ -76,9 +73,9 @@
               if (data) {
                   for (i in data) {
 
-                      if (data[i] >= higherLimit) { cantALTO++; }
-                      if (data[i] > lowerLimit && data[i] < higherLimit) { cantMEDIO++; }
-                      if (data[i] <= lowerLimit) { cantBAJO++; }
+                      if (data[i] && data[i] >= higherLimit) { cantALTO++; }
+                      if (data[i] && data[i] > lowerLimit && data[i] < higherLimit) { cantMEDIO++; }
+                      if (data[i] && data[i] <= lowerLimit) { cantBAJO++; }
                   }
                   indicadoresDePermanenciaController.loadCharts(gridName, [{ 'label': 'ALTO', 'value': cantALTO.toString() }, { 'label': 'MEDIO', 'value': cantMEDIO.toString() }, { 'label': 'BAJO', 'value': cantBAJO.toString() }], charTitle, charSubtitle, charColour);
               }
@@ -114,48 +111,52 @@
               }
           };
 
-		  indicadoresDePermanenciaController.clearCharts = function(tabPrefix){
-		  
-			var chart;
-		    
-			if(tabPrefix == 'adm'){
-				 indicadoresDePermanenciaController.loadCharts('adm_morososGridChartContainer', [], 'Morosos encontrados', 'Según los filtros ingresados', '#F9670C,#FFB089,#F9CCB6');
-			}
-			if(tabPrefix == 'aca'){
-				
-				indicadoresDePermanenciaController.loadCharts('aca_gridChartContainer', [], 'Inasistencias encontradas', 'Según los filtros ingresados', '#F9670C,#FFB089,#F9CCB6');
-                indicadoresDePermanenciaController.loadCharts('aca_examenesReprobadosChartContainer', [], 'Exámenes reprobados', 'Según los filtros ingresados', '#3288D3,#639FD3,#A3CAED');
-                indicadoresDePermanenciaController.loadCharts('aca_finalesReprobadosChartContainer', [], 'Finales reprobados', 'Según los filtros ingresados', '#42A540,#25E222,#A4FFA3');
+          indicadoresDePermanenciaController.clearCharts = function (tabPrefix) {
 
-			}
-			
-			chart = null;
-		  };
-		  
+              var chart;
+
+              if (tabPrefix == 'adm') {
+                  indicadoresDePermanenciaController.loadCharts('adm_morososGridChartContainer', [], 'Morosos encontrados', 'Según los filtros ingresados', '#F9670C,#FFB089,#F9CCB6');
+              }
+              if (tabPrefix == 'aca') {
+
+                  indicadoresDePermanenciaController.loadCharts('aca_gridChartContainer', [], 'Inasistencias encontradas', 'Según los filtros ingresados', '#F9670C,#FFB089,#F9CCB6');
+                  indicadoresDePermanenciaController.loadCharts('aca_examenesReprobadosChartContainer', [], 'Exámenes reprobados', 'Según los filtros ingresados', '#3288D3,#639FD3,#A3CAED');
+                  indicadoresDePermanenciaController.loadCharts('aca_finalesReprobadosChartContainer', [], 'Finales reprobados', 'Según los filtros ingresados', '#42A540,#25E222,#A4FFA3');
+
+              }
+
+              chart = null;
+          };
+
           // KPI Morosos
           indicadoresDePermanenciaController.getKPIMorosoListCallback = function (response) {
-			  
-			  if(indicadoresDePermanenciaController.adm_resetCharts){ indicadoresDePermanenciaController.clearCharts('adm'); }
-              if (response) {
-                  for (i in response.data) {
-                        
-                      var actualKPIMoroso = response.data[i],
-                          valorDeDeuda = '',
-                          cantALTO = 0,
-                          cantMEDIO = 0,
-                          cantBAJO = 0;
 
-                      if (actualKPIMoroso.DeudaToal >= $rootScope.KPI_MONTO_DE_DEUDA_LIMITE_MAYOR) {
+              if (indicadoresDePermanenciaController.adm_resetCharts) { indicadoresDePermanenciaController.clearCharts('adm'); }
+              if (response) {
+                  var cantALTO = 0,
+                      cantMEDIO = 0,
+                      cantBAJO = 0;
+
+                  for (i in response.data) {
+
+                      var actualKPIMoroso = response.data[i],
+                          valorDeDeuda = '';
+
+                      if (actualKPIMoroso.DeudaToal && actualKPIMoroso.DeudaToal >= $rootScope.KPI_MONTO_DE_DEUDA_LIMITE_MAYOR) {
                           valorDeDeuda = 'ALTO';
                           cantALTO++;
                       }
-                      if ($rootScope.KPI_MONTO_DE_DEUDA_LIMITE_MENOR < actualKPIMoroso.DeudaToal && actualKPIMoroso.DeudaToal < $rootScope.KPI_MONTO_DE_DEUDA_LIMITE_MAYOR) {
+                      if (actualKPIMoroso.DeudaToal && $rootScope.KPI_MONTO_DE_DEUDA_LIMITE_MENOR - 0.0001 < actualKPIMoroso.DeudaToal && actualKPIMoroso.DeudaToal < $rootScope.KPI_MONTO_DE_DEUDA_LIMITE_MAYOR + 0.0001) {
                           valorDeDeuda = 'MEDIO';
                           cantMEDIO++;
                       }
-                      if (actualKPIMoroso.DeudaToal <= $rootScope.KPI_MONTO_DE_DEUDA_LIMITE_MENOR) {
+                      if (actualKPIMoroso.DeudaToal && actualKPIMoroso.DeudaToal <= $rootScope.KPI_MONTO_DE_DEUDA_LIMITE_MENOR) {
                           valorDeDeuda = 'BAJO';
                           cantBAJO++;
+                      }
+                      if (!actualKPIMoroso.DeudaToal) {
+                          valorDeDeuda = 'N/A';
                       }
                       indicadoresDePermanenciaController.administracionResultList.push({
 
@@ -187,7 +188,7 @@
                       });
                   }
 
-				  indicadoresDePermanenciaController.adm_resetCharts = true;
+                  indicadoresDePermanenciaController.adm_resetCharts = true;
               }
           };
 
@@ -195,16 +196,16 @@
 
               if (response) {
                   indicadoresDePermanenciaController.adm_lastCicloCuatriSelected = { ciclo: indicadoresDePermanenciaController.adm_cicloSelected, cuatrimestre: indicadoresDePermanenciaController.adm_cuatrimestreSelected };
-                  indicadoresDePermanenciaController.loadChartInfo(response.data, 'adm_morososFullChartContainer', 'Total de morosos', 'En el ciclo ' + indicadoresDePermanenciaController.adm_lastCicloCuatriSelected.ciclo + ', cuatrimestre ' + indicadoresDePermanenciaController.adm_lastCicloCuatriSelected.cuatrimestre, $rootScope.KPI_MONTO_DE_DEUDA_LIMITE_MAYOR, $rootScope.KPI_MONTO_DE_DEUDA_LIMITE_MENOR, '#F9670C,#FFB089,#F9CCB6');
+                  indicadoresDePermanenciaController.loadChartInfo(response.data, 'adm_morososFullChartContainer', 'Total de morosos', 'En el ciclo ' + indicadoresDePermanenciaController.adm_lastCicloCuatriSelected.ciclo + ', cuatrimestre ' + indicadoresDePermanenciaController.adm_lastCicloCuatriSelected.cuatrimestre, $rootScope.KPI_MONTO_DE_DEUDA_LIMITE_MENOR, $rootScope.KPI_MONTO_DE_DEUDA_LIMITE_MAYOR, '#F9670C,#FFB089,#F9CCB6');
               }
           };
 
           // KPI Inasistencias
           indicadoresDePermanenciaController.getKPIInasistenciaListCallback = function (response) {
-              
-			  if(indicadoresDePermanenciaController.aca_resetCharts) {indicadoresDePermanenciaController.clearCharts('aca');}
+
+              if (indicadoresDePermanenciaController.aca_resetCharts) { indicadoresDePermanenciaController.clearCharts('aca'); }
               if (response) {
-				  
+
                   debugger;
 
                   indicadoresDePermanenciaController.academicoResultList = [];
@@ -237,50 +238,59 @@
                       };
 
                       if (((previousLegajo && actualLegajo != previousLegajo) || (!nuevaInasistencia)) && !nuevaInasistenciaCreada) {
-                          
+
                           // Inasistencia - Resumen
                           var inasistenciaTexto = '';
-                          if (actualKPIInasistencia.Promedio >= $rootScope.KPI_INASISTENCIAS_PORCENTAJE_LIMITE_MAYOR) {
+                          if (actualKPIInasistencia.Promedio && actualKPIInasistencia.Promedio >= $rootScope.KPI_INASISTENCIAS_PORCENTAJE_LIMITE_MAYOR) {
                               inasistenciaTexto = 'ALTO';
                               cantALTO++;
                           }
-                          if (actualKPIInasistencia.Promedio > $rootScope.KPI_INASISTENCIAS_PORCENTAJE_LIMITE_MENOR && actualKPIInasistencia.Promedio < $rootScope.KPI_INASISTENCIAS_PORCENTAJE_LIMITE_MAYOR) {
+                          if (actualKPIInasistencia.Promedio && actualKPIInasistencia.Promedio > $rootScope.KPI_INASISTENCIAS_PORCENTAJE_LIMITE_MENOR && actualKPIInasistencia.Promedio < $rootScope.KPI_INASISTENCIAS_PORCENTAJE_LIMITE_MAYOR) {
                               inasistenciaTexto = 'MEDIO';
                               cantMEDIO++;
                           }
-                          if (actualKPIInasistencia.Promedio <= $rootScope.KPI_INASISTENCIAS_PORCENTAJE_LIMITE_MENOR) {
+                          if (actualKPIInasistencia.Promedio && actualKPIInasistencia.Promedio <= $rootScope.KPI_INASISTENCIAS_PORCENTAJE_LIMITE_MENOR) {
                               inasistenciaTexto = 'BAJO';
                               cantBAJO++;
+                          }
+                          if (!actualKPIInasistencia.Promedio) {
+                              inasistenciaTexto = 'N/A';
                           }
 
                           // Exámenes reprobados - Resumen
                           var examenesReprobadosTexto = '';
-                          if (actualKPIInasistencia.PromedioExamenesReprobados >= $rootScope.KPI_EXAMENES_REPROBADOS_PORCENTAJE_LIMITE_MAYOR) {
+                          if (actualKPIInasistencia.PromedioExamenesReprobados && actualKPIInasistencia.PromedioExamenesReprobados >= $rootScope.KPI_EXAMENES_REPROBADOS_PORCENTAJE_LIMITE_MAYOR) {
                               examenesReprobadosTexto = 'ALTO';
                               cantExamenesReprobadosALTO++;
                           }
-                          if (actualKPIInasistencia.PromedioExamenesReprobados > $rootScope.KPI_EXAMENES_REPROBADOS_PORCENTAJE_LIMITE_MENOR && actualKPIInasistencia.PromedioExamenesReprobados < $rootScope.KPI_EXAMENES_REPROBADOS_PORCENTAJE_LIMITE_MAYOR) {
+                          if (actualKPIInasistencia.PromedioExamenesReprobados && actualKPIInasistencia.PromedioExamenesReprobados > $rootScope.KPI_EXAMENES_REPROBADOS_PORCENTAJE_LIMITE_MENOR && actualKPIInasistencia.PromedioExamenesReprobados < $rootScope.KPI_EXAMENES_REPROBADOS_PORCENTAJE_LIMITE_MAYOR) {
                               examenesReprobadosTexto = 'MEDIO';
                               cantExamenesReprobadosMEDIO++;
                           }
-                          if (actualKPIInasistencia.PromedioExamenesReprobados <= $rootScope.KPI_EXAMENES_REPROBADOS_PORCENTAJE_LIMITE_MENOR) {
+                          if (actualKPIInasistencia.PromedioExamenesReprobados && actualKPIInasistencia.PromedioExamenesReprobados <= $rootScope.KPI_EXAMENES_REPROBADOS_PORCENTAJE_LIMITE_MENOR) {
                               examenesReprobadosTexto = 'BAJO';
                               cantExamenesReprobadosBAJO++;
+                          }
+                          if (!actualKPIInasistencia.PromedioExamenesReprobados) {
+                              examenesReprobadosTexto = 'N/A';
                           }
 
                           // Finales reprobados - Resumen
                           var finalesReprobadosTexto = '';
-                          if (actualKPIInasistencia.PromedioFinalesReprobados >= $rootScope.KPI_FINALES_REPROBADOS_PORCENTAJE_LIMITE_MAYOR) {
+                          if (actualKPIInasistencia.PromedioFinalesReprobados && actualKPIInasistencia.PromedioFinalesReprobados >= $rootScope.KPI_FINALES_REPROBADOS_PORCENTAJE_LIMITE_MAYOR) {
                               finalesReprobadosTexto = 'ALTO';
                               cantFinalesReprobadosALTO++;
                           }
-                          if (actualKPIInasistencia.PromedioFinalesReprobados > $rootScope.KPI_FINALES_REPROBADOS_PORCENTAJE_LIMITE_MENOR && actualKPIInasistencia.PromedioFinalesReprobados < $rootScope.KPI_FINALES_REPROBADOS_PORCENTAJE_LIMITE_MAYOR) {
+                          if (actualKPIInasistencia.PromedioFinalesReprobados && actualKPIInasistencia.PromedioFinalesReprobados > $rootScope.KPI_FINALES_REPROBADOS_PORCENTAJE_LIMITE_MENOR && actualKPIInasistencia.PromedioFinalesReprobados < $rootScope.KPI_FINALES_REPROBADOS_PORCENTAJE_LIMITE_MAYOR) {
                               finalesReprobadosTexto = 'MEDIO';
                               cantFinalesReprobadosMEDIO++;
                           }
-                          if (actualKPIInasistencia.PromedioFinalesReprobados <= $rootScope.KPI_FINALES_REPROBADOS_PORCENTAJE_LIMITE_MENOR) {
+                          if (actualKPIInasistencia.PromedioFinalesReprobados && actualKPIInasistencia.PromedioFinalesReprobados <= $rootScope.KPI_FINALES_REPROBADOS_PORCENTAJE_LIMITE_MENOR) {
                               finalesReprobadosTexto = 'BAJO';
                               cantFinalesReprobadosBAJO++;
+                          }
+                          if (!actualKPIInasistencia.PromedioFinalesReprobados) {
+                              finalesReprobadosTexto = 'N/A';
                           }
 
                           nuevaInasistencia = {
@@ -360,7 +370,7 @@
                                                                , callbackSuccess: indicadoresDePermanenciaController.getFullGridInfoListCallback, callbackError: indicadoresDePermanenciaController.getErrorCallback
                       });
                   }
-				  indicadoresDePermanenciaController.aca_resetCharts = true;
+                  indicadoresDePermanenciaController.aca_resetCharts = true;
               }
           };
 
@@ -398,8 +408,8 @@
 
           indicadoresDePermanenciaController.adm_chartGridData = [];
           indicadoresDePermanenciaController.adm_lastCicloCuatriSelected = {};
-		  
-		  indicadoresDePermanenciaController.adm_resetCharts = false;
+
+          indicadoresDePermanenciaController.adm_resetCharts = false;
 
           // Variables para Tab-Académico
           indicadoresDePermanenciaController.aca_legajoSearchText = '';
@@ -417,8 +427,8 @@
 
           indicadoresDePermanenciaController.aca_chartGridData = [];
           indicadoresDePermanenciaController.aca_lastCicloCuatriSelected = {};
-		  
-		  indicadoresDePermanenciaController.aca_resetCharts = false;
+
+          indicadoresDePermanenciaController.aca_resetCharts = false;
 
           // Variables generales
           indicadoresDePermanenciaController.legajoList = [];
@@ -523,11 +533,11 @@
                                                                 "&nombre=" + (indicadoresDePermanenciaController.adm_nombreSelected ? indicadoresDePermanenciaController.adm_nombreSelected : '') +
                                                                 "&apellido=" + (indicadoresDePermanenciaController.adm_apellidoSelected ? indicadoresDePermanenciaController.adm_apellidoSelected : '') +
                                                                 "&dni=" + indicadoresDePermanenciaController.adm_dniSelected +
-                                                                kpi_monto_url_query 
+                                                                kpi_monto_url_query
                                                                 , callbackSuccess: indicadoresDePermanenciaController.getKPIMorosoListCallback, callbackError: indicadoresDePermanenciaController.getErrorCallback
           });
       };
-      
+
       indicadoresDePermanenciaController.loadAcademicoGrid = function () {
 
           indicadoresDePermanenciaController.academicoResultList = [];
@@ -540,7 +550,7 @@
                   kpi_inasistencia_url_query = '&kpi_inasistencia_menor&kpi_inasistencia_mayor=' + $rootScope.KPI_INASISTENCIAS_PORCENTAJE_LIMITE_MAYOR;
               }
               if (indicadoresDePermanenciaController.aca_nivelDeRiesgoSelected == 'Medio') {
-                  kpi_inasistencia_url_query = '&kpi_inasistencia_menor=' + $rootScope.KPI_INASISTENCIAS_PORCENTAJE_LIMITE_MAYOR + '&kpi_inasistencia_mayor=' + $rootScope.KPI_INASISTENCIAS_PORCENTAJE_LIMITE_MENOR;
+                  kpi_inasistencia_url_query = '&kpi_inasistencia_menor=' + $rootScope.KPI_INASISTENCIAS_PORCENTAJE_LIMITE_MAYOR + 0.0001 + '&kpi_inasistencia_mayor=' + $rootScope.KPI_INASISTENCIAS_PORCENTAJE_LIMITE_MENOR - 0.0001;
               }
               if (indicadoresDePermanenciaController.aca_nivelDeRiesgoSelected == 'Bajo') {
                   kpi_inasistencia_url_query = '&kpi_inasistencia_mayor=&kpi_inasistencia_menor=' + $rootScope.KPI_INASISTENCIAS_PORCENTAJE_LIMITE_MENOR;
@@ -558,7 +568,7 @@
                   kpi_examenes_url_query = '&kpi_reprobados_menor&kpi_reprobados_mayor=' + $rootScope.KPI_EXAMENES_REPROBADOS_PORCENTAJE_LIMITE_MAYOR;
               }
               if (indicadoresDePermanenciaController.aca_nivelDeRiesgoSelected == 'Medio') {
-                  kpi_examenes_url_query = '&kpi_reprobados_menor=' +$rootScope.KPI_EXAMENES_REPROBADOS_PORCENTAJE_LIMITE_MAYOR + '&kpi_reprobados_mayor=' + $rootScope.KPI_EXAMENES_REPROBADOS_PORCENTAJE_LIMITE_MENOR;
+                  kpi_examenes_url_query = '&kpi_reprobados_menor=' + $rootScope.KPI_EXAMENES_REPROBADOS_PORCENTAJE_LIMITE_MAYOR + 0.0001 + '&kpi_reprobados_mayor=' + $rootScope.KPI_EXAMENES_REPROBADOS_PORCENTAJE_LIMITE_MENOR - 0.0001;
               }
               if (indicadoresDePermanenciaController.aca_nivelDeRiesgoSelected == 'Bajo') {
                   kpi_examenes_url_query = '&kpi_reprobados_mayor=&kpi_reprobados_menor=' + $rootScope.KPI_EXAMENES_REPROBADOS_PORCENTAJE_LIMITE_MENOR;
@@ -576,7 +586,7 @@
                   kpi_finales_url_query = '&kpi_finales_menor&kpi_finales_mayor=' + $rootScope.KPI_FINALES_REPROBADOS_PORCENTAJE_LIMITE_MAYOR;
               }
               if (indicadoresDePermanenciaController.aca_nivelDeRiesgoSelected == 'Medio') {
-                  kpi_finales_url_query = '&kpi_finales_menor=' + $rootScope.KPI_FINALES_REPROBADOS_PORCENTAJE_LIMITE_MAYOR + '&kpi_finales_mayor=' + $rootScope.KPI_FINALES_REPROBADOS_PORCENTAJE_LIMITE_MENOR;
+                  kpi_finales_url_query = '&kpi_finales_menor=' + $rootScope.KPI_FINALES_REPROBADOS_PORCENTAJE_LIMITE_MAYOR + 0.0001 + '&kpi_finales_mayor=' + $rootScope.KPI_FINALES_REPROBADOS_PORCENTAJE_LIMITE_MENOR - 0.0001;
               }
               if (indicadoresDePermanenciaController.aca_nivelDeRiesgoSelected == 'Bajo') {
                   kpi_finales_url_query = '&kpi_finales_mayor=&kpi_finales_menor=' + $rootScope.KPI_FINALES_REPROBADOS_PORCENTAJE_LIMITE_MENOR;

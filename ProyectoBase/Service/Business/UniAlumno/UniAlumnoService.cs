@@ -39,14 +39,19 @@ namespace Service
             List<FinalReprobadoDTO> finalReprobadoList = GetFinalesReprobados(ciclo, cuatri, legajo, sede, carrera, nombre, apellido, dni, kpi_finales_mayor, kpi_finales_menor);
             List<KPIInasistenciasDTO> rtn = new List<KPIInasistenciasDTO>();
 
+            List<LegajoMateriaDTO> legajosDeExamen = new List<LegajoMateriaDTO>();
+            List<LegajoMateriaDTO> legajosDeFinales = new List<LegajoMateriaDTO>();
+
             foreach (sp_KPI_Inansistencias_Result kpiInasistenciaModel in kpiInasistenciaModelList)
             {
                 KPIInasistenciasDTO newKPIInasistencia = new KPIInasistenciasDTO(kpiInasistenciaModel);
                 ExamenReprobadoDTO examenPorLegajoYMateria = examenReprobadoList.Where(x => x.Legajo == kpiInasistenciaModel.Legajo && x.Materia == kpiInasistenciaModel.Materia && x.Ciclo == kpiInasistenciaModel.Ciclo && x.Cuatri == kpiInasistenciaModel.Cuatri).FirstOrDefault();
                 FinalReprobadoDTO finalPorLegajoYMateria = finalReprobadoList.Where(x => x.Legajo == kpiInasistenciaModel.Legajo && x.Materia == kpiInasistenciaModel.Materia && x.Ciclo == kpiInasistenciaModel.Ciclo && x.Cuatri == kpiInasistenciaModel.Cuatri).FirstOrDefault();
 
+
                 if (examenPorLegajoYMateria != null)
                 {
+                    legajosDeExamen.Add(new LegajoMateriaDTO(kpiInasistenciaModel.Legajo, kpiInasistenciaModel.Materia));
                     newKPIInasistencia.ExamenesDesaprobados = examenPorLegajoYMateria.ExamenesDesaprobados;
                     newKPIInasistencia.TotalExamenesDesaprobados = examenPorLegajoYMateria.TotalExamenesDesaprobados;
                     newKPIInasistencia.PromedioExamenesReprobados = examenPorLegajoYMateria.Promedio;
@@ -54,12 +59,31 @@ namespace Service
 
                 if (finalPorLegajoYMateria != null)
                 {
+                    legajosDeFinales.Add(new LegajoMateriaDTO(kpiInasistenciaModel.Legajo, kpiInasistenciaModel.Materia));
                     newKPIInasistencia.FinalesDesaprobados = finalPorLegajoYMateria.FinalesDesaprobados;
                     newKPIInasistencia.TotalFinalesDesaprobados = finalPorLegajoYMateria.TotalFinalesDesaprobados;
                     newKPIInasistencia.PromedioFinalesReprobados = finalPorLegajoYMateria.Promedio;
                 }
 
                 rtn.Add(newKPIInasistencia);
+            }
+
+            foreach (ExamenReprobadoDTO examenReprobado in examenReprobadoList)
+            {
+                if (!legajosDeExamen.Any(z => z.legajo == examenReprobado.Legajo && z.materia == examenReprobado.Materia))
+                {
+                    KPIInasistenciasDTO newKPIInasistencia = new KPIInasistenciasDTO(examenReprobado);
+                    rtn.Add(newKPIInasistencia);
+                }
+            }
+
+            foreach (FinalReprobadoDTO finalReprobado in finalReprobadoList)
+            {
+                if (!legajosDeFinales.Any(z => z.legajo == finalReprobado.Legajo && z.materia == finalReprobado.Materia))
+                {
+                    KPIInasistenciasDTO newKPIInasistencia = new KPIInasistenciasDTO(finalReprobado);
+                    rtn.Add(newKPIInasistencia);
+                }
             }
             return rtn;
         }
@@ -155,15 +179,10 @@ namespace Service
         {
             List<KPIMorososDTO> kpiMorosoList = GetKPIMorosos(ciclo, cuatri, null, null, null, null, null, null, null, null);
             List<decimal> rtn = new List<decimal>();
-            List<int> usedLegajos = new List<int>();
 
             foreach (KPIMorososDTO kpiMoroso in kpiMorosoList)
             {
-                if (!usedLegajos.Any(x => x == kpiMoroso.Legajo) && kpiMoroso.DeudaToal.HasValue)
-                {
-                    rtn.Add(kpiMoroso.DeudaToal.Value);
-                    usedLegajos.Add(kpiMoroso.Legajo);
-                }
+                rtn.Add(kpiMoroso.DeudaToal.Value);
             }
             return rtn;
         }

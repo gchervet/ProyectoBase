@@ -27,6 +27,41 @@ namespace Domain
             this.Promedio = kpiInasistenciasResult.Promedio;
         }
 
+        public KPIInasistenciasDTO(ExamenReprobadoDTO examenReprobado)
+        {
+            this.Legajo = examenReprobado.Legajo;
+            this.Nombre = examenReprobado.Nombre;
+            this.Apellido = examenReprobado.Apellido;
+            this.Dni = examenReprobado.Dni;
+            this.Carrera = examenReprobado.Carrera;
+            this.Ciclo = examenReprobado.Ciclo;
+            this.Cuatri = examenReprobado.Cuatri;
+            this.Materia = examenReprobado.Materia;
+            this.Telefono = examenReprobado.Telefono;
+            this.Mail = examenReprobado.Mail;
+
+
+            this.ExamenesDesaprobados = examenReprobado.ExamenesDesaprobados;
+            this.TotalExamenesDesaprobados = examenReprobado.TotalExamenesDesaprobados;
+            this.PromedioExamenesReprobados = examenReprobado.Promedio;
+        }
+
+        public KPIInasistenciasDTO(FinalReprobadoDTO finalReprobado)
+        {
+            this.Legajo = finalReprobado.Legajo;
+            this.Nombre = finalReprobado.Nombre;
+            this.Apellido = finalReprobado.Apellido;
+            this.Dni = finalReprobado.Dni;
+            this.Carrera = finalReprobado.Carrera;
+            this.Materia = finalReprobado.Materia;
+            this.Telefono = finalReprobado.Telefono;
+            this.Mail = finalReprobado.Mail;
+
+            this.FinalesDesaprobados = finalReprobado.FinalesDesaprobados;
+            this.TotalFinalesDesaprobados = finalReprobado.TotalFinalesDesaprobados;
+            this.PromedioFinalesReprobados = finalReprobado.Promedio;
+        }
+
         public int Legajo { get; set; }
         public string Nombre { get; set; }
         public string Apellido { get; set; }
