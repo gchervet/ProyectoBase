@@ -117,10 +117,9 @@
 		  indicadoresDePermanenciaController.clearCharts = function(tabPrefix){
 		  
 			var chart;
-		  
+		    
 			if(tabPrefix == 'adm'){
-				 indicadoresDePermanenciaController.loadCharts('adm_morososGridChartContainer', [], 'Morosos encontradas', 'Según los filtros ingresados', '#F9670C,#FFB089,#F9CCB6');
-
+				 indicadoresDePermanenciaController.loadCharts('adm_morososGridChartContainer', [], 'Morosos encontrados', 'Según los filtros ingresados', '#F9670C,#FFB089,#F9CCB6');
 			}
 			if(tabPrefix == 'aca'){
 				
@@ -148,12 +147,15 @@
 
                       if (actualKPIMoroso.DeudaToal >= $rootScope.KPI_DEUDA_LIMITE_MAYOR) {
                           valorDeDeuda = 'ALTO';
+                          cantALTO++;
                       }
                       if ($rootScope.KPI_DEUDA_LIMITE_MENOR < actualKPIMoroso.DeudaToal && actualKPIMoroso.DeudaToal < $rootScope.KPI_DEUDA_LIMITE_MAYOR) {
                           valorDeDeuda = 'MEDIO';
+                          cantMEDIO++;
                       }
                       if (actualKPIMoroso.DeudaToal <= $rootScope.KPI_DEUDA_LIMITE_MENOR) {
                           valorDeDeuda = 'BAJO';
+                          cantBAJO++;
                       }
                       indicadoresDePermanenciaController.administracionResultList.push({
 
@@ -508,9 +510,9 @@
                   kpi_monto_url_query = '&kpi_monto_mayor=&kpi_monto_menor=' + $rootScope.KPI_MONTO_DE_DEUDA_LIMITE_MENOR;
               }
           }
-          else {
-              kpi_monto_url_query = '&kpi_monto_menor=' + $rootScope.KPI_MONTO_DE_DEUDA_LIMITE_MAYOR + '&kpi_monto_mayor=' + $rootScope.KPI_MONTO_DE_DEUDA_LIMITE_MENOR;
-          }
+          //else {
+          //    kpi_monto_url_query = '&kpi_monto_menor=' + $rootScope.KPI_MONTO_DE_DEUDA_LIMITE_MAYOR + '&kpi_monto_mayor=' + $rootScope.KPI_MONTO_DE_DEUDA_LIMITE_MENOR;
+          //}
 
           utilityService.callHttp({
               method: "GET", url: "/api/UniAlumno/GetKPIMorosos?ciclo=" + indicadoresDePermanenciaController.adm_cicloSelected +

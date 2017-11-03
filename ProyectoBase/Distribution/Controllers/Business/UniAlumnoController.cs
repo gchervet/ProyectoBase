@@ -54,8 +54,18 @@ namespace Distribution
         {
             try
             {
-                string tokenString = this.ActionContext.Request.Headers.GetValues("Authorization").ToList().FirstOrDefault();
-                string userString = this.ActionContext.Request.Headers.GetValues("User").ToList().FirstOrDefault();
+                string tokenString = string.Empty;
+                string userString = string.Empty;
+                try
+                {
+                    tokenString = this.ActionContext.Request.Headers.GetValues("Authorization").ToList().FirstOrDefault();
+                    userString = this.ActionContext.Request.Headers.GetValues("User").ToList().FirstOrDefault();
+                }
+                catch
+                {
+                    return HttpResponseController.Return_401_Unauthorized(string.Empty);
+
+                }
 
                 if (SessionTokenService.ValidRequestByUserAndToken(tokenString, userString))
                 {
