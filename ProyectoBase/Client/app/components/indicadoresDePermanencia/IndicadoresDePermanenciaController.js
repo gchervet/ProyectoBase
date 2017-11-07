@@ -205,8 +205,9 @@
 
               if (indicadoresDePermanenciaController.aca_resetCharts) { indicadoresDePermanenciaController.clearCharts('aca'); }
               if (response) {
-
-                  debugger;
+                  
+                  var finalesLegajosUsados = [],
+                      examenesLegajosUsados = [];
 
                   indicadoresDePermanenciaController.academicoResultList = [];
 
@@ -225,8 +226,8 @@
                       cantFinalesReprobadosBAJO = 0;
 
                   for (i in response.data) {
-                      var index = Number(i);
-                      var actualKPIInasistencia = response.data[index];
+                      var index = Number(i),
+                          actualKPIInasistencia = response.data[index];
 
                       actualLegajo = actualKPIInasistencia.Legajo;
 
@@ -259,39 +260,50 @@
 
                           // Exámenes reprobados - Resumen
                           var examenesReprobadosTexto = '';
-                          if (actualKPIInasistencia.PromedioExamenesReprobados && actualKPIInasistencia.PromedioExamenesReprobados >= $rootScope.KPI_EXAMENES_REPROBADOS_PORCENTAJE_LIMITE_MAYOR) {
-                              examenesReprobadosTexto = 'ALTO';
-                              cantExamenesReprobadosALTO++;
-                          }
-                          if (actualKPIInasistencia.PromedioExamenesReprobados && actualKPIInasistencia.PromedioExamenesReprobados > $rootScope.KPI_EXAMENES_REPROBADOS_PORCENTAJE_LIMITE_MENOR && actualKPIInasistencia.PromedioExamenesReprobados < $rootScope.KPI_EXAMENES_REPROBADOS_PORCENTAJE_LIMITE_MAYOR) {
-                              examenesReprobadosTexto = 'MEDIO';
-                              cantExamenesReprobadosMEDIO++;
-                          }
-                          if (actualKPIInasistencia.PromedioExamenesReprobados && actualKPIInasistencia.PromedioExamenesReprobados <= $rootScope.KPI_EXAMENES_REPROBADOS_PORCENTAJE_LIMITE_MENOR) {
-                              examenesReprobadosTexto = 'BAJO';
-                              cantExamenesReprobadosBAJO++;
-                          }
-                          if (!actualKPIInasistencia.PromedioExamenesReprobados) {
-                              examenesReprobadosTexto = 'N/A';
+                          if (examenesLegajosUsados.indexOf(actualLegajo) == -1) {
+                              if (actualKPIInasistencia.PromedioExamenesReprobados && actualKPIInasistencia.PromedioExamenesReprobados >= $rootScope.KPI_EXAMENES_REPROBADOS_PORCENTAJE_LIMITE_MAYOR) {
+                                  examenesReprobadosTexto = 'ALTO';
+                                  examenesLegajosUsados.push(actualLegajo);
+                                  cantExamenesReprobadosALTO++;
+                              }
+                              if (actualKPIInasistencia.PromedioExamenesReprobados && actualKPIInasistencia.PromedioExamenesReprobados > $rootScope.KPI_EXAMENES_REPROBADOS_PORCENTAJE_LIMITE_MENOR && actualKPIInasistencia.PromedioExamenesReprobados < $rootScope.KPI_EXAMENES_REPROBADOS_PORCENTAJE_LIMITE_MAYOR) {
+                                  examenesReprobadosTexto = 'MEDIO';
+                                  examenesLegajosUsados.push(actualLegajo);
+                                  cantExamenesReprobadosMEDIO++;
+                              }
+                              if (actualKPIInasistencia.PromedioExamenesReprobados && actualKPIInasistencia.PromedioExamenesReprobados <= $rootScope.KPI_EXAMENES_REPROBADOS_PORCENTAJE_LIMITE_MENOR) {
+                                  examenesReprobadosTexto = 'BAJO';
+                                  examenesLegajosUsados.push(actualLegajo);
+                                  cantExamenesReprobadosBAJO++;
+                              }
+                              if (!actualKPIInasistencia.PromedioExamenesReprobados) {
+                                  examenesReprobadosTexto = 'N/A';
+                              }
                           }
 
                           // Finales reprobados - Resumen
                           var finalesReprobadosTexto = '';
-                          if (actualKPIInasistencia.PromedioFinalesReprobados && actualKPIInasistencia.PromedioFinalesReprobados >= $rootScope.KPI_FINALES_REPROBADOS_PORCENTAJE_LIMITE_MAYOR) {
-                              finalesReprobadosTexto = 'ALTO';
-                              cantFinalesReprobadosALTO++;
+                          if (finalesLegajosUsados.indexOf(actualLegajo) == -1) {
+                              if (actualKPIInasistencia.PromedioFinalesReprobados && actualKPIInasistencia.PromedioFinalesReprobados >= $rootScope.KPI_FINALES_REPROBADOS_PORCENTAJE_LIMITE_MAYOR) {
+                                  finalesReprobadosTexto = 'ALTO';
+                                  finalesLegajosUsados.push(actualLegajo);
+                                  cantFinalesReprobadosALTO++;
+                              }
+                              if (actualKPIInasistencia.PromedioFinalesReprobados && actualKPIInasistencia.PromedioFinalesReprobados > $rootScope.KPI_FINALES_REPROBADOS_PORCENTAJE_LIMITE_MENOR && actualKPIInasistencia.PromedioFinalesReprobados < $rootScope.KPI_FINALES_REPROBADOS_PORCENTAJE_LIMITE_MAYOR) {
+                                  finalesReprobadosTexto = 'MEDIO';
+                                  finalesLegajosUsados.push(actualLegajo);
+                                  cantFinalesReprobadosMEDIO++;
+                              }
+                              if (actualKPIInasistencia.PromedioFinalesReprobados && actualKPIInasistencia.PromedioFinalesReprobados <= $rootScope.KPI_FINALES_REPROBADOS_PORCENTAJE_LIMITE_MENOR) {
+                                  finalesReprobadosTexto = 'BAJO';
+                                  finalesLegajosUsados.push(actualLegajo);
+                                  cantFinalesReprobadosBAJO++;
+                              }
+                              if (!actualKPIInasistencia.PromedioFinalesReprobados) {
+                                  finalesReprobadosTexto = 'N/A';
+                              }
                           }
-                          if (actualKPIInasistencia.PromedioFinalesReprobados && actualKPIInasistencia.PromedioFinalesReprobados > $rootScope.KPI_FINALES_REPROBADOS_PORCENTAJE_LIMITE_MENOR && actualKPIInasistencia.PromedioFinalesReprobados < $rootScope.KPI_FINALES_REPROBADOS_PORCENTAJE_LIMITE_MAYOR) {
-                              finalesReprobadosTexto = 'MEDIO';
-                              cantFinalesReprobadosMEDIO++;
-                          }
-                          if (actualKPIInasistencia.PromedioFinalesReprobados && actualKPIInasistencia.PromedioFinalesReprobados <= $rootScope.KPI_FINALES_REPROBADOS_PORCENTAJE_LIMITE_MENOR) {
-                              finalesReprobadosTexto = 'BAJO';
-                              cantFinalesReprobadosBAJO++;
-                          }
-                          if (!actualKPIInasistencia.PromedioFinalesReprobados) {
-                              finalesReprobadosTexto = 'N/A';
-                          }
+                          
 
                           nuevaInasistencia = {
                               Legajo: actualKPIInasistencia.Legajo,
@@ -316,6 +328,34 @@
                           nuevaInasistenciaCreada = true;
                       }
                       nuevaInasistencia.nested.push(nuevaMateria);
+
+                      if (examenesLegajosUsados.indexOf(actualLegajo) == -1 && actualKPIInasistencia.PromedioExamenesReprobados) {
+                          // Exámenes reprobados - Resumen
+                          if (actualKPIInasistencia.PromedioExamenesReprobados && actualKPIInasistencia.PromedioExamenesReprobados >= $rootScope.KPI_EXAMENES_REPROBADOS_PORCENTAJE_LIMITE_MAYOR) {
+                              cantExamenesReprobadosALTO++;
+                          }
+                          if (actualKPIInasistencia.PromedioExamenesReprobados && actualKPIInasistencia.PromedioExamenesReprobados > $rootScope.KPI_EXAMENES_REPROBADOS_PORCENTAJE_LIMITE_MENOR && actualKPIInasistencia.PromedioExamenesReprobados < $rootScope.KPI_EXAMENES_REPROBADOS_PORCENTAJE_LIMITE_MAYOR) {
+                              cantExamenesReprobadosMEDIO++;
+                          }
+                          if (actualKPIInasistencia.PromedioExamenesReprobados && actualKPIInasistencia.PromedioExamenesReprobados <= $rootScope.KPI_EXAMENES_REPROBADOS_PORCENTAJE_LIMITE_MENOR) {
+                              cantExamenesReprobadosBAJO++;
+                          }
+                          examenesLegajosUsados.push(actualLegajo);
+                      }
+
+                      if (finalesLegajosUsados.indexOf(actualLegajo) == -1 && actualKPIInasistencia.PromedioFinalesReprobados) {
+                          // Finales reprobados - Resumen
+                          if (actualKPIInasistencia.PromedioFinalesReprobados && actualKPIInasistencia.PromedioFinalesReprobados >= $rootScope.KPI_FINALES_REPROBADOS_PORCENTAJE_LIMITE_MAYOR) {
+                              cantFinalesReprobadosALTO++;
+                          }
+                          if (actualKPIInasistencia.PromedioFinalesReprobados && actualKPIInasistencia.PromedioFinalesReprobados > $rootScope.KPI_FINALES_REPROBADOS_PORCENTAJE_LIMITE_MENOR && actualKPIInasistencia.PromedioFinalesReprobados < $rootScope.KPI_FINALES_REPROBADOS_PORCENTAJE_LIMITE_MAYOR) {
+                              cantFinalesReprobadosMEDIO++;
+                          }
+                          if (actualKPIInasistencia.PromedioFinalesReprobados && actualKPIInasistencia.PromedioFinalesReprobados <= $rootScope.KPI_FINALES_REPROBADOS_PORCENTAJE_LIMITE_MENOR) {
+                              cantFinalesReprobadosBAJO++;
+                          }
+                          finalesLegajosUsados.push(actualLegajo);
+                      }
 
                       if ((response.data[index + 1] && response.data[index + 1].Legajo != actualLegajo) || !response.data[index + 1]) {
 
