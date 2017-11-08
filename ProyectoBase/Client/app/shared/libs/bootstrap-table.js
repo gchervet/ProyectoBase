@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @author zhixin wen <wenzhixin2010@gmail.com>
  * version: 1.11.1
  * https://github.com/wenzhixin/bootstrap-table/
@@ -467,7 +467,7 @@
             return 'Cargando...';
         },
         formatRecordsPerPage: function (pageNumber) {
-            return sprintf('%s filas por p�gina', pageNumber);
+            return sprintf('%s filas por página', pageNumber);
         },
         formatShowingRows: function (pageFrom, pageTo, totalRows) {
             return sprintf('Mostrando %s a %s de %s filas', pageFrom, pageTo, totalRows);

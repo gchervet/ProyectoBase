@@ -125,18 +125,18 @@
                                                data-page-size="10">
                                             <thead>
                                                 <tr>
-                                                    <th data-field="Legajo" data-filter-control="input" data-filter-control-placeholder="Buscar">Legajo</th>
-                                                    <th data-field="Nombre" data-filter-control="input" data-filter-control-placeholder="Buscar">Nombre</th>
-                                                    <th data-field="Apellido" data-filter-control="input" data-filter-control-placeholder="Buscar">Apellido</th>
-                                                    <th data-field="DNI" data-filter-control="input" data-filter-control-placeholder="Buscar">DNI</th>
-                                                    <th data-field="Carrera" data-filter-control="input" data-filter-control-placeholder="Buscar">Carrera</th>
-                                                    <th data-field="Ciclo" data-filter-control="input" data-filter-control-placeholder="Buscar">Ciclo</th>
-                                                    <th data-field="Cuatrimestre" data-filter-control="input" data-filter-control-placeholder="Buscar">Cuatrimestre</th>
-                                                    <th data-field="Inasistencia" data-filter-control="input" data-filter-control-placeholder="Buscar">Inasistencia</th>
-                                                    <th data-field="Examenes" data-filter-control="input" data-filter-control-placeholder="Buscar">Exámenes</th>
-                                                    <th data-field="FinalesReprobados" data-filter-control="input" data-filter-control-placeholder="Buscar">Finales reprobados</th>
-                                                    <th data-field="Telefono" data-filter-control="input" data-filter-control-placeholder="Buscar">Teléfono</th>
-                                                    <th data-field="CorreoElectronico" data-filter-control="input" data-filter-control-placeholder="Buscar">Correo electrónico</th>
+                                                    <th data-field="Legajo" data-filter-control="input" data-sortable="true" data-filter-control-placeholder="Buscar">Legajo</th>
+                                                    <th data-field="Nombre" data-filter-control="input" data-sortable="true" data-filter-control-placeholder="Buscar">Nombre</th>
+                                                    <th data-field="Apellido" data-filter-control="input" data-sortable="true" data-filter-control-placeholder="Buscar">Apellido</th>
+                                                    <th data-field="DNI" data-filter-control="input" data-sortable="true" data-filter-control-placeholder="Buscar">DNI</th>
+                                                    <th data-field="Carrera" data-filter-control="input" data-sortable="true" data-filter-control-placeholder="Buscar">Carrera</th>
+                                                    <!--<th data-field="Ciclo" data-filter-control="input" data-filter-control-placeholder="Buscar">Ciclo</th>-->
+                                                    <!--<th data-field="Cuatrimestre" data-filter-control="input" data-filter-control-placeholder="Buscar">Cuatrimestre</th>-->
+                                                    <th data-field="Inasistencia" data-filter-control="input" data-sortable="true" data-filter-control-placeholder="Buscar">Inasistencia</th>
+                                                    <th data-field="Examenes" data-filter-control="input" data-sortable="true" data-filter-control-placeholder="Buscar">Parciales reprobados</th>
+                                                    <th data-field="FinalesReprobados" data-filter-control="input" data-sortable="true" data-filter-control-placeholder="Buscar">Finales reprobados</th>
+                                                    <th data-field="Telefono" data-filter-control="input" data-sortable="true" data-filter-control-placeholder="Buscar">Teléfono</th>
+                                                    <th data-field="CorreoElectronico" data-filter-control="input" data-sortable="true" data-filter-control-placeholder="Buscar">Correo electrónico</th>
                                                 </tr>
                                             </thead>
                                         </table>
@@ -151,29 +151,30 @@
                         <div class="panel-heading">Gráficos</div>
                         <div class="panel-body">
                             <div class="row">
-
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div id="aca_gridChartContainer"></div>
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div id="aca_gridChartContainer"></div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div id="aca_fullChartContainer"></div>
+                                        </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div id="aca_fullChartContainer"></div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div id="aca_examenesReprobadosChartContainer"></div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div id="aca_fullExamenesReprobadosChartContainer"></div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div id="aca_examenesReprobadosChartContainer"></div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div id="aca_fullExamenesReprobadosChartContainer"></div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div id="aca_finalesReprobadosChartContainer"></div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div id="aca_fullFinalesReprobadosChartContainer"></div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div id="aca_finalesReprobadosChartContainer"></div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div id="aca_fullFinalesReprobadosChartContainer"></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

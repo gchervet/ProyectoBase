@@ -50,7 +50,7 @@
           indicadoresDePermanenciaController.getExamenesReprobadosTotalInfoListCallback = function (response) {
               if (response) {
                   indicadoresDePermanenciaController.aca_lastCicloCuatriSelected = { ciclo: indicadoresDePermanenciaController.aca_cicloSelected, cuatrimestre: indicadoresDePermanenciaController.aca_cuatrimestreSelected };
-                  indicadoresDePermanenciaController.loadChartInfo(response.data, 'aca_fullExamenesReprobadosChartContainer', 'Total de exámenes reprobados', 'En el ciclo ' + indicadoresDePermanenciaController.aca_lastCicloCuatriSelected.ciclo + ', cuatrimestre ' + indicadoresDePermanenciaController.aca_lastCicloCuatriSelected.cuatrimestre, $rootScope.KPI_EXAMENES_REPROBADOS_PORCENTAJE_LIMITE_MENOR, $rootScope.KPI_EXAMENES_REPROBADOS_PORCENTAJE_LIMITE_MAYOR, '#3288D3,#639FD3,#A3CAED');
+                  indicadoresDePermanenciaController.loadChartInfo(response.data, 'aca_fullExamenesReprobadosChartContainer', 'Total de parciales reprobados', 'En el ciclo ' + indicadoresDePermanenciaController.aca_lastCicloCuatriSelected.ciclo + ', cuatrimestre ' + indicadoresDePermanenciaController.aca_lastCicloCuatriSelected.cuatrimestre, $rootScope.KPI_EXAMENES_REPROBADOS_PORCENTAJE_LIMITE_MENOR, $rootScope.KPI_EXAMENES_REPROBADOS_PORCENTAJE_LIMITE_MAYOR, '#3288D3,#639FD3,#A3CAED');
 
                   utilityService.callHttp({
                       method: "GET", url: "/api/UniAlumno/GetFinalesReprobadosTotal?ciclo=" + indicadoresDePermanenciaController.aca_cicloSelected + "&cuatri=" + indicadoresDePermanenciaController.aca_cuatrimestreSelected
@@ -121,12 +121,20 @@
               if (tabPrefix == 'aca') {
 
                   indicadoresDePermanenciaController.loadCharts('aca_gridChartContainer', [], 'Inasistencias encontradas', 'Según los filtros ingresados', '#F9670C,#FFB089,#F9CCB6');
-                  indicadoresDePermanenciaController.loadCharts('aca_examenesReprobadosChartContainer', [], 'Exámenes reprobados', 'Según los filtros ingresados', '#3288D3,#639FD3,#A3CAED');
+                  indicadoresDePermanenciaController.loadCharts('aca_examenesReprobadosChartContainer', [], 'Parciales reprobados', 'Según los filtros ingresados', '#3288D3,#639FD3,#A3CAED');
                   indicadoresDePermanenciaController.loadCharts('aca_finalesReprobadosChartContainer', [], 'Finales reprobados', 'Según los filtros ingresados', '#42A540,#25E222,#A4FFA3');
 
               }
 
               chart = null;
+          };
+
+          indicadoresDePermanenciaController.setCicloCuatrimestreIntoSelection = function () {
+
+              indicadoresDePermanenciaController.aca_cicloSelected = new Date().getFullYear();
+              indicadoresDePermanenciaController.aca_cuatrimestreSelected = 2;
+              indicadoresDePermanenciaController.adm_cicloSelected = new Date().getFullYear();
+              indicadoresDePermanenciaController.adm_cuatrimestreSelected = 2;
           };
 
           // KPI Morosos
@@ -141,7 +149,7 @@
                   for (i in response.data) {
 
                       var actualKPIMoroso = response.data[i],
-                          valorDeDeuda = '';
+                          valorDeDeuda = 'N/A';
 
                       if (actualKPIMoroso.DeudaToal && actualKPIMoroso.DeudaToal >= $rootScope.KPI_MONTO_DE_DEUDA_LIMITE_MAYOR) {
                           valorDeDeuda = 'ALTO';
@@ -155,9 +163,7 @@
                           valorDeDeuda = 'BAJO';
                           cantBAJO++;
                       }
-                      if (!actualKPIMoroso.DeudaToal) {
-                          valorDeDeuda = 'N/A';
-                      }
+
                       indicadoresDePermanenciaController.administracionResultList.push({
 
                           Legajo: actualKPIMoroso.Legajo,
@@ -241,7 +247,7 @@
                       if (((previousLegajo && actualLegajo != previousLegajo) || (!nuevaInasistencia)) && !nuevaInasistenciaCreada) {
 
                           // Inasistencia - Resumen
-                          var inasistenciaTexto = '';
+                          var inasistenciaTexto = 'N/A';
                           if (actualKPIInasistencia.Promedio && actualKPIInasistencia.Promedio >= $rootScope.KPI_INASISTENCIAS_PORCENTAJE_LIMITE_MAYOR) {
                               inasistenciaTexto = 'ALTO';
                               cantALTO++;
@@ -254,12 +260,9 @@
                               inasistenciaTexto = 'BAJO';
                               cantBAJO++;
                           }
-                          if (!actualKPIInasistencia.Promedio) {
-                              inasistenciaTexto = 'N/A';
-                          }
 
-                          // Exámenes reprobados - Resumen
-                          var examenesReprobadosTexto = '';
+                          // Parciales reprobados - Resumen
+                          var examenesReprobadosTexto = 'N/A';
                           if (examenesLegajosUsados.indexOf(actualLegajo) == -1) {
                               if (actualKPIInasistencia.PromedioExamenesReprobados && actualKPIInasistencia.PromedioExamenesReprobados >= $rootScope.KPI_EXAMENES_REPROBADOS_PORCENTAJE_LIMITE_MAYOR) {
                                   examenesReprobadosTexto = 'ALTO';
@@ -276,13 +279,10 @@
                                   examenesLegajosUsados.push(actualLegajo);
                                   cantExamenesReprobadosBAJO++;
                               }
-                              if (!actualKPIInasistencia.PromedioExamenesReprobados) {
-                                  examenesReprobadosTexto = 'N/A';
-                              }
                           }
 
                           // Finales reprobados - Resumen
-                          var finalesReprobadosTexto = '';
+                          var finalesReprobadosTexto = 'N/A';
                           if (finalesLegajosUsados.indexOf(actualLegajo) == -1) {
                               if (actualKPIInasistencia.PromedioFinalesReprobados && actualKPIInasistencia.PromedioFinalesReprobados >= $rootScope.KPI_FINALES_REPROBADOS_PORCENTAJE_LIMITE_MAYOR) {
                                   finalesReprobadosTexto = 'ALTO';
@@ -298,9 +298,6 @@
                                   finalesReprobadosTexto = 'BAJO';
                                   finalesLegajosUsados.push(actualLegajo);
                                   cantFinalesReprobadosBAJO++;
-                              }
-                              if (!actualKPIInasistencia.PromedioFinalesReprobados) {
-                                  finalesReprobadosTexto = 'N/A';
                               }
                           }
                           
@@ -330,7 +327,7 @@
                       nuevaInasistencia.nested.push(nuevaMateria);
 
                       if (examenesLegajosUsados.indexOf(actualLegajo) == -1 && actualKPIInasistencia.PromedioExamenesReprobados) {
-                          // Exámenes reprobados - Resumen
+                          // Parciales reprobados - Resumen
                           if (actualKPIInasistencia.PromedioExamenesReprobados && actualKPIInasistencia.PromedioExamenesReprobados >= $rootScope.KPI_EXAMENES_REPROBADOS_PORCENTAJE_LIMITE_MAYOR) {
                               cantExamenesReprobadosALTO++;
                           }
@@ -370,8 +367,8 @@
                                   indicadoresDePermanenciaController.academicoResultList.push(nuevaInasistencia);
                               }
                           }
-                              // Si hay filtro KPI - Exámenes reprobados
-                          else if (indicadoresDePermanenciaController.aca_kpiSelected == 'Exámenes reprobados') {
+                              // Si hay filtro KPI - Parciales reprobados
+                          else if (indicadoresDePermanenciaController.aca_kpiSelected == 'Parciales reprobados') {
                               if (indicadoresDePermanenciaController.aca_nivelDeRiesgoSelected == '' ||
                                   indicadoresDePermanenciaController.aca_nivelDeRiesgoSelected.toLowerCase() == inasistenciaTexto.toLowerCase()) {
                                   indicadoresDePermanenciaController.academicoResultList.push(nuevaInasistencia);
@@ -397,7 +394,7 @@
 
                   // Load charts values
                   indicadoresDePermanenciaController.loadCharts('aca_gridChartContainer', [{ 'label': 'ALTO', 'value': cantALTO.toString() }, { 'label': 'MEDIO', 'value': cantMEDIO.toString() }, { 'label': 'BAJO', 'value': cantBAJO.toString() }], 'Inasistencias encontradas', 'Según los filtros ingresados', '#F9670C,#FFB089,#F9CCB6');
-                  indicadoresDePermanenciaController.loadCharts('aca_examenesReprobadosChartContainer', [{ 'label': 'ALTO', 'value': cantExamenesReprobadosALTO.toString() }, { 'label': 'MEDIO', 'value': cantExamenesReprobadosMEDIO.toString() }, { 'label': 'BAJO', 'value': cantExamenesReprobadosBAJO.toString() }], 'Exámenes reprobados', 'Según los filtros ingresados', '#3288D3,#639FD3,#A3CAED');
+                  indicadoresDePermanenciaController.loadCharts('aca_examenesReprobadosChartContainer', [{ 'label': 'ALTO', 'value': cantExamenesReprobadosALTO.toString() }, { 'label': 'MEDIO', 'value': cantExamenesReprobadosMEDIO.toString() }, { 'label': 'BAJO', 'value': cantExamenesReprobadosBAJO.toString() }], 'Parciales reprobados', 'Según los filtros ingresados', '#3288D3,#639FD3,#A3CAED');
                   indicadoresDePermanenciaController.loadCharts('aca_finalesReprobadosChartContainer', [{ 'label': 'ALTO', 'value': cantFinalesReprobadosALTO.toString() }, { 'label': 'MEDIO', 'value': cantFinalesReprobadosMEDIO.toString() }, { 'label': 'BAJO', 'value': cantFinalesReprobadosBAJO.toString() }], 'Finales reprobados', 'Según los filtros ingresados', '#42A540,#25E222,#A4FFA3');
 
 
@@ -476,7 +473,7 @@
           indicadoresDePermanenciaController.cuatrimestreList = [1, 2];
           indicadoresDePermanenciaController.sedeList = [];
           indicadoresDePermanenciaController.planList = [];
-          indicadoresDePermanenciaController.kpiList = ['Inasistencias', 'Exámenes reprobados', 'Finales reprobó'];
+          indicadoresDePermanenciaController.kpiList = ['Inasistencias', 'Parciales reprobados', 'Finales reprobados'];
           indicadoresDePermanenciaController.adm_kpiList = ['Monto de deuda'];
           indicadoresDePermanenciaController.nivelDeRiesgoList = ['Alto', 'Medio', 'Bajo'];
 
@@ -484,7 +481,8 @@
 
           utilityService.callHttp({ method: "GET", url: "/api/UniPlan/GetAll", callbackSuccess: indicadoresDePermanenciaController.getPlanListCallback, callbackError: indicadoresDePermanenciaController.getErrorCallback });
           utilityService.callHttp({ method: "GET", url: "/api/UniRegional/GetAll", callbackSuccess: indicadoresDePermanenciaController.getRegionalListCallback, callbackError: indicadoresDePermanenciaController.getErrorCallback });
-
+          
+          indicadoresDePermanenciaController.setCicloCuatrimestreIntoSelection();
       };
 
       indicadoresDePermanenciaController.loadPersonMethods = function () {
@@ -600,10 +598,10 @@
           //    kpi_inasistencia_url_query = '&kpi_inasistencia_menor=' + $rootScope.KPI_INASISTENCIAS_PORCENTAJE_LIMITE_MAYOR + '&kpi_inasistencia_mayor=' + $rootScope.KPI_INASISTENCIAS_PORCENTAJE_LIMITE_MENOR;
           //}
 
-          // KPI Exámenes reprobados Filter
+          // KPI Parciales reprobados Filter
           var kpi_examenes_url_query = '&kpi_reprobados_mayor=&kpi_reprobados_menor=';
 
-          if (indicadoresDePermanenciaController.aca_kpiSelected == 'Exámenes reprobados') {
+          if (indicadoresDePermanenciaController.aca_kpiSelected == 'Parciales reprobados') {
               if (indicadoresDePermanenciaController.aca_nivelDeRiesgoSelected == 'Alto') {
                   kpi_examenes_url_query = '&kpi_reprobados_menor&kpi_reprobados_mayor=' + $rootScope.KPI_EXAMENES_REPROBADOS_PORCENTAJE_LIMITE_MAYOR;
               }
@@ -675,7 +673,7 @@
                           title: 'Inasistencia'
                       }, {
                           field: 'Examenes',
-                          title: 'Exámenes'
+                          title: 'Parciales reprobados'
                       }, {
                           field: 'FinalesReprobados',
                           title: 'Finales reprobados'
@@ -699,7 +697,7 @@
               renderAt: charId,
               dataFormat: 'json',
               height: '500',
-              width: '750',
+              width: '100%',
               dataSource: {
                   "chart": {
                       "showBorder": "0",

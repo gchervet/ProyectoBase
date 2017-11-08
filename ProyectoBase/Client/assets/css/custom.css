@@ -1,4 +1,8 @@
 ﻿/* CUSTOM CLASSES */
+html{
+    overflow-x: hidden;
+}
+
 .fill {
     min-height: 100%;
     height: 100%;

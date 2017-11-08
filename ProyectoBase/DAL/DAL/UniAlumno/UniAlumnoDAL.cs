@@ -45,6 +45,7 @@ namespace Data
         {
             using (var context = new Uni_Entities())
             {
+                context.Database.CommandTimeout = 3000;
                 return context.sp_KPI_Inansistencias(ciclo, cuatri, legajo, sede, carrera, nombre, apellido, dni, kpiInasistenciaMayor, kpiInasistenciaMenor).ToList();
             }
         }
@@ -61,6 +62,7 @@ namespace Data
         {
             using (var context = new Uni_Entities())
             {
+                context.Database.CommandTimeout = 3000;
                 return context.sp_KPI_Examenes_Reprobados(ciclo, cuatri, legajo, sede, carrera, nombre, apellido, dni, kpi_reprobados_mayor, kpi_reprobados_menor).ToList();
             }
         }
@@ -69,6 +71,7 @@ namespace Data
         {
             using (var context = new Uni_Entities())
             {
+                context.Database.CommandTimeout = 3000;
                 return context.sp_KPI_Finales_Reprobados(ciclo, cuatri, legajo, sede, carrera, nombre, apellido, dni, kpi_reprobados_mayor, kpi_reprobados_menor).ToList();
             }
         }
