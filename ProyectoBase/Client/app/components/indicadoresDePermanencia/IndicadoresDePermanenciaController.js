@@ -131,10 +131,14 @@
 
           indicadoresDePermanenciaController.setCicloCuatrimestreIntoSelection = function () {
 
-              indicadoresDePermanenciaController.aca_cicloSelected = new Date().getFullYear();
-              indicadoresDePermanenciaController.aca_cuatrimestreSelected = 2;
-              indicadoresDePermanenciaController.adm_cicloSelected = new Date().getFullYear();
-              indicadoresDePermanenciaController.adm_cuatrimestreSelected = 2;
+              var date = new Date(),
+                  month = date.getMonth(),
+                  actualCuatrimestre = (month == 1 || month == 2 || month == 3 || month == 4 || month == 5 || month == 6 || month == 7) ? 1 : 2;
+
+              indicadoresDePermanenciaController.aca_cicloSelected = date.getFullYear();
+              indicadoresDePermanenciaController.aca_cuatrimestreSelected = actualCuatrimestre;
+              indicadoresDePermanenciaController.adm_cicloSelected = date.getFullYear();
+              indicadoresDePermanenciaController.adm_cuatrimestreSelected = actualCuatrimestre;
           };
 
           // KPI Morosos
@@ -241,7 +245,9 @@
                           Inasistencia: actualKPIInasistencia.Inansistencia,
                           Materia: actualKPIInasistencia.Materia,
                           Examenes: actualKPIInasistencia.ExamenesDesaprobados,
-                          FinalesReprobados: actualKPIInasistencia.FinalesDesaprobados
+                          FinalesReprobados: actualKPIInasistencia.FinalesDesaprobados,
+                          TotalCantidadExamenesTomadosPorMateria: actualKPIInasistencia.TotalCantidadExamenesTomadosPorMateria,
+                          TotalCantidadFinalesTomadosPorMateria: actualKPIInasistencia.TotalCantidadFinalesTomadosPorMateria
                       };
 
                       if (((previousLegajo && actualLegajo != previousLegajo) || (!nuevaInasistencia)) && !nuevaInasistenciaCreada) {
@@ -672,8 +678,14 @@
                           field: 'Examenes',
                           title: 'Parciales reprobados'
                       }, {
+                          field: 'TotalCantidadExamenesTomadosPorMateria',
+                          title: 'Total de parciales'
+                      }, {
                           field: 'FinalesReprobados',
                           title: 'Finales reprobados'
+                      }, {
+                          field: 'TotalCantidadFinalesTomadosPorMateria',
+                          title: 'Total de finales'
                       }],
                       data: row.nested
                   });

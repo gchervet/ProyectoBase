@@ -727,36 +727,6 @@
           <Property Type="String" Name="apellido" Nullable="true" MaxLength="30" />
           <Property Type="Decimal" Name="docnac" Nullable="true" Precision="9" Scale="0" />
         </ComplexType>
-        <ComplexType Name="sp_KPI_Examenes_Reprobados_Result">
-          <Property Type="Int32" Name="Legajo" Nullable="false" />
-          <Property Type="String" Name="Nombre" Nullable="true" MaxLength="30" />
-          <Property Type="String" Name="Apellido" Nullable="true" MaxLength="30" />
-          <Property Type="Decimal" Name="Dni" Nullable="true" Precision="9" Scale="0" />
-          <Property Type="String" Name="Carrera" Nullable="true" MaxLength="50" />
-          <Property Type="Int32" Name="Ciclo" Nullable="false" />
-          <Property Type="Int32" Name="Cuatri" Nullable="false" />
-          <Property Type="String" Name="Materia" Nullable="true" MaxLength="35" />
-          <Property Type="String" Name="Telefono" Nullable="true" MaxLength="25" />
-          <Property Type="String" Name="Mail" Nullable="true" MaxLength="100" />
-          <Property Type="Int32" Name="ExamenesDesaprobados" Nullable="true" />
-          <Property Type="Int32" Name="TotalExamenesDesaprobados" Nullable="true" />
-          <Property Type="Decimal" Name="Promedio" Nullable="true" Precision="16" Scale="4" />
-        </ComplexType>
-        <ComplexType Name="sp_KPI_Finales_Reprobados_Result">
-          <Property Type="Int32" Name="Legajo" Nullable="false" />
-          <Property Type="String" Name="Nombre" Nullable="true" MaxLength="30" />
-          <Property Type="String" Name="Apellido" Nullable="true" MaxLength="30" />
-          <Property Type="Decimal" Name="Dni" Nullable="true" Precision="9" Scale="0" />
-          <Property Type="String" Name="Carrera" Nullable="true" MaxLength="50" />
-          <Property Type="Int32" Name="Ciclo" Nullable="true" />
-          <Property Type="Int32" Name="Cuatri" Nullable="true" />
-          <Property Type="String" Name="Materia" Nullable="true" MaxLength="35" />
-          <Property Type="String" Name="Telefono" Nullable="true" MaxLength="25" />
-          <Property Type="String" Name="Mail" Nullable="true" MaxLength="100" />
-          <Property Type="Int32" Name="FinalesDesaprobados" Nullable="true" />
-          <Property Type="Int32" Name="TotalFinalesDesaprobados" Nullable="true" />
-          <Property Type="Decimal" Name="Promedio" Nullable="true" Precision="16" Scale="4" />
-        </ComplexType>
         <ComplexType Name="sp_KPI_Morosos_Result">
           <Property Type="Int32" Name="Legajo" Nullable="false" />
           <Property Type="String" Name="Carrera" Nullable="true" MaxLength="4" />
@@ -785,6 +755,38 @@
           <Property Type="Int32" Name="Inansistencia" Nullable="true" />
           <Property Type="Int32" Name="MaxNroClase" Nullable="true" />
           <Property Type="Int32" Name="TotalDeInasistencias" Nullable="true" />
+          <Property Type="Decimal" Name="Promedio" Nullable="true" Precision="16" Scale="4" />
+        </ComplexType>
+        <ComplexType Name="sp_KPI_Examenes_Reprobados_Result">
+          <Property Type="Int32" Name="Legajo" Nullable="false" />
+          <Property Type="String" Name="Nombre" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="Apellido" Nullable="true" MaxLength="30" />
+          <Property Type="Decimal" Name="Dni" Nullable="true" Precision="9" Scale="0" />
+          <Property Type="String" Name="Carrera" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="Ciclo" Nullable="false" />
+          <Property Type="Int32" Name="Cuatri" Nullable="false" />
+          <Property Type="String" Name="Materia" Nullable="true" MaxLength="35" />
+          <Property Type="String" Name="Telefono" Nullable="true" MaxLength="25" />
+          <Property Type="String" Name="Mail" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="ExamenesDesaprobados" Nullable="true" />
+          <Property Type="Int32" Name="TotalCantidadExamenesTomadosPorMateria" Nullable="true" />
+          <Property Type="Int32" Name="TotalExamenesDesaprobados" Nullable="true" />
+          <Property Type="Decimal" Name="Promedio" Nullable="true" Precision="16" Scale="4" />
+        </ComplexType>
+        <ComplexType Name="sp_KPI_Finales_Reprobados_Result">
+          <Property Type="Int32" Name="Legajo" Nullable="false" />
+          <Property Type="String" Name="Nombre" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="Apellido" Nullable="true" MaxLength="30" />
+          <Property Type="Decimal" Name="Dni" Nullable="true" Precision="9" Scale="0" />
+          <Property Type="String" Name="Carrera" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="Ciclo" Nullable="true" />
+          <Property Type="Int32" Name="Cuatri" Nullable="true" />
+          <Property Type="String" Name="Materia" Nullable="true" MaxLength="35" />
+          <Property Type="String" Name="Telefono" Nullable="true" MaxLength="25" />
+          <Property Type="String" Name="Mail" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="FinalesDesaprobados" Nullable="true" />
+          <Property Type="Int32" Name="TotalCantidadFinalesTomadosPorMateria" Nullable="true" />
+          <Property Type="Int32" Name="TotalFinalesDesaprobados" Nullable="true" />
           <Property Type="Decimal" Name="Promedio" Nullable="true" Precision="16" Scale="4" />
         </ComplexType>
       </Schema>
@@ -1160,6 +1162,7 @@
                 <ScalarProperty Name="Telefono" ColumnName="Telefono" />
                 <ScalarProperty Name="Mail" ColumnName="Mail" />
                 <ScalarProperty Name="ExamenesDesaprobados" ColumnName="ExamenesDesaprobados" />
+                <ScalarProperty Name="TotalCantidadExamenesTomadosPorMateria" ColumnName="TotalCantidadExamenesTomadosPorMateria" />
                 <ScalarProperty Name="TotalExamenesDesaprobados" ColumnName="TotalExamenesDesaprobados" />
                 <ScalarProperty Name="Promedio" ColumnName="Promedio" />
               </ComplexTypeMapping>
@@ -1179,6 +1182,7 @@
                 <ScalarProperty Name="Telefono" ColumnName="Telefono" />
                 <ScalarProperty Name="Mail" ColumnName="Mail" />
                 <ScalarProperty Name="FinalesDesaprobados" ColumnName="FinalesDesaprobados" />
+                <ScalarProperty Name="TotalCantidadFinalesTomadosPorMateria" ColumnName="TotalCantidadFinalesTomadosPorMateria" />
                 <ScalarProperty Name="TotalFinalesDesaprobados" ColumnName="TotalFinalesDesaprobados" />
                 <ScalarProperty Name="Promedio" ColumnName="Promedio" />
               </ComplexTypeMapping>

@@ -83,8 +83,10 @@ namespace Domain
 
         public int? TotalExamenesDesaprobados { get; set; }
         public int? ExamenesDesaprobados { get; set; }
+        public int? TotalCantidadExamenesTomadosPorMateria { get; set; }
 
         public int? FinalesDesaprobados { get; set; }
         public int? TotalFinalesDesaprobados { get; set; }
+        public int? TotalCantidadFinalesTomadosPorMateria { get; set; }
     }
 }

@@ -55,6 +55,7 @@ namespace Service
                     newKPIInasistencia.ExamenesDesaprobados = examenPorLegajoYMateria.ExamenesDesaprobados;
                     newKPIInasistencia.TotalExamenesDesaprobados = examenPorLegajoYMateria.TotalExamenesDesaprobados;
                     newKPIInasistencia.PromedioExamenesReprobados = examenPorLegajoYMateria.Promedio;
+                    newKPIInasistencia.TotalCantidadExamenesTomadosPorMateria = examenPorLegajoYMateria.TotalCantidadExamenesTomadosPorMateria;
                 }
 
                 if (finalPorLegajoYMateria != null)
@@ -63,6 +64,7 @@ namespace Service
                     newKPIInasistencia.FinalesDesaprobados = finalPorLegajoYMateria.FinalesDesaprobados;
                     newKPIInasistencia.TotalFinalesDesaprobados = finalPorLegajoYMateria.TotalFinalesDesaprobados;
                     newKPIInasistencia.PromedioFinalesReprobados = finalPorLegajoYMateria.Promedio;
+                    newKPIInasistencia.TotalCantidadFinalesTomadosPorMateria = finalPorLegajoYMateria.TotalCantidadFinalesTomadosPorMateria;
                 }
 
                 rtn.Add(newKPIInasistencia);

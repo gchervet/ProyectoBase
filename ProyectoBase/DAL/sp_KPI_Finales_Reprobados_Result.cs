@@ -24,6 +24,7 @@ namespace Data
         public string Telefono { get; set; }
         public string Mail { get; set; }
         public Nullable<int> FinalesDesaprobados { get; set; }
+        public Nullable<int> TotalCantidadFinalesTomadosPorMateria { get; set; }
         public Nullable<int> TotalFinalesDesaprobados { get; set; }
         public Nullable<decimal> Promedio { get; set; }
     }

@@ -24,6 +24,7 @@ namespace Domain
             this.FinalesDesaprobados = examenReprobadoModel.FinalesDesaprobados;
             this.TotalFinalesDesaprobados = examenReprobadoModel.TotalFinalesDesaprobados;
             this.Promedio = examenReprobadoModel.Promedio;
+            this.TotalCantidadFinalesTomadosPorMateria = examenReprobadoModel.TotalCantidadFinalesTomadosPorMateria;
         }
 
         public int Legajo { get; set; }
@@ -39,5 +40,6 @@ namespace Domain
         public Nullable<int> FinalesDesaprobados { get; set; }
         public Nullable<int> TotalFinalesDesaprobados { get; set; }
         public Nullable<decimal> Promedio { get; set; }
+        public int? TotalCantidadFinalesTomadosPorMateria { get; set; }
     }
 }
