@@ -211,7 +211,7 @@
 
               if (indicadoresDePermanenciaController.aca_resetCharts) { indicadoresDePermanenciaController.clearCharts('aca'); }
               if (response) {
-                  
+
                   var finalesLegajosUsados = [],
                       examenesLegajosUsados = [];
 
@@ -300,7 +300,7 @@
                                   cantFinalesReprobadosBAJO++;
                               }
                           }
-                          
+
 
                           nuevaInasistencia = {
                               Legajo: actualKPIInasistencia.Legajo,
@@ -362,22 +362,19 @@
                           }
                               // Si hay filtro KPI - Inasistencias
                           else if (indicadoresDePermanenciaController.aca_kpiSelected == 'Inasistencias') {
-                              if (indicadoresDePermanenciaController.aca_nivelDeRiesgoSelected == '' ||
-                                  indicadoresDePermanenciaController.aca_nivelDeRiesgoSelected.toLowerCase() == inasistenciaTexto.toLowerCase()) {
+                              if (inasistenciaTexto != 'N/A' && (!indicadoresDePermanenciaController.aca_nivelDeRiesgoSelected || indicadoresDePermanenciaController.aca_nivelDeRiesgoSelected.toLowerCase() == inasistenciaTexto.toLowerCase())) {
                                   indicadoresDePermanenciaController.academicoResultList.push(nuevaInasistencia);
                               }
                           }
                               // Si hay filtro KPI - Parciales reprobados
                           else if (indicadoresDePermanenciaController.aca_kpiSelected == 'Parciales reprobados') {
-                              if (indicadoresDePermanenciaController.aca_nivelDeRiesgoSelected == '' ||
-                                  indicadoresDePermanenciaController.aca_nivelDeRiesgoSelected.toLowerCase() == inasistenciaTexto.toLowerCase()) {
+                              if (examenesReprobadosTexto != 'N/A' && (!indicadoresDePermanenciaController.aca_nivelDeRiesgoSelected || indicadoresDePermanenciaController.aca_nivelDeRiesgoSelected.toLowerCase() == examenesReprobadosTexto.toLowerCase())) {
                                   indicadoresDePermanenciaController.academicoResultList.push(nuevaInasistencia);
                               }
                           }
-                              // Si hay filtro KPI - Inasistencias
-                          else if (indicadoresDePermanenciaController.aca_kpiSelected == 'Finales reprobó') {
-                              if (indicadoresDePermanenciaController.aca_nivelDeRiesgoSelected == '' ||
-                                  indicadoresDePermanenciaController.aca_nivelDeRiesgoSelected.toLowerCase() == inasistenciaTexto.toLowerCase()) {
+                              // Si hay filtro KPI - Finales reprobados
+                          else if (indicadoresDePermanenciaController.aca_kpiSelected == 'Finales reprobados') {
+                              if (finalesReprobadosTexto != 'N/A' && (!indicadoresDePermanenciaController.aca_nivelDeRiesgoSelected || indicadoresDePermanenciaController.aca_nivelDeRiesgoSelected.toLowerCase() == finalesReprobadosTexto.toLowerCase())) {
                                   indicadoresDePermanenciaController.academicoResultList.push(nuevaInasistencia);
                               }
                           }
@@ -481,7 +478,7 @@
 
           utilityService.callHttp({ method: "GET", url: "/api/UniPlan/GetAll", callbackSuccess: indicadoresDePermanenciaController.getPlanListCallback, callbackError: indicadoresDePermanenciaController.getErrorCallback });
           utilityService.callHttp({ method: "GET", url: "/api/UniRegional/GetAll", callbackSuccess: indicadoresDePermanenciaController.getRegionalListCallback, callbackError: indicadoresDePermanenciaController.getErrorCallback });
-          
+
           indicadoresDePermanenciaController.setCicloCuatrimestreIntoSelection();
       };
 
@@ -570,8 +567,8 @@
                                                                 "&carrera=" + (indicadoresDePermanenciaController.adm_planSelected ? indicadoresDePermanenciaController.adm_planSelected : '') +
                                                                 "&nombre=" + (indicadoresDePermanenciaController.adm_nombreSelected ? indicadoresDePermanenciaController.adm_nombreSelected : '') +
                                                                 "&apellido=" + (indicadoresDePermanenciaController.adm_apellidoSelected ? indicadoresDePermanenciaController.adm_apellidoSelected : '') +
-                                                                "&dni=" + indicadoresDePermanenciaController.adm_dniSelected +
-                                                                kpi_monto_url_query
+                                                                "&dni=" + (indicadoresDePermanenciaController.adm_dniSelected ? indicadoresDePermanenciaController.adm_dniSelected : '') +
+                                                                (kpi_monto_url_query ? kpi_monto_url_query : '')
                                                                 , callbackSuccess: indicadoresDePermanenciaController.getKPIMorosoListCallback, callbackError: indicadoresDePermanenciaController.getErrorCallback
           });
       };
@@ -585,13 +582,13 @@
 
           if (indicadoresDePermanenciaController.aca_kpiSelected == 'Inasistencias') {
               if (indicadoresDePermanenciaController.aca_nivelDeRiesgoSelected == 'Alto') {
-                  kpi_inasistencia_url_query = '&kpi_inasistencia_menor&kpi_inasistencia_mayor=' + $rootScope.KPI_INASISTENCIAS_PORCENTAJE_LIMITE_MAYOR;
+                  kpi_inasistencia_url_query = '&kpi_inasistencia_menor&kpi_inasistencia_mayor=' + Number($rootScope.KPI_INASISTENCIAS_PORCENTAJE_LIMITE_MAYOR);
               }
               if (indicadoresDePermanenciaController.aca_nivelDeRiesgoSelected == 'Medio') {
-                  kpi_inasistencia_url_query = '&kpi_inasistencia_menor=' + $rootScope.KPI_INASISTENCIAS_PORCENTAJE_LIMITE_MAYOR + 0.0001 + '&kpi_inasistencia_mayor=' + $rootScope.KPI_INASISTENCIAS_PORCENTAJE_LIMITE_MENOR - 0.0001;
+                  kpi_inasistencia_url_query = '&kpi_inasistencia_menor=' + Number($rootScope.KPI_INASISTENCIAS_PORCENTAJE_LIMITE_MAYOR + 0.0001) + '&kpi_inasistencia_mayor=' + Number($rootScope.KPI_INASISTENCIAS_PORCENTAJE_LIMITE_MENOR - 0.0001);
               }
               if (indicadoresDePermanenciaController.aca_nivelDeRiesgoSelected == 'Bajo') {
-                  kpi_inasistencia_url_query = '&kpi_inasistencia_mayor=&kpi_inasistencia_menor=' + $rootScope.KPI_INASISTENCIAS_PORCENTAJE_LIMITE_MENOR;
+                  kpi_inasistencia_url_query = '&kpi_inasistencia_mayor=&kpi_inasistencia_menor=' + Number($rootScope.KPI_INASISTENCIAS_PORCENTAJE_LIMITE_MENOR);
               }
           }
           //else {
@@ -603,13 +600,13 @@
 
           if (indicadoresDePermanenciaController.aca_kpiSelected == 'Parciales reprobados') {
               if (indicadoresDePermanenciaController.aca_nivelDeRiesgoSelected == 'Alto') {
-                  kpi_examenes_url_query = '&kpi_reprobados_menor&kpi_reprobados_mayor=' + $rootScope.KPI_EXAMENES_REPROBADOS_PORCENTAJE_LIMITE_MAYOR;
+                  kpi_examenes_url_query = '&kpi_reprobados_menor&kpi_reprobados_mayor=' + Number($rootScope.KPI_EXAMENES_REPROBADOS_PORCENTAJE_LIMITE_MAYOR);
               }
               if (indicadoresDePermanenciaController.aca_nivelDeRiesgoSelected == 'Medio') {
-                  kpi_examenes_url_query = '&kpi_reprobados_menor=' + $rootScope.KPI_EXAMENES_REPROBADOS_PORCENTAJE_LIMITE_MAYOR + 0.0001 + '&kpi_reprobados_mayor=' + $rootScope.KPI_EXAMENES_REPROBADOS_PORCENTAJE_LIMITE_MENOR - 0.0001;
+                  kpi_examenes_url_query = '&kpi_reprobados_menor=' + Number($rootScope.KPI_EXAMENES_REPROBADOS_PORCENTAJE_LIMITE_MAYOR + 0.0001) + '&kpi_reprobados_mayor=' + Number($rootScope.KPI_EXAMENES_REPROBADOS_PORCENTAJE_LIMITE_MENOR - 0.0001);
               }
               if (indicadoresDePermanenciaController.aca_nivelDeRiesgoSelected == 'Bajo') {
-                  kpi_examenes_url_query = '&kpi_reprobados_mayor=&kpi_reprobados_menor=' + $rootScope.KPI_EXAMENES_REPROBADOS_PORCENTAJE_LIMITE_MENOR;
+                  kpi_examenes_url_query = '&kpi_reprobados_mayor=&kpi_reprobados_menor=' + Number($rootScope.KPI_EXAMENES_REPROBADOS_PORCENTAJE_LIMITE_MENOR);
               }
           }
           //else {
@@ -619,15 +616,15 @@
           // KPI Finales reprobados Filter
           var kpi_finales_url_query = '&kpi_finales_mayor=&kpi_finales_menor=';
 
-          if (indicadoresDePermanenciaController.aca_kpiSelected == 'Finales reprobó') {
+          if (indicadoresDePermanenciaController.aca_kpiSelected == 'Finales reprobados') {
               if (indicadoresDePermanenciaController.aca_nivelDeRiesgoSelected == 'Alto') {
-                  kpi_finales_url_query = '&kpi_finales_menor&kpi_finales_mayor=' + $rootScope.KPI_FINALES_REPROBADOS_PORCENTAJE_LIMITE_MAYOR;
+                  kpi_finales_url_query = '&kpi_finales_menor&kpi_finales_mayor=' + Number($rootScope.KPI_FINALES_REPROBADOS_PORCENTAJE_LIMITE_MAYOR);
               }
               if (indicadoresDePermanenciaController.aca_nivelDeRiesgoSelected == 'Medio') {
-                  kpi_finales_url_query = '&kpi_finales_menor=' + $rootScope.KPI_FINALES_REPROBADOS_PORCENTAJE_LIMITE_MAYOR + 0.0001 + '&kpi_finales_mayor=' + $rootScope.KPI_FINALES_REPROBADOS_PORCENTAJE_LIMITE_MENOR - 0.0001;
+                  kpi_finales_url_query = '&kpi_finales_menor=' + Number($rootScope.KPI_FINALES_REPROBADOS_PORCENTAJE_LIMITE_MAYOR + 0.0001) + '&kpi_finales_mayor=' + Number($rootScope.KPI_FINALES_REPROBADOS_PORCENTAJE_LIMITE_MENOR - 0.0001);
               }
               if (indicadoresDePermanenciaController.aca_nivelDeRiesgoSelected == 'Bajo') {
-                  kpi_finales_url_query = '&kpi_finales_mayor=&kpi_finales_menor=' + $rootScope.KPI_FINALES_REPROBADOS_PORCENTAJE_LIMITE_MENOR;
+                  kpi_finales_url_query = '&kpi_finales_mayor=&kpi_finales_menor=' + Number($rootScope.KPI_FINALES_REPROBADOS_PORCENTAJE_LIMITE_MENOR);
               }
           }
           //else {
