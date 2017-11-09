@@ -177,5 +177,19 @@
         }
     }
 
+    auth.extendTokenTime = function (timeExtensionMinutes) {
+
+        var token = readCookie('token');
+
+        if (token) {
+            $.removeCookie('token');
+
+            var now = new Date(), timeExtension = timeExtensionMinutes;
+            now.setMinutes(now.getMinutes() + expirationMinutes);
+
+            $cookies.put('token', $rootScope.token, { expires: now });
+        }
+    };
+
     return auth;
 });

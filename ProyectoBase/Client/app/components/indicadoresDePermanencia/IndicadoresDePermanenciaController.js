@@ -468,6 +468,10 @@
           indicadoresDePermanenciaController.aca_chartGridData = [];
           indicadoresDePermanenciaController.aca_lastCicloCuatriSelected = {};
 
+          indicadoresDePermanenciaController.aca_inasistenciaChartShowing = false;
+          indicadoresDePermanenciaController.aca_parcialChartShowing = false;
+          indicadoresDePermanenciaController.aca_finalChartShowing = false;
+
           indicadoresDePermanenciaController.aca_resetCharts = false;
 
           // Variables generales
@@ -716,6 +720,8 @@
                       "showShadow": "0",
                       "enableSmartLabels": "0",
                       "startingAngle": "0",
+                      "exportEnabled": "1",
+                      "exportFormats": "PNG=Exportar a PNG|PDF=Exportar a PDF|XLS=Exportar a excel",
                       "showPercentValues": "1",
                       "showPercentInTooltip": "0",
                       "decimals": "1",
@@ -742,6 +748,24 @@
           });
 
           indicadoresDePermanenciaController.gridDataChart.render();
+
+
+          indicadoresDePermanenciaController.aca_inasistenciaChartShowing = true;
+          indicadoresDePermanenciaController.aca_parcialChartShowing = true;
+          indicadoresDePermanenciaController.aca_finalChartShowing = true;
+      };
+
+      indicadoresDePermanenciaController.exportCharts = function(charIdList, format, exportName){
+          FusionCharts.batchExport({
+              "charts": [{
+                  "id": "aca_gridChartContainer",
+              }, {
+                  "id": "aca_fullChartContainer",
+              }],
+              "exportFileName": "batchExport",
+              "exportFormat": "pdf",
+              "exportAtClientSide": "1"
+          })
       };
 
   });
