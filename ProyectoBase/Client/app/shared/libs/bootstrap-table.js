@@ -224,7 +224,7 @@
     var objectKeys = function () {
         // From https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys
         if (!Object.keys) {
-            Object.keys = (function() {
+            Object.keys = (function () {
                 var hasOwnProperty = Object.prototype.hasOwnProperty,
                     hasDontEnumBug = !({ toString: null }).propertyIsEnumerable('toString'),
                     dontEnums = [
@@ -238,7 +238,7 @@
                     ],
                     dontEnumsLength = dontEnums.length;
 
-                return function(obj) {
+                return function (obj) {
                     if (typeof obj !== 'object' && (typeof obj !== 'function' || obj === null)) {
                         throw new TypeError('Object.keys called on non-object');
                     }
@@ -453,7 +453,7 @@
             return false;
         },
         onRefresh: function (params) {
-          return false;
+            return false;
         },
         onResetView: function () {
             return false;
@@ -464,37 +464,37 @@
 
     BootstrapTable.LOCALES['en-US'] = BootstrapTable.LOCALES.en = {
         formatLoadingMessage: function () {
-            return 'Cargando...';
+            return 'Loading, please wait...';
         },
         formatRecordsPerPage: function (pageNumber) {
-            return sprintf('%s filas por página', pageNumber);
+            return sprintf('%s rows per page', pageNumber);
         },
         formatShowingRows: function (pageFrom, pageTo, totalRows) {
-            return sprintf('Mostrando %s a %s de %s filas', pageFrom, pageTo, totalRows);
+            return sprintf('Showing %s to %s of %s rows', pageFrom, pageTo, totalRows);
         },
         formatDetailPagination: function (totalRows) {
             return sprintf('Showing %s rows', totalRows);
         },
         formatSearch: function () {
-            return 'Buscar';
+            return 'Search';
         },
         formatNoMatches: function () {
-            return 'No se encontraron resultados';
+            return 'No matching records found';
         },
         formatPaginationSwitch: function () {
-            return 'Mostrar/esconder paginado';
+            return 'Hide/Show pagination';
         },
         formatRefresh: function () {
-            return 'Refrescar';
+            return 'Refresh';
         },
         formatToggle: function () {
             return 'Toggle';
         },
         formatColumns: function () {
-            return 'Columnas';
+            return 'Columns';
         },
         formatAllRows: function () {
-            return 'Todo';
+            return 'All';
         }
     };
 
@@ -527,7 +527,7 @@
         searchable: true,
         searchFormatter: true,
         cardVisible: true,
-        escape : false
+        escape: false
     };
 
     BootstrapTable.EVENTS = {
@@ -811,6 +811,7 @@
                     sprintf(' rowspan="%s"', column.rowspan),
                     sprintf(' colspan="%s"', column.colspan),
                     sprintf(' data-field="%s"', column.field),
+                    "tabindex='0'",
                     '>');
 
                 html.push(sprintf('<div class="th-inner %s">', that.options.sortable && column.sortable ?
@@ -881,10 +882,10 @@
 
         this.$selectAll = this.$header.find('[name="btSelectAll"]');
         this.$selectAll.off('click').on('click', function () {
-                var checked = $(this).prop('checked');
-                that[checked ? 'checkAll' : 'uncheckAll']();
-                that.updateSelected();
-            });
+            var checked = $(this).prop('checked');
+            that[checked ? 'checkAll' : 'uncheckAll']();
+            that.updateSelected();
+        });
     };
 
     BootstrapTable.prototype.initFooter = function () {
@@ -1328,7 +1329,7 @@
                 var pageLst = typeof this.options.pageList === 'string' ?
                     this.options.pageList.replace('[', '').replace(']', '')
                         .replace(/ /g, '').toLowerCase().split(',') : this.options.pageList;
-                if ($.inArray(this.options.formatAllRows().toLowerCase(), pageLst)  > -1) {
+                if ($.inArray(this.options.formatAllRows().toLowerCase(), pageLst) > -1) {
                     $allSelected = true;
                 }
             }
@@ -1371,7 +1372,7 @@
                     ' <span class="caret"></span>',
                     '</button>',
                     '<ul class="dropdown-menu" role="menu">'
-                ];
+            ];
 
             if (typeof this.options.pageList === 'string') {
                 var list = this.options.pageList.replace('[', '').replace(']', '')
@@ -1602,8 +1603,8 @@
         return false;
     };
 
-    BootstrapTable.prototype.initRow = function(item, i, data, parentDom) {
-        var that=this,
+    BootstrapTable.prototype.initRow = function (item, i, data, parentDom) {
+        var that = this,
             key,
             html = [],
             style = {},
@@ -1634,7 +1635,7 @@
         }
 
         if (item._data && !$.isEmptyObject(item._data)) {
-            $.each(item._data, function(k, v) {
+            $.each(item._data, function (k, v) {
                 // ignore data-index
                 if (k === 'index') {
                     return;
@@ -1665,7 +1666,7 @@
                 '</td>');
         }
 
-        $.each(this.header.fields, function(j, field) {
+        $.each(this.header.fields, function (j, field) {
             var text = '',
                 value_ = getItemField(item, field, that.options.escape),
                 value = '',
@@ -1730,7 +1731,7 @@
                 that.header.formatters[j], [value_, item, i], value_);
 
             if (item['_' + field + '_data'] && !$.isEmptyObject(item['_' + field + '_data'])) {
-                $.each(item['_' + field + '_data'], function(k, v) {
+                $.each(item['_' + field + '_data'], function (k, v) {
                     // ignore data-index
                     if (k === 'index') {
                         return;
@@ -1819,7 +1820,7 @@
             var item = data[i];
             var tr = this.initRow(item, i, data, trFragments);
             hasTr = hasTr || !!tr;
-            if (tr&&tr!==true) {
+            if (tr && tr !== true) {
                 trFragments.append(tr);
             }
         }
@@ -1882,7 +1883,7 @@
                 $tr.after(sprintf('<tr class="detail-view"><td colspan="%s"></td></tr>', $tr.find('td').length));
                 var $element = $tr.next().find('td');
                 var content = calculateObjectValue(that.options, that.options.detailFormatter, [index, row, $element], '');
-                if($element.length === 1) {
+                if ($element.length === 1) {
                     $element.append(content);
                 }
                 that.trigger('expand-row', index, row, $element);
@@ -2013,7 +2014,7 @@
         }
         request = $.extend({}, calculateObjectValue(null, this.options.ajaxOptions), {
             type: this.options.method,
-            url:  url || this.options.url,
+            url: url || this.options.url,
             data: this.options.contentType === 'application/json' && this.options.method === 'post' ?
                 JSON.stringify(data) : data,
             cache: this.options.cache,
@@ -2047,7 +2048,7 @@
             if (this.options.searchText !== '') {
                 var $search = this.$toolbar.find('.search input');
                 $search.val(this.options.searchText);
-                this.onSearch({currentTarget: $search});
+                this.onSearch({ currentTarget: $search });
             }
         }
     };
@@ -2466,7 +2467,7 @@
 
             if (row.hasOwnProperty(uniqueId)) { // uniqueId is a column
                 rowUniqueId = row[uniqueId];
-            } else if(row._data.hasOwnProperty(uniqueId)) { // uniqueId is a row data property
+            } else if (row._data.hasOwnProperty(uniqueId)) { // uniqueId is a row data property
                 rowUniqueId = row._data[uniqueId];
             } else {
                 continue;
@@ -2510,9 +2511,9 @@
 
     BootstrapTable.prototype.updateByUniqueId = function (params) {
         var that = this;
-        var allParams = $.isArray(params) ? params : [ params ];
+        var allParams = $.isArray(params) ? params : [params];
 
-        $.each(allParams, function(i, params) {
+        $.each(allParams, function (i, params) {
             var rowId;
 
             if (!params.hasOwnProperty('id') || !params.hasOwnProperty('row')) {
@@ -2546,9 +2547,9 @@
 
     BootstrapTable.prototype.updateRow = function (params) {
         var that = this;
-        var allParams = $.isArray(params) ? params : [ params ];
+        var allParams = $.isArray(params) ? params : [params];
 
-        $.each(allParams, function(i, params) {
+        $.each(allParams, function (i, params) {
             if (!params.hasOwnProperty('index') || !params.hasOwnProperty('row')) {
                 return;
             }
@@ -2686,7 +2687,7 @@
         var that = this;
         var rows = that.$selectItem.filter(':enabled');
         var checked = rows.filter(':checked');
-        rows.each(function() {
+        rows.each(function () {
             $(this).prop('checked', !$(this).prop('checked'));
         });
         that.updateRows();
@@ -2922,7 +2923,7 @@
     BootstrapTable.prototype.resetSearch = function (text) {
         var $search = this.$toolbar.find('.search input');
         $search.val(text || '');
-        this.onSearch({currentTarget: $search});
+        this.onSearch({ currentTarget: $search });
     };
 
     BootstrapTable.prototype.expandRow_ = function (expand, index) {
