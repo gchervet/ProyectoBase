@@ -727,20 +727,6 @@
           <Property Type="String" Name="apellido" Nullable="true" MaxLength="30" />
           <Property Type="Decimal" Name="docnac" Nullable="true" Precision="9" Scale="0" />
         </ComplexType>
-        <ComplexType Name="sp_KPI_Morosos_Result">
-          <Property Type="Int32" Name="Legajo" Nullable="false" />
-          <Property Type="String" Name="Carrera" Nullable="true" MaxLength="4" />
-          <Property Type="String" Name="Apellido" Nullable="true" MaxLength="30" />
-          <Property Type="String" Name="Nombre" Nullable="true" MaxLength="30" />
-          <Property Type="Decimal" Name="Dni" Nullable="true" Precision="9" Scale="0" />
-          <Property Type="Decimal" Name="DeudaToal" Nullable="true" Precision="38" Scale="4" />
-          <Property Type="Int32" Name="DiasDeuda" Nullable="true" />
-          <Property Type="DateTime" Name="FechaUltimoPago" Nullable="true" />
-          <Property Type="Decimal" Name="ImporteUltimoPago" Nullable="true" Precision="18" Scale="4" />
-          <Property Type="DateTime" Name="UltimaActAca" Nullable="true" />
-          <Property Type="String" Name="Telefono" Nullable="true" MaxLength="25" />
-          <Property Type="String" Name="Mail" Nullable="true" MaxLength="100" />
-        </ComplexType>
         <ComplexType Name="sp_KPI_Inansistencias_Result">
           <Property Type="Int32" Name="Legajo" Nullable="false" />
           <Property Type="String" Name="Nombre" Nullable="true" MaxLength="30" />
@@ -788,6 +774,16 @@
           <Property Type="Int32" Name="TotalCantidadFinalesTomadosPorMateria" Nullable="true" />
           <Property Type="Int32" Name="TotalFinalesDesaprobados" Nullable="true" />
           <Property Type="Decimal" Name="Promedio" Nullable="true" Precision="16" Scale="4" />
+        </ComplexType>
+        <ComplexType Name="sp_KPI_Morosos_Result">
+          <Property Type="Int32" Name="Legajo" Nullable="false" />
+          <Property Type="String" Name="Carrera" Nullable="true" MaxLength="4" />
+          <Property Type="String" Name="Apellido" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="Nombre" Nullable="true" MaxLength="30" />
+          <Property Type="Decimal" Name="Dni" Nullable="true" Precision="9" Scale="0" />
+          <Property Type="Decimal" Name="DeudaTotal" Nullable="true" Precision="20" Scale="10" />
+          <Property Type="String" Name="Telefono" Nullable="true" MaxLength="25" />
+          <Property Type="String" Name="Mail" Nullable="true" MaxLength="100" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1098,11 +1094,7 @@
                 <ScalarProperty Name="Apellido" ColumnName="Apellido" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="Dni" ColumnName="Dni" />
-                <ScalarProperty Name="DeudaToal" ColumnName="DeudaToal" />
-                <ScalarProperty Name="DiasDeuda" ColumnName="DiasDeuda" />
-                <ScalarProperty Name="FechaUltimoPago" ColumnName="FechaUltimoPago" />
-                <ScalarProperty Name="ImporteUltimoPago" ColumnName="ImporteUltimoPago" />
-                <ScalarProperty Name="UltimaActAca" ColumnName="UltimaActAca" />
+                <ScalarProperty Name="DeudaTotal" ColumnName="DeudaTotal" />
                 <ScalarProperty Name="Telefono" ColumnName="Telefono" />
                 <ScalarProperty Name="Mail" ColumnName="Mail" />
               </ComplexTypeMapping>

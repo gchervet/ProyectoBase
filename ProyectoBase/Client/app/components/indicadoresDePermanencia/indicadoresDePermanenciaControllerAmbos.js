@@ -1,5 +1,5 @@
 ﻿angular.module('app')
-  .controller('indicadoresDePermanenciaController', function ($scope, $rootScope, $location, $sessionStorage, utilityService, Auth) {
+  .controller('indicadoresDePermanenciaControllerAmbos', function ($scope, $rootScope, $location, $sessionStorage, utilityService, Auth) {
 
       var indicadoresDePermanenciaController = this;
 

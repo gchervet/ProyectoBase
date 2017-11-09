@@ -18,11 +18,7 @@ namespace Data
         public string Apellido { get; set; }
         public string Nombre { get; set; }
         public Nullable<decimal> Dni { get; set; }
-        public Nullable<decimal> DeudaToal { get; set; }
-        public Nullable<int> DiasDeuda { get; set; }
-        public Nullable<System.DateTime> FechaUltimoPago { get; set; }
-        public Nullable<decimal> ImporteUltimoPago { get; set; }
-        public Nullable<System.DateTime> UltimaActAca { get; set; }
+        public Nullable<decimal> DeudaTotal { get; set; }
         public string Telefono { get; set; }
         public string Mail { get; set; }
     }

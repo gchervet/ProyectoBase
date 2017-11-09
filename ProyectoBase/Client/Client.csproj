@@ -65,7 +65,9 @@
     <Content Include="app\app.module.js" />
     <Content Include="app\components\home\home.html" />
     <Content Include="app\components\home\homeController.js" />
+    <Content Include="app\components\indicadoresDePermanencia\indicadoresDePermanenciaAmbos.html" />
     <Content Include="app\components\indicadoresDePermanencia\indicadoresDePermanencia.html" />
+    <Content Include="app\components\indicadoresDePermanencia\indicadoresDePermanenciaControllerAmbos.js" />
     <Content Include="app\components\indicadoresDePermanencia\indicadoresDePermanenciaController.js" />
     <Content Include="app\components\inscripciones\consultaDeInscripcionAExamenes.html" />
     <Content Include="app\components\inscripciones\consultaDeInscripcionAExamenes.js" />

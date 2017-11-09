@@ -184,7 +184,7 @@ namespace Service
 
             foreach (KPIMorososDTO kpiMoroso in kpiMorosoList)
             {
-                rtn.Add(kpiMoroso.DeudaToal.Value);
+                rtn.Add(kpiMoroso.DeudaTotal.Value);
             }
             return rtn;
         }
