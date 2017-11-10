@@ -81,8 +81,8 @@ app.config(['$qProvider', '$routeProvider', '$stateProvider', '$urlRouterProvide
           })
           /* INDICADORES DE PERMANENCIA */
           .when('/IndicadoresDePermanencia', {
-              templateUrl: server_prefix + '/app/components/indicadoresDePermanencia/indicadoresDePermanenciaAmbos.html',
-              controller: 'indicadoresDePermanenciaControllerAmbos as vm',
+              templateUrl: server_prefix + '/app/components/indicadoresDePermanencia/indicadoresDePermanencia.html',
+              controller: 'indicadoresDePermanenciaController as vm',
               requiresAuthentication: true
           })
           .otherwise({ redirectTo: "home" });
