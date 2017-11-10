@@ -32,22 +32,24 @@ namespace Service
             return rtn;
         }
 
-        public static List<KPIInasistenciasDTO> GetKPIInasistencias(int? ciclo, int? cuatri, int? legajo, int? sede, string carrera, string nombre, string apellido, decimal? dni, int? kpi_inasistencia_mayor, int? kpi_inasistencia_menor, int? kpi_reprobados_mayor, int? kpi_reprobados_menor, int? kpi_finales_mayor, int? kpi_finales_menor)
+        public static List<KPIInasistenciasDTO> GetKPIInasistencias(int? ciclo, int? cuatri, int? legajo, int? sede, string carrera, string nombre, string apellido, decimal? dni, int? kpi_inasistencia_mayor, int? kpi_inasistencia_menor, int? kpi_reprobados_mayor, int? kpi_reprobados_menor, int? kpi_finales_mayor, int? kpi_finales_menor, int? kpi_monto_mayor, int? kpi_monto_menor)
         {
             List<sp_KPI_Inansistencias_Result> kpiInasistenciaModelList = UniAlumnoDAL.GetKPIInasistencias(ciclo, cuatri, legajo, sede, carrera, nombre, apellido, dni, kpi_inasistencia_mayor, kpi_inasistencia_menor);
             List<ExamenReprobadoDTO> examenReprobadoList = GetExamenesReprobados(ciclo, cuatri, legajo, sede, carrera, nombre, apellido, dni, kpi_reprobados_mayor, kpi_reprobados_menor);
             List<FinalReprobadoDTO> finalReprobadoList = GetFinalesReprobados(ciclo, cuatri, legajo, sede, carrera, nombre, apellido, dni, kpi_finales_mayor, kpi_finales_menor);
+            List<KPIMorososDTO> morososList = GetKPIMorosos(ciclo, cuatri, legajo, sede, carrera, nombre, apellido, dni, kpi_monto_mayor, kpi_monto_menor);
             List<KPIInasistenciasDTO> rtn = new List<KPIInasistenciasDTO>();
 
             List<LegajoMateriaDTO> legajosDeExamen = new List<LegajoMateriaDTO>();
             List<LegajoMateriaDTO> legajosDeFinales = new List<LegajoMateriaDTO>();
+            List<LegajoMateriaDTO> legajosDeMorosos = new List<LegajoMateriaDTO>();
 
             foreach (sp_KPI_Inansistencias_Result kpiInasistenciaModel in kpiInasistenciaModelList)
             {
                 KPIInasistenciasDTO newKPIInasistencia = new KPIInasistenciasDTO(kpiInasistenciaModel);
                 ExamenReprobadoDTO examenPorLegajoYMateria = examenReprobadoList.Where(x => x.Legajo == kpiInasistenciaModel.Legajo && x.Materia == kpiInasistenciaModel.Materia && x.Ciclo == kpiInasistenciaModel.Ciclo && x.Cuatri == kpiInasistenciaModel.Cuatri).FirstOrDefault();
                 FinalReprobadoDTO finalPorLegajoYMateria = finalReprobadoList.Where(x => x.Legajo == kpiInasistenciaModel.Legajo && x.Materia == kpiInasistenciaModel.Materia && x.Ciclo == kpiInasistenciaModel.Ciclo && x.Cuatri == kpiInasistenciaModel.Cuatri).FirstOrDefault();
-
+                KPIMorososDTO morosoPorLegajoYMateria = morososList.Where(x => x.Legajo == kpiInasistenciaModel.Legajo).FirstOrDefault();
 
                 if (examenPorLegajoYMateria != null)
                 {
@@ -67,6 +69,15 @@ namespace Service
                     newKPIInasistencia.TotalCantidadFinalesTomadosPorMateria = finalPorLegajoYMateria.TotalCantidadFinalesTomadosPorMateria;
                 }
 
+                if (morosoPorLegajoYMateria != null)
+                {
+                    if (!legajosDeMorosos.Any(z => z.legajo == morosoPorLegajoYMateria.Legajo))
+                    {
+                        legajosDeMorosos.Add(new LegajoMateriaDTO(kpiInasistenciaModel.Legajo, null));
+                        newKPIInasistencia.DeudaMonto = morosoPorLegajoYMateria.DeudaTotal;
+                    }
+                }
+
                 rtn.Add(newKPIInasistencia);
             }
 
@@ -84,6 +95,15 @@ namespace Service
                 if (!legajosDeFinales.Any(z => z.legajo == finalReprobado.Legajo && z.materia == finalReprobado.Materia))
                 {
                     KPIInasistenciasDTO newKPIInasistencia = new KPIInasistenciasDTO(finalReprobado);
+                    rtn.Add(newKPIInasistencia);
+                }
+            }
+
+            foreach (KPIMorososDTO moroso in morososList)
+            {
+                if (!legajosDeMorosos.Any(z => z.legajo == moroso.Legajo))
+                {
+                    KPIInasistenciasDTO newKPIInasistencia = new KPIInasistenciasDTO(moroso);
                     rtn.Add(newKPIInasistencia);
                 }
             }

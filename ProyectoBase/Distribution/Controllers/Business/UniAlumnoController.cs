@@ -113,7 +113,7 @@ namespace Distribution
         [Route("GetKPIInasistencias")]
         [HttpGet]
         [AllowAnonymous]
-        public HttpResponseMessage GetKPIInasistencias(int? ciclo, int? cuatri, int? legajo, int? sede, string carrera, string nombre, string apellido, decimal? dni, int? kpi_inasistencia_mayor, int? kpi_inasistencia_menor, int? kpi_reprobados_mayor, int? kpi_reprobados_menor, int? kpi_finales_mayor, int? kpi_finales_menor)
+        public HttpResponseMessage GetKPIInasistencias(int? ciclo, int? cuatri, int? legajo, int? sede, string carrera, string nombre, string apellido, decimal? dni, int? kpi_inasistencia_mayor, int? kpi_inasistencia_menor, int? kpi_reprobados_mayor, int? kpi_reprobados_menor, int? kpi_finales_mayor, int? kpi_finales_menor, int? kpi_monto_mayor, int? kpi_monto_menor)
         {
             try
             {
@@ -131,7 +131,7 @@ namespace Distribution
 
                 if (SessionTokenService.ValidRequestByUserAndToken(tokenString, userString))
                 {
-                    return HttpResponseController.Return_200_OK(UniAlumnoService.GetKPIInasistencias(ciclo, cuatri, legajo, sede, carrera, nombre, apellido, dni, kpi_inasistencia_mayor, kpi_inasistencia_menor, kpi_reprobados_mayor, kpi_reprobados_menor, kpi_finales_mayor, kpi_finales_menor));
+                    return HttpResponseController.Return_200_OK(UniAlumnoService.GetKPIInasistencias(ciclo, cuatri, legajo, sede, carrera, nombre, apellido, dni, kpi_inasistencia_mayor, kpi_inasistencia_menor, kpi_reprobados_mayor, kpi_reprobados_menor, kpi_finales_mayor, kpi_finales_menor, kpi_monto_mayor, kpi_monto_menor));
                 }
                 return HttpResponseController.Return_401_Unauthorized(string.Empty);
             }

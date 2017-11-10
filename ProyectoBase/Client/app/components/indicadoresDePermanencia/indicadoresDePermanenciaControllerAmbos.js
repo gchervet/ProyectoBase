@@ -234,17 +234,17 @@
                           // Valor de deuda - Resumen
                           var valorDeDeuda = 'N/A';
                           if (deudaLegajosUsados.indexOf(actualLegajo) == -1) {
-                              if (actualResult.DeudaTotal && actualResult.DeudaTotal >= $rootScope.KPI_MONTO_DE_DEUDA_LIMITE_MAYOR) {
+                              if (actualResult.DeudaMonto && actualResult.DeudaMonto >= $rootScope.KPI_MONTO_DE_DEUDA_LIMITE_MAYOR) {
                                   valorDeDeuda = 'ALTO';
                                   deudaLegajosUsados.push(actualLegajo);
                                   valorDeDeudaALTO++;
                               }
-                              if (actualResult.DeudaTotal && $rootScope.KPI_MONTO_DE_DEUDA_LIMITE_MENOR - 0.0001 < actualResult.DeudaTotal && actualResult.DeudaTotal < $rootScope.KPI_MONTO_DE_DEUDA_LIMITE_MAYOR + 0.0001) {
+                              if (actualResult.DeudaMonto && $rootScope.KPI_MONTO_DE_DEUDA_LIMITE_MENOR - 0.0001 < actualResult.DeudaMonto && actualResult.DeudaMonto < $rootScope.KPI_MONTO_DE_DEUDA_LIMITE_MAYOR + 0.0001) {
                                   valorDeDeuda = 'MEDIO';
                                   deudaLegajosUsados.push(actualLegajo);
                                   valorDeDeudaMEDIO++;
                               }
-                              if (actualResult.DeudaTotal && actualResult.DeudaTotal <= $rootScope.KPI_MONTO_DE_DEUDA_LIMITE_MENOR) {
+                              if (actualResult.DeudaMonto && actualResult.DeudaMonto <= $rootScope.KPI_MONTO_DE_DEUDA_LIMITE_MENOR) {
                                   valorDeDeuda = 'BAJO';
                                   deudaLegajosUsados.push(actualLegajo);
                                   valorDeDeudaBAJO++;
@@ -268,7 +268,7 @@
                               Examenes: examenesReprobadosTexto,
                               FinalesReprobados: finalesReprobadosTexto,
                               ValorDeDeuda: valorDeDeuda,
-                              DeudaMonto: '$ ' + actualResult.DeudaTotal,
+                              DeudaMonto: actualResult.DeudaMonto ? '$ ' + actualResult.DeudaMonto : '-',
 
                               nested: []
                           }

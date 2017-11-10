@@ -62,6 +62,19 @@ namespace Domain
             this.PromedioFinalesReprobados = finalReprobado.Promedio;
         }
 
+        public KPIInasistenciasDTO(KPIMorososDTO moroso)
+        {
+            this.Legajo = moroso.Legajo;
+            this.Nombre = moroso.Nombre;
+            this.Apellido = moroso.Apellido;
+            this.Dni = moroso.Dni;
+            this.Carrera = moroso.Carrera;
+            this.Telefono = moroso.Telefono;
+            this.Mail = moroso.Mail;
+
+            this.DeudaMonto = moroso.DeudaTotal;
+        }
+
         public int Legajo { get; set; }
         public string Nombre { get; set; }
         public string Apellido { get; set; }
@@ -88,5 +101,7 @@ namespace Domain
         public int? FinalesDesaprobados { get; set; }
         public int? TotalFinalesDesaprobados { get; set; }
         public int? TotalCantidadFinalesTomadosPorMateria { get; set; }
+
+        public decimal? DeudaMonto { get; set; }
     }
 }
