@@ -146,9 +146,10 @@
                       previousLegajo,
                       nuevaInasistencia = null,
                       nuevaInasistenciaCreada = false,
-                      cantALTO = 0,
-                      cantMEDIO = 0,
-                      cantBAJO = 0,
+                      cantMaterias = 0,
+                      inasistenciaALTO = 0,
+                      inasistenciaMEDIO = 0,
+                      inasistenciaBAJO = 0,
                       cantExamenesReprobadosALTO = 0,
                       cantExamenesReprobadosMEDIO = 0,
                       cantExamenesReprobadosBAJO = 0,
@@ -173,6 +174,7 @@
                           TotalCantidadExamenesTomadosPorMateria: actualResult.TotalCantidadExamenesTomadosPorMateria,
                           TotalCantidadFinalesTomadosPorMateria: actualResult.TotalCantidadFinalesTomadosPorMateria
                       };
+                      cantMaterias++;
 
                       if (((previousLegajo && actualLegajo != previousLegajo) || (!nuevaInasistencia)) && !nuevaInasistenciaCreada) {
 
@@ -180,15 +182,15 @@
                           var inasistenciaTexto = 'N/A';
                           if (actualResult.Promedio && actualResult.Promedio >= $rootScope.KPI_INASISTENCIAS_PORCENTAJE_LIMITE_MAYOR) {
                               inasistenciaTexto = 'ALTO';
-                              cantALTO++;
+                              inasistenciaALTO++;
                           }
                           if (actualResult.Promedio && actualResult.Promedio > $rootScope.KPI_INASISTENCIAS_PORCENTAJE_LIMITE_MENOR && actualResult.Promedio < $rootScope.KPI_INASISTENCIAS_PORCENTAJE_LIMITE_MAYOR) {
                               inasistenciaTexto = 'MEDIO';
-                              cantMEDIO++;
+                              inasistenciaMEDIO++;
                           }
                           if (actualResult.Promedio && actualResult.Promedio <= $rootScope.KPI_INASISTENCIAS_PORCENTAJE_LIMITE_MENOR) {
                               inasistenciaTexto = 'BAJO';
-                              cantBAJO++;
+                              inasistenciaBAJO++;
                           }
 
                           // Parciales reprobados - Resumen
@@ -359,7 +361,7 @@
                   $('#resultTable').bootstrapTable('load', indicadoresDePermanenciaController.resultList);
 
                   // Load charts values
-                  indicadoresDePermanenciaController.loadCharts('gridChartContainer', [{ 'label': 'ALTO', 'value': cantALTO.toString() }, { 'label': 'MEDIO', 'value': cantMEDIO.toString() }, { 'label': 'BAJO', 'value': cantBAJO.toString() }], 'Inasistencias encontradas', 'Según los filtros ingresados', '#F9670C,#FFB089,#F9CCB6');
+                  indicadoresDePermanenciaController.loadCharts('gridChartContainer', [{ 'label': 'ALTO', 'value': inasistenciaALTO.toString() }, { 'label': 'MEDIO', 'value': inasistenciaMEDIO.toString() }, { 'label': 'BAJO', 'value': inasistenciaBAJO.toString() }], 'Inasistencias encontradas', 'Según los filtros ingresados', '#F9670C,#FFB089,#F9CCB6');
                   indicadoresDePermanenciaController.loadCharts('examenesReprobadosChartContainer', [{ 'label': 'ALTO', 'value': cantExamenesReprobadosALTO.toString() }, { 'label': 'MEDIO', 'value': cantExamenesReprobadosMEDIO.toString() }, { 'label': 'BAJO', 'value': cantExamenesReprobadosBAJO.toString() }], 'Parciales reprobados', 'Según los filtros ingresados', '#3288D3,#639FD3,#A3CAED');
                   indicadoresDePermanenciaController.loadCharts('finalesReprobadosChartContainer', [{ 'label': 'ALTO', 'value': cantFinalesReprobadosALTO.toString() }, { 'label': 'MEDIO', 'value': cantFinalesReprobadosMEDIO.toString() }, { 'label': 'BAJO', 'value': cantFinalesReprobadosBAJO.toString() }], 'Finales reprobados', 'Según los filtros ingresados', '#42A540,#25E222,#A4FFA3');
                   indicadoresDePermanenciaController.loadCharts('morososGridChartContainer', [{ 'label': 'ALTO', 'value': valorDeDeudaALTO.toString() }, { 'label': 'MEDIO', 'value': valorDeDeudaMEDIO.toString() }, { 'label': 'BAJO', 'value': valorDeDeudaBAJO.toString() }], 'Morosos encontradas', 'Según los filtros ingresados', '#F9670C,#FFB089,#F9CCB6');
@@ -563,7 +565,6 @@
 
           indicadoresDePermanenciaController.resultList = [];
 
-          // Académico table
           $('#resultTable').bootstrapTable({
               data: indicadoresDePermanenciaController.resultList,
               detailView: true,
